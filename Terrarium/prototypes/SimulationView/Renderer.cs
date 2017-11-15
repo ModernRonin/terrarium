@@ -31,15 +31,14 @@ namespace SimulationView
 
             entity.Parts.Select(p => ToRectangle(p, entity.Position)).UseIn(drawRectangle);
         }
-        static ColoredRectangle ToRectangle(Part part, Vector2D origin)
+        static ColoredRectangle ToRectangle(Part part, Vector origin)
         {
             const int factor = 100;
-            var o = origin * factor;
-            
+            var position = (origin + part.RelativePosition) * factor;
             return new ColoredRectangle
             {
                 Color = ToColor(part.Kind),
-                Rectangle = new Rvectorect()
+                Rectangle = new Rect((Point) position, new Size(factor, factor))
             };
         }
         static Color ToColor(PartKind kind)

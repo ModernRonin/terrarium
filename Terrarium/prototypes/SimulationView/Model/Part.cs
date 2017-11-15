@@ -1,8 +1,10 @@
-﻿namespace SimulationView.Model
+﻿using System.Windows;
+
+namespace SimulationView.Model
 {
     public class Part
     {
-        public Vector2D RelativePosition { get; set; }
+        public Vector RelativePosition { get; set; }
         public PartKind Kind { get; set; }
     }
 }

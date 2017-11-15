@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Windows;
 
 namespace SimulationView.Model
 {
@@ -6,10 +7,7 @@ namespace SimulationView.Model
     {
         public int Width { get; } = 100;
         public int Height { get; } = 100;
-        public IList<Entity> Entities { get; } = new List<Entity>
-        {
-            Entity.Cross.At(new Vector2D(10, 10)),
-            Entity.Snake.At(new Vector2D(90, 90))
-        };
+        public IList<Entity> Entities { get; } =
+            new List<Entity> {Entity.Cross.At(new Vector(10, 10)), Entity.Snake.At(new Vector(90, 90))};
     }
 }

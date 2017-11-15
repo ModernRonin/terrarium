@@ -90,7 +90,6 @@
     <Compile Include="Model\Part.cs" />
     <Compile Include="Model\PartKind.cs" />
     <Compile Include="Model\Simulation.cs" />
-    <Compile Include="Model\Vector2D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
