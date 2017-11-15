@@ -33,7 +33,7 @@ namespace SimulationView
         }
         static ColoredRectangle ToRectangle(Part part, Vector origin)
         {
-            const int factor = 100;
+            const int factor = 10;
             var position = (origin + part.RelativePosition) * factor;
             return new ColoredRectangle
             {
