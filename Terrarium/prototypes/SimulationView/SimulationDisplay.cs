@@ -10,7 +10,6 @@ namespace SimulationView
     public class SimulationDisplay : UIElement
     {
         readonly DrawingGroup mBackPage = new DrawingGroup();
-        readonly Pen mPen = new Pen(new SolidColorBrush(Colors.White), 1);
         public SimulationDisplay()
         {
             Render();
@@ -31,7 +30,7 @@ namespace SimulationView
         }
         void Render(DrawingContext context)
         {
-            context.DrawRectangle(Brushes.Black, new Pen(), new Rect(RenderSize));
+            context.DrawRectangle(Brushes.Black, null, new Rect(RenderSize));
             Simulation.Entities.UseIn(e => Draw(context, e));
         }
         void Draw(DrawingContext context, Entity entity)
