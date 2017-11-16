@@ -1,20 +1,18 @@
 ﻿using System.Linq;
 using System.Windows;
-using ModernRonin.PraeterArtem.Functional;
 
 namespace SimulationView.Model
 {
     public class SimulationTicker
     {
         readonly SimulationState mCurrent;
-        readonly Vector[] mDirections = {new Vector(1, 1), new Vector(-3, -7)};
+        readonly Vector[] mDirections = {new Vector(1, 1).Normalized(), new Vector(-3, -7).Normalized()};
         readonly SimulationState mNext = new SimulationState();
         int mDirectionIndex;
         public SimulationTicker(SimulationState current)
         {
             mCurrent = current;
             mNext.Size = mCurrent.Size;
-            mDirections.UseIn(v => v.Normalize());
         }
         public SimulationState Tick()
         {
