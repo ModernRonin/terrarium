@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
+using ModernRonin.PraeterArtem.Functional;
 
 namespace SimulationView.Model
 {
     public class SimulationState
     {
         public Size Size { get; set; }
-        public IEnumerable<Entity> Entities { get; set; }
+        public IEnumerable<Entity> Entities { get; set; } = Null.Enumerable<Entity>();
         public static SimulationState Default => new SimulationState
         {
             Size = new Size(100, 100),
