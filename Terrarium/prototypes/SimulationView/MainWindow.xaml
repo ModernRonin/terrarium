@@ -14,9 +14,9 @@
         <StackPanel Orientation="Vertical" Grid.Row="1">
             <TextBlock>Lorem ipsum </TextBlock>
         </StackPanel>
-        <local:SimulationViewer Grid.Row="0">
+        <local:SimulationDisplay Grid.Row="0">
             
-        </local:SimulationViewer>
+        </local:SimulationDisplay>
     </Grid>
 </Window>
 

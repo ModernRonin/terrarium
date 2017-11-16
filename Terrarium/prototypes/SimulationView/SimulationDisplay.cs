@@ -7,38 +7,51 @@ using SimulationView.Model;
 
 namespace SimulationView
 {
-    public class Renderer
+    public class SimulationDisplay : UIElement
     {
-        readonly Pen mPen = new Pen(new SolidColorBrush(Colors.White), 2);
-        public Simulation Simulation { get; set; } = new Simulation();
-        public DrawingGroup Root { get; } = new DrawingGroup();
-        public void Render()
+        readonly DrawingGroup mBackPage = new DrawingGroup();
+        readonly Pen mPen = new Pen(new SolidColorBrush(Colors.White), 1);
+        public SimulationDisplay()
         {
-            var context = Root.Open();
-            RenderTo(context);
+            Render();
+            CompositionTarget.Rendering += (_, __) => Render();
+        }
+        public Simulation Simulation { get; set; } = new Simulation();
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+            Render();
+            base.OnRender(drawingContext);
+            drawingContext.DrawDrawing(mBackPage);
+        }
+        void Render()
+        {
+            var context = mBackPage.Open();
+            Render(context);
             context.Close();
         }
-        void RenderTo(DrawingContext context)
+        void Render(DrawingContext context)
         {
+            context.DrawRectangle(Brushes.Black, new Pen(), new Rect(RenderSize));
             Simulation.Entities.UseIn(e => Draw(context, e));
         }
         void Draw(DrawingContext context, Entity entity)
         {
             void drawRectangle(ColoredRectangle rectangle)
             {
-                context.DrawRectangle(new SolidColorBrush(rectangle.Color), mPen, rectangle.Rectangle);
+                context.DrawRectangle(new SolidColorBrush(rectangle.Color), null, rectangle.Rectangle);
             }
 
             entity.Parts.Select(p => ToRectangle(p, entity.Position)).UseIn(drawRectangle);
         }
-        static ColoredRectangle ToRectangle(Part part, Vector origin)
+        ColoredRectangle ToRectangle(Part part, Vector origin)
         {
-            const int factor = 10;
-            var position = (origin + part.RelativePosition) * factor;
+            var factor = new Vector(RenderSize.Width / Simulation.Size.Width,
+                RenderSize.Height / Simulation.Size.Height);
+            var position = (origin + part.RelativePosition).ScaleBy(factor);
             return new ColoredRectangle
             {
                 Color = ToColor(part.Kind),
-                Rectangle = new Rect((Point) position, new Size(factor, factor))
+                Rectangle = new Rect((Point) position, (Size) factor)
             };
         }
         static Color ToColor(PartKind kind)
@@ -62,5 +75,10 @@ namespace SimulationView
             public Rect Rectangle { get; set; }
             public Color Color { get; set; }
         }
+    }
+
+    public static class VectorExtensions
+    {
+        public static Vector ScaleBy(this Vector self, Vector scale) => new Vector(self.X * scale.X, self.Y * scale.Y);
     }
 }
