@@ -11,20 +11,12 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Vertical" Grid.Row="1">
-            <TextBlock TextWrapping="Wrap">Lorem ipsum<LineBreak/>
-                The quick brown fox jumped over the lazy dog...<LineBreak/>
-                The quick brown fox jumped over the lazy dog...<LineBreak/>
-                The quick brown fox jumped over the lazy dog...<LineBreak/>
-                The quick brown fox jumped over the lazy dog...<LineBreak/>
-                The quick brown fox jumped over the lazy dog...<LineBreak/>
-                The quick brown fox jumped over the lazy dog...<LineBreak/>
-                The quick brown fox jumped over the lazy dog...<LineBreak/>
-                
-            </TextBlock>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Button x:Name="StartButton" Click="OnStart">Start</Button>
+            <Button x:Name="StopButton" Click="OnStop" IsEnabled="false">Stop</Button>
         </StackPanel>
         <local:ZoomBorder Grid.Row="0" ClipToBounds="True" Background="AliceBlue">
-            <local:SimulationDisplay DoAutoScale="False"/>
+            <local:SimulationDisplay x:Name="Display"/>
         </local:ZoomBorder>
     </Grid>
 </Window>
