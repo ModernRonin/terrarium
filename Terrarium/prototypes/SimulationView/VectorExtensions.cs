@@ -7,5 +7,7 @@ namespace SimulationView
         public static Vector ScaleBy(this Vector self, Vector scale) => new Vector(self.X * scale.X, self.Y * scale.Y);
         public static Vector ScaleTo(this Size self, Size destination) =>
             new Vector(destination.Width / self.Width, destination.Height / self.Height);
+        public static Vector WrapOver(this Vector self, Size size) =>
+            new Vector(self.X % size.Width, self.Y % size.Height);
     }
 }
