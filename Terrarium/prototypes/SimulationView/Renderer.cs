@@ -7,7 +7,7 @@ using SimulationView.Model;
 
 namespace SimulationView
 {
-    public class Renderer: IDisposable
+    public class Renderer : IDisposable
     {
         readonly DrawingContext mContext;
         readonly Size mRenderSize;

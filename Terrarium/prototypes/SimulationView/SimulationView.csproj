@@ -67,6 +67,7 @@
     <Compile Include="Model\SimulationTicker.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="SimulationDisplay.cs" />
+    <Compile Include="TracingWatch.cs" />
     <Compile Include="VectorExtensions.cs" />
     <Compile Include="ZoomBorder.cs" />
     <Page Include="MainWindow.xaml">

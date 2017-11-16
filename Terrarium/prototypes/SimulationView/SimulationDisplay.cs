@@ -13,14 +13,7 @@ namespace SimulationView
             CompositionTarget.Rendering += (_, __) => Render();
         }
         public bool DoAutoScale { get; set; }
-        
         public SimulationState SimulationState { get; set; } = new SimulationState();
-        protected override void OnRender(DrawingContext drawingContext)
-        {
-            Render();
-            base.OnRender(drawingContext);
-            drawingContext.DrawDrawing(mBackPage);
-        }
         Size DesiredDisplaySize
         {
             get
@@ -30,6 +23,12 @@ namespace SimulationView
                 result *= 10;
                 return (Size) result;
             }
+        }
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+            Render();
+            base.OnRender(drawingContext);
+            drawingContext.DrawDrawing(mBackPage);
         }
         void Render()
         {
