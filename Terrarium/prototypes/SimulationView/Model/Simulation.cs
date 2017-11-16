@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -6,16 +7,24 @@ namespace SimulationView.Model
 {
     public class Simulation
     {
+        readonly Stopwatch mWatch= new Stopwatch();
         SimulationState mCurrentState;
         bool mIsRunning;
         bool mIsStopRequested;
         Task mTask;
         public Simulation(SimulationState initialState) => mCurrentState = initialState;
         public SimulationState CurrentState => mCurrentState;
+        public int MaximumFramesPerSecond { get; set; }= 30;
         void Tick()
         {
+            mWatch.Restart();
             var next = new SimulationTicker(CurrentState).Tick();
             Interlocked.Exchange(ref mCurrentState, next);
+            mWatch.Stop();
+            var minimumTimePerFrame = TimeSpan.FromMilliseconds(1000d / MaximumFramesPerSecond);
+            var timeLeftToWait = minimumTimePerFrame.Subtract(mWatch.Elapsed);
+            if (timeLeftToWait.TotalMilliseconds>0)
+                Thread.Sleep(timeLeftToWait);
         }
         void Run()
         {
