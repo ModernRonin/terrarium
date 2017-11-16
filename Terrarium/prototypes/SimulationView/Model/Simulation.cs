@@ -12,7 +12,7 @@ namespace SimulationView.Model
         Task mTask;
         public Simulation(SimulationState initialState) => mCurrentState = initialState;
         public SimulationState CurrentState => mCurrentState;
-        public void Tick()
+        void Tick()
         {
             var next = new SimulationTicker(CurrentState).Tick();
             Interlocked.Exchange(ref mCurrentState, next);
