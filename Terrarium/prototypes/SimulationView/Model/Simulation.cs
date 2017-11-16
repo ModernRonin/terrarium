@@ -10,6 +10,7 @@ namespace SimulationView.Model
         bool mIsRunning;
         bool mIsStopRequested;
         Task mTask;
+        public Simulation(SimulationState initialState) => mCurrentState = initialState;
         public SimulationState CurrentState => mCurrentState;
         public void Tick()
         {
