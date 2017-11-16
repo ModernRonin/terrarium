@@ -35,49 +35,44 @@ namespace SimulationView
         }
         void Draw(DrawingContext context, Entity entity)
         {
-            void drawRectangle(ColoredRectangle rectangle)
+            void drawRectangle(FilledRectangle rectangle)
             {
-                context.DrawRectangle(new SolidColorBrush(rectangle.Color), null, rectangle.Rectangle);
+                context.DrawRectangle(rectangle.Brush, null, rectangle.Rectangle);
             }
 
             entity.Parts.Select(p => ToRectangle(p, entity.Position)).UseIn(drawRectangle);
         }
-        ColoredRectangle ToRectangle(Part part, Vector origin)
+        FilledRectangle ToRectangle(Part part, Vector origin)
         {
             var factor = new Vector(RenderSize.Width / Simulation.Size.Width,
                 RenderSize.Height / Simulation.Size.Height);
             var position = (origin + part.RelativePosition).ScaleBy(factor);
-            return new ColoredRectangle
+            return new FilledRectangle
             {
-                Color = ToColor(part.Kind),
+                Brush = ToColor(part.Kind),
                 Rectangle = new Rect((Point) position, (Size) factor)
             };
         }
-        static Color ToColor(PartKind kind)
+        static Brush ToColor(PartKind kind)
         {
             switch (kind)
             {
                 case PartKind.Core:
-                    return Colors.Aquamarine;
+                    return Brushes.Aquamarine;
 
                 case PartKind.Absorber:
-                    return Colors.LightGreen;
+                    return Brushes.LightGreen;
                 case PartKind.Store:
-                    return Colors.BurlyWood;
+                    return Brushes.BurlyWood;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
         }
 
-        class ColoredRectangle
+        class FilledRectangle
         {
             public Rect Rectangle { get; set; }
-            public Color Color { get; set; }
+            public Brush Brush { get; set; }
         }
-    }
-
-    public static class VectorExtensions
-    {
-        public static Vector ScaleBy(this Vector self, Vector scale) => new Vector(self.X * scale.X, self.Y * scale.Y);
     }
 }
