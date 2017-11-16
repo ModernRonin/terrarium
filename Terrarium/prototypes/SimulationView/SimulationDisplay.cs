@@ -12,6 +12,7 @@ namespace SimulationView
             Render();
             CompositionTarget.Rendering += (_, __) => Render();
         }
+        public bool DoAutoScale { get; set; }
         public Simulation Simulation { get; set; } = new Simulation();
         protected override void OnRender(DrawingContext drawingContext)
         {
