@@ -18,8 +18,7 @@ namespace SimulationView
             mContext = drawingGroup.Open();
             mRenderSize = renderSize;
             mSimulation = simulation;
-            mScalingFactor = new Vector(mRenderSize.Width / mSimulation.Size.Width,
-                mRenderSize.Height / mSimulation.Size.Height);
+            mScalingFactor = mSimulation.Size.ScaleTo(mRenderSize);
         }
         public void Dispose()
         {
