@@ -1,12 +1,39 @@
-﻿using System.Collections.Generic;
-using System.Windows;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SimulationView.Model
 {
     public class Simulation
     {
-        public Size Size { get; }= new Size(100, 100);
-        public IList<Entity> Entities { get; } =
-            new List<Entity> {Entity.Cross.At(new Vector(10, 10)), Entity.Snake.At(new Vector(90, 90))};
+        SimulationState mCurrentState;
+        bool mIsRunning;
+        bool mIsStopRequested;
+        Task mTask;
+        public SimulationState CurrentState => mCurrentState;
+        public void Tick()
+        {
+            var next = new SimulationTicker(CurrentState).Tick();
+            Interlocked.Exchange(ref mCurrentState, next);
+        }
+        void Run()
+        {
+            while (!mIsStopRequested) Tick();
+        }
+        public void Start()
+        {
+            if (mIsRunning) throw new InvalidOperationException("Already running");
+            mIsStopRequested = false;
+            mIsRunning = true;
+            mTask = Task.Run(() => Run());
+        }
+        public async Task Stop()
+        {
+            if (!mIsRunning) throw new InvalidOperationException("Not running");
+            mIsStopRequested = true;
+            await mTask;
+            mTask = null;
+            mIsRunning = false;
+        }
     }
 }

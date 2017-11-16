@@ -14,7 +14,7 @@ namespace SimulationView
         }
         public bool DoAutoScale { get; set; }
         
-        public Simulation Simulation { get; set; } = new Simulation();
+        public SimulationState SimulationState { get; set; } = new SimulationState();
         protected override void OnRender(DrawingContext drawingContext)
         {
             Render();
@@ -26,14 +26,14 @@ namespace SimulationView
             get
             {
                 if (DoAutoScale) return RenderSize;
-                var result = (Vector) Simulation.Size;
+                var result = (Vector) SimulationState.Size;
                 result *= 10;
                 return (Size) result;
             }
         }
         void Render()
         {
-            using (var renderer = new Renderer(mBackPage, DesiredDisplaySize, Simulation)) { renderer.Render(); }
+            using (var renderer = new Renderer(mBackPage, DesiredDisplaySize, SimulationState)) { renderer.Render(); }
         }
     }
 }

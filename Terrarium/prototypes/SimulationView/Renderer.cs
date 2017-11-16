@@ -12,13 +12,13 @@ namespace SimulationView
         readonly DrawingContext mContext;
         readonly Size mRenderSize;
         readonly Vector mScalingFactor;
-        readonly Simulation mSimulation;
-        public Renderer(DrawingGroup drawingGroup, Size renderSize, Simulation simulation)
+        readonly SimulationState mSimulationState;
+        public Renderer(DrawingGroup drawingGroup, Size renderSize, SimulationState simulationState)
         {
             mContext = drawingGroup.Open();
             mRenderSize = renderSize;
-            mSimulation = simulation;
-            mScalingFactor = mSimulation.Size.ScaleTo(mRenderSize);
+            mSimulationState = simulationState;
+            mScalingFactor = mSimulationState.Size.ScaleTo(mRenderSize);
         }
         public void Dispose()
         {
@@ -27,7 +27,7 @@ namespace SimulationView
         public void Render()
         {
             mContext.DrawRectangle(Brushes.Black, null, new Rect(mRenderSize));
-            mSimulation.Entities.UseIn(Draw);
+            mSimulationState.Entities.UseIn(Draw);
         }
         void Draw(Entity entity)
         {

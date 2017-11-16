@@ -63,6 +63,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Simulation.cs" />
+    <Compile Include="Model\SimulationTicker.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="SimulationDisplay.cs" />
     <Compile Include="VectorExtensions.cs" />
@@ -85,7 +87,7 @@
     <Compile Include="Model\EntityExtensions.cs" />
     <Compile Include="Model\Part.cs" />
     <Compile Include="Model\PartKind.cs" />
-    <Compile Include="Model\Simulation.cs" />
+    <Compile Include="Model\SimulationState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
