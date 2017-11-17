@@ -2,20 +2,19 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using ModernRonin.Terrarium.Logic;
 
-namespace SimulationView.Model
+namespace ModernRonin.Terrarium.Logic
 {
     public class Simulation
     {
-        readonly Stopwatch mWatch= new Stopwatch();
+        readonly Stopwatch mWatch = new Stopwatch();
         SimulationState mCurrentState;
         bool mIsRunning;
         bool mIsStopRequested;
         Task mTask;
         public Simulation(SimulationState initialState) => mCurrentState = initialState;
         public SimulationState CurrentState => mCurrentState;
-        public int MaximumFramesPerSecond { get; set; }= 30;
+        public int MaximumFramesPerSecond { get; set; } = 30;
         void Tick()
         {
             mWatch.Restart();
@@ -24,8 +23,7 @@ namespace SimulationView.Model
             mWatch.Stop();
             var minimumTimePerFrame = TimeSpan.FromMilliseconds(1000d / MaximumFramesPerSecond);
             var timeLeftToWait = minimumTimePerFrame.Subtract(mWatch.Elapsed);
-            if (timeLeftToWait.TotalMilliseconds>0)
-                Thread.Sleep(timeLeftToWait);
+            if (timeLeftToWait.TotalMilliseconds > 0) Thread.Sleep(timeLeftToWait);
         }
         void Run()
         {

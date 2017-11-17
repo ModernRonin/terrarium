@@ -64,7 +64,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\Simulation.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="SimulationDisplay.cs" />
     <Compile Include="Vector2Adaptations.cs" />
@@ -118,6 +117,9 @@
       <Project>{d50f8002-abf8-4570-bb1c-d05b10c00846}</Project>
       <Name>ModernRonin.Terrarium.Logic</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

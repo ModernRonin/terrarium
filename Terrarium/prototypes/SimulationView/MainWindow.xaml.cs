@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Threading;
 using ModernRonin.Terrarium.Logic;
-using SimulationView.Model;
 
 namespace SimulationView
 {
