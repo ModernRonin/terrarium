@@ -23,7 +23,7 @@ namespace ModernRonin.Terrarium.Logic
             mWatch.Stop();
             var minimumTimePerFrame = TimeSpan.FromMilliseconds(1000d / MaximumFramesPerSecond);
             var timeLeftToWait = minimumTimePerFrame.Subtract(mWatch.Elapsed);
-            if (timeLeftToWait.TotalMilliseconds > 0) Thread.Sleep(timeLeftToWait);
+            if (timeLeftToWait.TotalMilliseconds > 0)  Task.Delay(timeLeftToWait).Wait();
         }
         void Run()
         {

@@ -15,7 +15,7 @@ namespace ModernRonin.Standard
         public void Dispose()
         {
             mWatch.Stop();
-            Trace.WriteLine($"{mActivity} took {mWatch.ElapsedMilliseconds}ms");
+            Debug.WriteLine($"{mActivity} took {mWatch.ElapsedMilliseconds}ms");
         }
     }
 }
