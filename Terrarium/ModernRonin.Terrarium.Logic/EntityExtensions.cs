@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace ModernRonin.Terrarium.Logic
+﻿namespace ModernRonin.Terrarium.Logic
 {
     public static class EntityExtensions
     {

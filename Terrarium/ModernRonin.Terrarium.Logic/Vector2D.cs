@@ -35,7 +35,7 @@ namespace ModernRonin.Terrarium.Logic
         public static Vector2D operator /(Vector2D lhs, float scalar) => new Vector2D(scalar / lhs.X, scalar / lhs.Y);
         public Vector2D ScaleBy(Vector2D scale) => new Vector2D(X * scale.X, Y * scale.Y);
         public Vector2D ScaleTo(Vector2D destination) => new Vector2D(destination.X / X, destination.Y / Y);
-        public Vector2D WrapOver(Size size)
+        public Vector2D ClampWithin(Vector2D maximum)
         {
             float clamp(float value, float limit)
             {
@@ -44,8 +44,8 @@ namespace ModernRonin.Terrarium.Logic
                 return result;
             }
 
-            var x = clamp(X, size.Width);
-            var y = clamp(Y, size.Height);
+            var x = clamp(X, maximum.X);
+            var y = clamp(Y, maximum.Y);
             return new Vector2D(x, y);
         }
         public float LengthSquared => X * X + Y * Y;
