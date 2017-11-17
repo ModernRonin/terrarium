@@ -1,4 +1,4 @@
-﻿namespace SimulationView.Model
+﻿namespace ModernRonin.Terrarium.Logic
 {
     public enum PartKind
     {

@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Media;
+using ModernRonin.Terrarium.Logic;
 using SimulationView.Model;
 
 namespace SimulationView

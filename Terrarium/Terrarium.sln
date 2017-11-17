@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimulationView", "prototype
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGameUwpXaml", "prototypes\MonoGameUwpXaml\MonoGameUwpXaml.csproj", "{F4CA77F2-4D2D-40FD-B696-347169BB74B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernRonin.Terrarium.Logic", "ModernRonin.Terrarium.Logic\ModernRonin.Terrarium.Logic.csproj", "{D50F8002-ABF8-4570-BB1C-D05B10C00846}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,22 @@ Global
 		{F4CA77F2-4D2D-40FD-B696-347169BB74B6}.Release|x86.ActiveCfg = Release|x86
 		{F4CA77F2-4D2D-40FD-B696-347169BB74B6}.Release|x86.Build.0 = Release|x86
 		{F4CA77F2-4D2D-40FD-B696-347169BB74B6}.Release|x86.Deploy.0 = Release|x86
+		{D50F8002-ABF8-4570-BB1C-D05B10C00846}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D50F8002-ABF8-4570-BB1C-D05B10C00846}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D50F8002-ABF8-4570-BB1C-D05B10C00846}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{D50F8002-ABF8-4570-BB1C-D05B10C00846}.Debug|ARM.Build.0 = Debug|Any CPU
+		{D50F8002-ABF8-4570-BB1C-D05B10C00846}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D50F8002-ABF8-4570-BB1C-D05B10C00846}.Debug|x64.Build.0 = Debug|Any CPU
+		{D50F8002-ABF8-4570-BB1C-D05B10C00846}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D50F8002-ABF8-4570-BB1C-D05B10C00846}.Debug|x86.Build.0 = Debug|Any CPU
+		{D50F8002-ABF8-4570-BB1C-D05B10C00846}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D50F8002-ABF8-4570-BB1C-D05B10C00846}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D50F8002-ABF8-4570-BB1C-D05B10C00846}.Release|ARM.ActiveCfg = Release|Any CPU
+		{D50F8002-ABF8-4570-BB1C-D05B10C00846}.Release|ARM.Build.0 = Release|Any CPU
+		{D50F8002-ABF8-4570-BB1C-D05B10C00846}.Release|x64.ActiveCfg = Release|Any CPU
+		{D50F8002-ABF8-4570-BB1C-D05B10C00846}.Release|x64.Build.0 = Release|Any CPU
+		{D50F8002-ABF8-4570-BB1C-D05B10C00846}.Release|x86.ActiveCfg = Release|Any CPU
+		{D50F8002-ABF8-4570-BB1C-D05B10C00846}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

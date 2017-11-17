@@ -1,10 +1,10 @@
-﻿using System.Windows;
+﻿using System.Numerics;
 
-namespace SimulationView.Model
+namespace ModernRonin.Terrarium.Logic
 {
     public static class EntityExtensions
     {
-        public static Entity At(this Entity self, Vector position)
+        public static Entity At(this Entity self, Vector2D position)
         {
             self.Position = position;
             return self;
