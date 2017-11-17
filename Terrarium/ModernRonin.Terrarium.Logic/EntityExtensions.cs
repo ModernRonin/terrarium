@@ -1,4 +1,6 @@
-﻿namespace ModernRonin.Terrarium.Logic
+﻿using ModernRonin.Standard;
+
+namespace ModernRonin.Terrarium.Logic
 {
     public static class EntityExtensions
     {

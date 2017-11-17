@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ModernRonin.Terrarium.Logic
+namespace ModernRonin.Standard
 {
     public struct Vector2D : IEquatable<Vector2D>
     {
@@ -15,7 +15,7 @@ namespace ModernRonin.Terrarium.Logic
         public bool Equals(Vector2D other) => X.Equals(other.X) && Y.Equals(other.Y);
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (Object.ReferenceEquals(null, obj)) return false;
             return obj is Vector2D && Equals((Vector2D) obj);
         }
         public override int GetHashCode()
@@ -55,7 +55,7 @@ namespace ModernRonin.Terrarium.Logic
             get
             {
                 var l = Length;
-                if (Math.Abs(l) < 0.001) return Zero;
+                if (Math.Abs((float) l) < 0.001) return Zero;
                 return this / l;
             }
         }

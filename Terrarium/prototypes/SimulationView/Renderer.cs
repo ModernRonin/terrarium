@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using ModernRonin.PraeterArtem.Functional;
+using ModernRonin.Standard;
 using ModernRonin.Terrarium.Logic;
 
 namespace SimulationView
