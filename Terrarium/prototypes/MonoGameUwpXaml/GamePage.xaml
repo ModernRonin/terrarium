@@ -11,7 +11,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <SwapChainPanel x:Name="swapChainPanel" Grid.Row="0" />
+        <SwapChainPanel x:Name="SwapChainPanel" Grid.Row="0" />
         <StackPanel Orientation="Horizontal" Grid.Row="1">
             <Button x:Name="StartButton" Click="OnStart">Start</Button>
             <Button x:Name="StopButton" Click="OnStop" IsEnabled="false">Stop</Button>

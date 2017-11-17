@@ -5,14 +5,14 @@ namespace MonoGameUwpXaml
 {
     public sealed partial class GamePage
     {
-        readonly Game1 _game;
+        readonly Game1 mGame;
         public GamePage()
         {
             InitializeComponent();
 
             // Create the game.
             var launchArguments = string.Empty;
-            _game = XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
+            mGame = XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, SwapChainPanel);
         }
         void OnStart(object sender, RoutedEventArgs e) { }
         void OnStop(object sender, RoutedEventArgs e) { }
