@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prototypes", "prototypes", "{A9156C50-C649-43FB-B594-660B0642FD80}"
 EndProject
@@ -9,7 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimulationView", "prototype
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGameUwpXaml", "prototypes\MonoGameUwpXaml\MonoGameUwpXaml.csproj", "{F4CA77F2-4D2D-40FD-B696-347169BB74B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernRonin.Terrarium.Logic", "ModernRonin.Terrarium.Logic\ModernRonin.Terrarium.Logic.csproj", "{D50F8002-ABF8-4570-BB1C-D05B10C00846}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModernRonin.Terrarium.Logic", "ModernRonin.Terrarium.Logic\ModernRonin.Terrarium.Logic.csproj", "{D50F8002-ABF8-4570-BB1C-D05B10C00846}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernRonin.Standard", "ModernRonin.Standard\ModernRonin.Standard.csproj", "{DC8CCA68-8837-4F10-8B61-523365CF9996}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +79,22 @@ Global
 		{D50F8002-ABF8-4570-BB1C-D05B10C00846}.Release|x64.Build.0 = Release|Any CPU
 		{D50F8002-ABF8-4570-BB1C-D05B10C00846}.Release|x86.ActiveCfg = Release|Any CPU
 		{D50F8002-ABF8-4570-BB1C-D05B10C00846}.Release|x86.Build.0 = Release|Any CPU
+		{DC8CCA68-8837-4F10-8B61-523365CF9996}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC8CCA68-8837-4F10-8B61-523365CF9996}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC8CCA68-8837-4F10-8B61-523365CF9996}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{DC8CCA68-8837-4F10-8B61-523365CF9996}.Debug|ARM.Build.0 = Debug|Any CPU
+		{DC8CCA68-8837-4F10-8B61-523365CF9996}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DC8CCA68-8837-4F10-8B61-523365CF9996}.Debug|x64.Build.0 = Debug|Any CPU
+		{DC8CCA68-8837-4F10-8B61-523365CF9996}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DC8CCA68-8837-4F10-8B61-523365CF9996}.Debug|x86.Build.0 = Debug|Any CPU
+		{DC8CCA68-8837-4F10-8B61-523365CF9996}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC8CCA68-8837-4F10-8B61-523365CF9996}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC8CCA68-8837-4F10-8B61-523365CF9996}.Release|ARM.ActiveCfg = Release|Any CPU
+		{DC8CCA68-8837-4F10-8B61-523365CF9996}.Release|ARM.Build.0 = Release|Any CPU
+		{DC8CCA68-8837-4F10-8B61-523365CF9996}.Release|x64.ActiveCfg = Release|Any CPU
+		{DC8CCA68-8837-4F10-8B61-523365CF9996}.Release|x64.Build.0 = Release|Any CPU
+		{DC8CCA68-8837-4F10-8B61-523365CF9996}.Release|x86.ActiveCfg = Release|Any CPU
+		{DC8CCA68-8837-4F10-8B61-523365CF9996}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

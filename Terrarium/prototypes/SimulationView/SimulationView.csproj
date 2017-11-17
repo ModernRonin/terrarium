@@ -67,7 +67,6 @@
     <Compile Include="Model\Simulation.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="SimulationDisplay.cs" />
-    <Compile Include="TracingWatch.cs" />
     <Compile Include="Vector2Adaptations.cs" />
     <Compile Include="ZoomBorder.cs" />
     <Page Include="MainWindow.xaml">

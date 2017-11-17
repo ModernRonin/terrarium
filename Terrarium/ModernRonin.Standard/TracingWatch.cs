@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace SimulationView
+namespace ModernRonin.Standard
 {
     public class TracingWatch : IDisposable
     {
+        readonly string mActivity;
         readonly Stopwatch mWatch = new Stopwatch();
-        public TracingWatch()
+        public TracingWatch(string activity)
         {
+            mActivity = activity;
             mWatch.Start();
         }
         public void Dispose()
         {
             mWatch.Stop();
-            Trace.WriteLine($"Render took {mWatch.ElapsedMilliseconds}ms");
+            Trace.WriteLine($"{mActivity} took {mWatch.ElapsedMilliseconds}ms");
         }
     }
 }
