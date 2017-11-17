@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 
 namespace ModernRonin.Terrarium.Logic
 {
@@ -32,6 +31,7 @@ namespace ModernRonin.Terrarium.Logic
         public static Vector2D operator +(Vector2D lhs, Vector2D rhs) => new Vector2D(lhs.X + rhs.X, lhs.Y + rhs.Y);
         public static Vector2D operator -(Vector2D lhs, Vector2D rhs) => new Vector2D(lhs.X - rhs.X, lhs.Y - rhs.Y);
         public static Vector2D operator *(Vector2D lhs, float scalar) => new Vector2D(scalar * lhs.X, scalar * lhs.Y);
+        public static Vector2D operator *(float scalar, Vector2D rhs) => new Vector2D(scalar * rhs.X, scalar * rhs.Y);
         public static Vector2D operator /(Vector2D lhs, float scalar) => new Vector2D(scalar / lhs.X, scalar / lhs.Y);
         public Vector2D ScaleBy(Vector2D scale) => new Vector2D(X * scale.X, Y * scale.Y);
         public Vector2D ScaleTo(Vector2D destination) => new Vector2D(destination.X / X, destination.Y / Y);

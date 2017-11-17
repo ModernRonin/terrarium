@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using ModernRonin.Terrarium.Logic;
-using SimulationView.Model;
 
 namespace SimulationView
 {
@@ -13,16 +12,13 @@ namespace SimulationView
             Render();
             CompositionTarget.Rendering += (_, __) => Render();
         }
-        public bool DoAutoScale { get; set; }
         public SimulationState SimulationState { get; set; } = new SimulationState();
         Size DesiredDisplaySize
         {
             get
             {
-                if (DoAutoScale) return RenderSize;
-                var result = (Vector) SimulationState.Size;
-                result *= 10;
-                return (Size) result;
+                var result = 10 * SimulationState.Size;
+                return result.ToSize();
             }
         }
         protected override void OnRender(DrawingContext drawingContext)

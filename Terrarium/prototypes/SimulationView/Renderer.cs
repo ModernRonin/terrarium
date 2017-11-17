@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Media;
 using ModernRonin.PraeterArtem.Functional;
 using ModernRonin.Terrarium.Logic;
-using SimulationView.Model;
 
 namespace SimulationView
 {
@@ -12,7 +11,7 @@ namespace SimulationView
     {
         readonly DrawingContext mContext;
         readonly Size mRenderSize;
-        readonly Vector mScalingFactor;
+        readonly Vector2D mScalingFactor;
         readonly SimulationState mSimulationState;
         public Renderer(DrawingGroup drawingGroup, Size renderSize, SimulationState simulationState)
         {
@@ -39,13 +38,13 @@ namespace SimulationView
 
             entity.Parts.Select(p => ToRectangle(p, entity.Position)).UseIn(drawRectangle);
         }
-        FilledRectangle ToRectangle(Part part, Vector origin)
+        FilledRectangle ToRectangle(Part part, Vector2D origin)
         {
             var position = (origin + part.RelativePosition).ScaleBy(mScalingFactor);
             return new FilledRectangle
             {
                 Brush = ToColor(part.Kind),
-                Rectangle = new Rect((Point) position, (Size) mScalingFactor)
+                Rectangle = new Rect(position.ToPoint(), mScalingFactor.ToSize())
             };
         }
         static Brush ToColor(PartKind kind)
