@@ -100,6 +100,7 @@
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vector2DExtensions.cs" />
     <Compile Include="VisualSimulation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
