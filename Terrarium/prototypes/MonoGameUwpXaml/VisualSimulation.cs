@@ -1,22 +1,24 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ModernRonin.Terrarium.Logic;
+using MoreLinq;
 
 namespace MonoGameUwpXaml
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
-    public class Game1 : Game
+    public class VisualSimulation : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-
-        public Game1()
+        readonly GraphicsDeviceManager mGraphics;
+        readonly Dictionary<PartKind, Texture2D> mPartKindTextures = new Dictionary<PartKind, Texture2D>();
+        SpriteBatch mSpriteBatch;
+        public VisualSimulation()
         {
-            graphics = new GraphicsDeviceManager(this);
+            mGraphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
-
+        public SimulationState SimulationState { get; set; }
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -29,19 +31,13 @@ namespace MonoGameUwpXaml
 
             base.Initialize();
         }
-
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            mSpriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            Enum.GetNames(typeof(PartKind)).ToDictionary(Enum.Parse<PartKind>, Content.Load<Texture2D>)
+                .ForEach(kvp => mPartKindTextures.Add(kvp.Key, kvp.Value));
         }
-
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// game-specific content.
@@ -50,7 +46,6 @@ namespace MonoGameUwpXaml
         {
             // TODO: Unload any non ContentManager content here
         }
-
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -62,7 +57,6 @@ namespace MonoGameUwpXaml
 
             base.Update(gameTime);
         }
-
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -70,8 +64,6 @@ namespace MonoGameUwpXaml
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
 
             base.Draw(gameTime);
         }

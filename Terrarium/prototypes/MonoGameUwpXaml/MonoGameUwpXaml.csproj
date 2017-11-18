@@ -100,7 +100,7 @@
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Game1.cs" />
+    <Compile Include="VisualSimulation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +138,9 @@
     </PackageReference>
     <PackageReference Include="MonoGame.Framework.WindowsUniversal">
       <Version>3.6.0.1625</Version>
+    </PackageReference>
+    <PackageReference Include="morelinq">
+      <Version>2.8.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
