@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using ModernRonin.Standard;
 using ModernRonin.Terrarium.Logic;
 using MoreLinq;
@@ -16,6 +19,9 @@ namespace MonoGameUwpXaml
         readonly Dictionary<PartKind, Texture2D> mPartKindTextures = new Dictionary<PartKind, Texture2D>();
         SpriteBatch mSpriteBatch;
         readonly Point mScalingVector = new Point(ScalingFactor, ScalingFactor);
+        readonly Camera mCamera = new Camera();
+        KeyboardState mLastKeyboardState;
+        MouseState mLastMouseState;
         public VisualSimulation()
         {
             mGraphics = new GraphicsDeviceManager(this);
@@ -30,9 +36,17 @@ namespace MonoGameUwpXaml
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
+            SetCameraViewport();
+            Window.ClientSizeChanged += (_, __) => SetCameraViewport();
+            IsMouseVisible = true;
+            mLastMouseState = Mouse.GetState();
+            mLastKeyboardState = Keyboard.GetState();
             base.Initialize();
+        }
+        void SetCameraViewport()
+        {
+            mCamera.ViewportWidth = GraphicsDevice.Viewport.Width;
+            mCamera.ViewportHeight = GraphicsDevice.Viewport.Height;
         }
         protected override void LoadContent()
         {
@@ -56,13 +70,27 @@ namespace MonoGameUwpXaml
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // TODO: Add your update logic here
+            var currentMouseState = Mouse.GetState();
+            var currentKeyboardState = Keyboard.GetState();
+            if (currentMouseState.LeftButton == ButtonState.Pressed)
+            {
+                var dx = currentMouseState.X - mLastMouseState.X;
+                var dy = currentMouseState.Y - mLastMouseState.Y;
+                var movement= new Vector2(dx, dy);
+                mCamera.MoveCamera(movement);
+            }
+            var zoom = 0.001f*(currentMouseState.ScrollWheelValue - mLastMouseState.ScrollWheelValue);
+            mCamera.AdjustZoom(zoom);
+            if (mLastKeyboardState.IsKeyDown(Keys.C) && currentKeyboardState.IsKeyUp(Keys.C))
+                mCamera.CenterOn(new Vector2(50, 50)*ScalingFactor);
 
+            mLastMouseState = currentMouseState;
+            mLastKeyboardState = currentKeyboardState;
             base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)
         {
-            mSpriteBatch.Begin();
+            mSpriteBatch.Begin(transformMatrix:mCamera.TranslationMatrix);
             GraphicsDevice.Clear(Color.Black);
             SimulationState.Entities.ForEach(Draw);
             mSpriteBatch.End();
