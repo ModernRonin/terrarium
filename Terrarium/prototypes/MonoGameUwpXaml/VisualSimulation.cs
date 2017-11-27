@@ -76,7 +76,7 @@ namespace MonoGameUwpXaml
             {
                 var dx = currentMouseState.X - mLastMouseState.X;
                 var dy = currentMouseState.Y - mLastMouseState.Y;
-                var movement= new Vector2(dx, dy);
+                var movement= new Vector2(-dx, -dy);
                 mCamera.MoveCamera(movement);
             }
             var zoom = 0.001f*(currentMouseState.ScrollWheelValue - mLastMouseState.ScrollWheelValue);
@@ -92,6 +92,7 @@ namespace MonoGameUwpXaml
         {
             mSpriteBatch.Begin(transformMatrix:mCamera.TranslationMatrix);
             GraphicsDevice.Clear(Color.Black);
+
             SimulationState.Entities.ForEach(Draw);
             mSpriteBatch.End();
         }
