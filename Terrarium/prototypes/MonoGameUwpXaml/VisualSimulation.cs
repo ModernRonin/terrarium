@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -15,13 +13,16 @@ namespace MonoGameUwpXaml
     public class VisualSimulation : Game
     {
         const int ScalingFactor = 100;
+        const float ZoomSpeed = 0.0001f;
+        const int PanSpeed = 5;
+        readonly Camera mCamera = new Camera();
         readonly GraphicsDeviceManager mGraphics;
         readonly Dictionary<PartKind, Texture2D> mPartKindTextures = new Dictionary<PartKind, Texture2D>();
-        SpriteBatch mSpriteBatch;
         readonly Point mScalingVector = new Point(ScalingFactor, ScalingFactor);
-        readonly Camera mCamera = new Camera();
+        Texture2D mGrayPixel;
         KeyboardState mLastKeyboardState;
         MouseState mLastMouseState;
+        SpriteBatch mSpriteBatch;
         public VisualSimulation()
         {
             mGraphics = new GraphicsDeviceManager(this);
@@ -54,6 +55,7 @@ namespace MonoGameUwpXaml
 
             Enum.GetNames(typeof(PartKind)).ToDictionary(Enum.Parse<PartKind>, Content.Load<Texture2D>)
                 .ForEach(kvp => mPartKindTextures.Add(kvp.Key, kvp.Value));
+            mGrayPixel = Content.Load<Texture2D>("GreyPoint");
         }
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -76,13 +78,13 @@ namespace MonoGameUwpXaml
             {
                 var dx = currentMouseState.X - mLastMouseState.X;
                 var dy = currentMouseState.Y - mLastMouseState.Y;
-                var movement= new Vector2(-dx, -dy);
+                var movement = new Vector2(-dx*PanSpeed, -dy*PanSpeed);
                 mCamera.MoveCamera(movement);
             }
-            var zoom = 0.001f*(currentMouseState.ScrollWheelValue - mLastMouseState.ScrollWheelValue);
+            var zoom = ZoomSpeed * (currentMouseState.ScrollWheelValue - mLastMouseState.ScrollWheelValue);
             mCamera.AdjustZoom(zoom);
             if (mLastKeyboardState.IsKeyDown(Keys.C) && currentKeyboardState.IsKeyUp(Keys.C))
-                mCamera.CenterOn(new Vector2(50, 50)*ScalingFactor);
+                mCamera.CenterOn(new Vector2(50, 50) * ScalingFactor);
 
             mLastMouseState = currentMouseState;
             mLastKeyboardState = currentKeyboardState;
@@ -90,9 +92,14 @@ namespace MonoGameUwpXaml
         }
         protected override void Draw(GameTime gameTime)
         {
-            mSpriteBatch.Begin(transformMatrix:mCamera.TranslationMatrix);
+            mSpriteBatch.Begin(transformMatrix: mCamera.TranslationMatrix);
             GraphicsDevice.Clear(Color.Black);
-
+            mSpriteBatch.Draw(mGrayPixel,
+                new Rectangle(0,
+                    0,
+                    (int) (ScalingFactor * SimulationState.Size.X),
+                    (int) (ScalingFactor * SimulationState.Size.Y)),
+                Color.DarkGray);
             SimulationState.Entities.ForEach(Draw);
             mSpriteBatch.End();
         }
@@ -104,7 +111,7 @@ namespace MonoGameUwpXaml
         Sprite ToSprite(Part part, Vector2D origin)
         {
             var absolutePosition = (origin + part.RelativePosition) * ScalingFactor;
-            return new Sprite()
+            return new Sprite
             {
                 Image = mPartKindTextures[part.Kind],
                 BoundingBox = new Rectangle(absolutePosition.ToPoint(), mScalingVector)
