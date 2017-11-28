@@ -11,7 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGameUwpXaml", "prototyp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModernRonin.Terrarium.Logic", "ModernRonin.Terrarium.Logic\ModernRonin.Terrarium.Logic.csproj", "{D50F8002-ABF8-4570-BB1C-D05B10C00846}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernRonin.Standard", "ModernRonin.Standard\ModernRonin.Standard.csproj", "{DC8CCA68-8837-4F10-8B61-523365CF9996}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModernRonin.Standard", "ModernRonin.Standard\ModernRonin.Standard.csproj", "{DC8CCA68-8837-4F10-8B61-523365CF9996}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logic", "Logic", "{4BD447A3-7CF0-4A71-A0A4-FE70A9638077}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,6 +104,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{2BFACF43-EE3B-4487-A9F9-7DA23E6609C3} = {A9156C50-C649-43FB-B594-660B0642FD80}
 		{F4CA77F2-4D2D-40FD-B696-347169BB74B6} = {A9156C50-C649-43FB-B594-660B0642FD80}
+		{D50F8002-ABF8-4570-BB1C-D05B10C00846} = {4BD447A3-7CF0-4A71-A0A4-FE70A9638077}
+		{DC8CCA68-8837-4F10-8B61-523365CF9996} = {4BD447A3-7CF0-4A71-A0A4-FE70A9638077}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B4972CAA-9C50-4468-80AC-6D3928758C15}
