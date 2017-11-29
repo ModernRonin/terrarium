@@ -8,7 +8,7 @@ using ModernRonin.Standard;
 using ModernRonin.Terrarium.Logic;
 using MoreLinq;
 
-namespace MonoGameUwpXaml
+namespace ModernRonin.Terrarium.Rendering.Windows
 {
     public class VisualSimulation : Game
     {

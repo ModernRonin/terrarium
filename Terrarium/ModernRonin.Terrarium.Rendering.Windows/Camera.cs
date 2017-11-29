@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace MonoGameUwpXaml
+namespace ModernRonin.Terrarium.Rendering.Windows
 {
     public class Camera
     {

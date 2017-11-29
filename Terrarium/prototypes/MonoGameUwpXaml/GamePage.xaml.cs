@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml;
 using ModernRonin.Terrarium.Logic;
+using ModernRonin.Terrarium.Rendering.Windows;
 using MonoGame.Framework;
 
 namespace MonoGameUwpXaml

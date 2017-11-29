@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using ModernRonin.Standard;
 
-namespace MonoGameUwpXaml
+namespace ModernRonin.Terrarium.Rendering.Windows
 {
     public static class Vector2DExtensions
     {

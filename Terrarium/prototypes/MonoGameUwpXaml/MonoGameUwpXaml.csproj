@@ -97,12 +97,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Camera.cs" />
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vector2DExtensions.cs" />
-    <Compile Include="VisualSimulation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +150,10 @@
     <ProjectReference Include="..\..\ModernRonin.Terrarium.Logic\ModernRonin.Terrarium.Logic.csproj">
       <Project>{d50f8002-abf8-4570-bb1c-d05b10c00846}</Project>
       <Name>ModernRonin.Terrarium.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ModernRonin.Terrarium.Rendering.Windows\ModernRonin.Terrarium.Rendering.Windows.csproj">
+      <Project>{4fb64cf4-a57f-4c66-94ed-16df8b20021d}</Project>
+      <Name>ModernRonin.Terrarium.Rendering.Windows</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
