@@ -1,5 +1,4 @@
-﻿using Windows.ApplicationModel.Core;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Caliburn.Micro;
 
 namespace ModernRonin.Terrarium.Client.Windows.ViewModels
