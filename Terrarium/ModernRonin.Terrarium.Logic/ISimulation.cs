@@ -4,7 +4,7 @@ namespace ModernRonin.Terrarium.Logic
 {
     public interface ISimulation
     {
-        SimulationState CurrentState { get; }
+        ISimulationState CurrentState { get; }
         int MaximumFramesPerSecond { get; set; }
         bool IsRunning { get; }
         void Tick();

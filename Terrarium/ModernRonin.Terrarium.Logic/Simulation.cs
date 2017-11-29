@@ -7,21 +7,39 @@ namespace ModernRonin.Terrarium.Logic
 {
     public class Simulation : ISimulation
     {
+        readonly ReaderWriterLockSlim mLock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
         readonly Stopwatch mWatch = new Stopwatch();
-        SimulationState mCurrentState;
-        bool mIsRunning;
+        ISimulationState mCurrentState;
         bool mIsStopRequested;
         Task mTask;
-        public Simulation(SimulationState initialState) => mCurrentState = initialState;
+        public Simulation(SimulationState initialState) => CurrentState = initialState;
+        // ReSharper disable once UnusedMember.Global - used by IOC
         public Simulation() : this(SimulationState.Default) { }
-        public SimulationState CurrentState => mCurrentState;
+        public ISimulationState CurrentState
+        {
+            get
+            {
+                mLock.EnterReadLock();
+                try
+                {
+                    mLock.EnterReadLock();
+                    return mCurrentState;
+                }
+                finally { mLock.ExitReadLock(); }
+            }
+            private set
+            {
+                mLock.EnterWriteLock();
+                try { mCurrentState = value; }
+                finally { mLock.ExitWriteLock(); }
+            }
+        }
         public int MaximumFramesPerSecond { get; set; } = 30;
-        public bool IsRunning => mIsRunning;
+        public bool IsRunning { get; set; }
         public void Tick()
         {
             mWatch.Restart();
-            var next = new SimulationTicker(CurrentState).Tick();
-            Interlocked.Exchange(ref mCurrentState, next);
+            CurrentState = new SimulationTicker(CurrentState).Tick();
             mWatch.Stop();
             var minimumTimePerFrame = TimeSpan.FromMilliseconds(1000d / MaximumFramesPerSecond);
             var timeLeftToWait = minimumTimePerFrame.Subtract(mWatch.Elapsed);
@@ -29,18 +47,18 @@ namespace ModernRonin.Terrarium.Logic
         }
         public void Start()
         {
-            if (mIsRunning) throw new InvalidOperationException("Already running");
+            if (IsRunning) throw new InvalidOperationException("Already running");
             mIsStopRequested = false;
-            mIsRunning = true;
+            IsRunning = true;
             mTask = Task.Run(() => Run());
         }
         public async Task Stop()
         {
-            if (!mIsRunning) throw new InvalidOperationException("Not running");
+            if (!IsRunning) throw new InvalidOperationException("Not running");
             mIsStopRequested = true;
             await mTask;
             mTask = null;
-            mIsRunning = false;
+            IsRunning = false;
         }
         void Run()
         {

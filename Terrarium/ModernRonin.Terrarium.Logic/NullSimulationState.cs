@@ -3,7 +3,7 @@ using ModernRonin.Standard;
 
 namespace ModernRonin.Terrarium.Logic
 {
-    public class NullSimulationState : ISimulationState
+    public struct NullSimulationState : ISimulationState
     {
         public Vector2D Size => new Vector2D(100, 100);
         public IEnumerable<Entity> Entities => new Entity[0];

@@ -5,24 +5,19 @@ namespace ModernRonin.Terrarium.Logic
 {
     public class SimulationTicker
     {
-        readonly SimulationState mCurrent;
+        readonly ISimulationState mCurrent;
         readonly Vector2D[] mDirections = {new Vector2D(1, 1).Normalized, new Vector2D(-3, -7).Normalized};
-        readonly SimulationState mNext = new SimulationState();
         int mDirectionIndex;
-        public SimulationTicker(SimulationState current)
+        public SimulationTicker(ISimulationState current) => mCurrent = current;
+        public ISimulationState Tick()
         {
-            mCurrent = current;
-            mNext.Size = mCurrent.Size;
-        }
-        public SimulationState Tick()
-        {
-            mNext.Entities = mCurrent.Entities.Select(Move).ToArray();
-            return mNext;
+            var entities = mCurrent.Entities.Select(Move).ToArray();
+            return mCurrent.WithEntities(entities);
         }
         Entity Move(Entity old)
         {
             mDirectionIndex = 0 == mDirectionIndex ? 1 : 0;
-            var newPosition = (old.Position + mDirections[mDirectionIndex]).ClampWithin(mNext.Size);
+            var newPosition = (old.Position + mDirections[mDirectionIndex]).ClampWithin(mCurrent.Size);
             return old.At(newPosition);
         }
     }
