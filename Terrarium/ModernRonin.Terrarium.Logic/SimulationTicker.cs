@@ -23,9 +23,7 @@ namespace ModernRonin.Terrarium.Logic
         {
             mDirectionIndex = 0 == mDirectionIndex ? 1 : 0;
             var newPosition = (old.Position + mDirections[mDirectionIndex]).ClampWithin(mNext.Size);
-
-            // TODO: make Simulation, Entity etc. all immutable so we can't forget to treat them as such
-            return new Entity {Parts = old.Parts, Position = newPosition};
+            return old.At(newPosition);
         }
     }
 }
