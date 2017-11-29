@@ -42,7 +42,7 @@ namespace ModernRonin.Terrarium.Client.Windows
         {
             var applicationSetup = new ApplicationSetup(mContainerBuilder);
             applicationSetup.Configure();
-            ConfigureCaliburnMicro(applicationSetup.Assemblies);
+            ConfigureCaliburnMicro(ApplicationSetup.Assemblies);
 
             mContainerBuilder.Register(x => mRootFrame).As<INavigationService>().SingleInstance();
             mContainer = mContainerBuilder.Build();

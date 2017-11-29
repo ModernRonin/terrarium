@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ModernRonin.Terrarium.Logic
 {
-    public class Simulation
+    public class Simulation : ISimulation
     {
         readonly Stopwatch mWatch = new Stopwatch();
         SimulationState mCurrentState;
@@ -13,9 +13,10 @@ namespace ModernRonin.Terrarium.Logic
         bool mIsStopRequested;
         Task mTask;
         public Simulation(SimulationState initialState) => mCurrentState = initialState;
+        public Simulation() : this(SimulationState.Default) { }
         public SimulationState CurrentState => mCurrentState;
         public int MaximumFramesPerSecond { get; set; } = 30;
-        void Tick()
+        public void Tick()
         {
             mWatch.Restart();
             var next = new SimulationTicker(CurrentState).Tick();
@@ -24,10 +25,6 @@ namespace ModernRonin.Terrarium.Logic
             var minimumTimePerFrame = TimeSpan.FromMilliseconds(1000d / MaximumFramesPerSecond);
             var timeLeftToWait = minimumTimePerFrame.Subtract(mWatch.Elapsed);
             if (timeLeftToWait.TotalMilliseconds > 0) Thread.Sleep(timeLeftToWait);
-        }
-        void Run()
-        {
-            while (!mIsStopRequested) Tick();
         }
         public void Start()
         {
@@ -43,6 +40,10 @@ namespace ModernRonin.Terrarium.Logic
             await mTask;
             mTask = null;
             mIsRunning = false;
+        }
+        void Run()
+        {
+            while (!mIsStopRequested) Tick();
         }
     }
 }

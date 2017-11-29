@@ -6,14 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:windows="using:ModernRonin.Terrarium.Rendering.Windows"
     mc:Ignorable="d">
 
-    <StackPanel >
-        <controls:Menu>
+    <Grid>
+        <!--<controls:Menu>
             <controls:MenuItem Header="File">
-                <MenuFlyoutItem Name="ExitApplication" Text="Exit"></MenuFlyoutItem>
+                <MenuFlyoutItem Name="ExitApplication" Text="Exit" />
             </controls:MenuItem>
-        </controls:Menu>
-            <TextBlock x:Name="Message"></TextBlock>
-    </StackPanel>
+        </controls:Menu>-->
+        <windows:SimulationView SimulationStateSource="{Binding UpdateSimulationState}" />
+    </Grid>
 </Page>

@@ -7,6 +7,7 @@ using Autofac.Builder;
 using Autofac.Features.Scanning;
 using Caliburn.Micro;
 using ModernRonin.Terrarium.Client.Windows.ViewModels;
+using ModernRonin.Terrarium.Logic;
 
 namespace ModernRonin.Terrarium.Client.Windows
 {
@@ -14,12 +15,13 @@ namespace ModernRonin.Terrarium.Client.Windows
     {
         readonly ContainerBuilder mBuilder;
         public ApplicationSetup(ContainerBuilder builder) => mBuilder = builder;
-        public Assembly[] Assemblies => GetAssemblies().Distinct().ToArray();
+        public static Assembly[] Assemblies => GetAssemblies().Distinct().ToArray();
         IRegistrationBuilder<object, ScanningActivatorData, DynamicRegistrationStyle> TypesFromAllAssemblies =>
             mBuilder.RegisterAssemblyTypes(Assemblies);
-        IEnumerable<Assembly> GetAssemblies()
+        static IEnumerable<Assembly> GetAssemblies()
         {
             yield return AssemblyOf<ShellViewModel>();
+            yield return AssemblyOf<LogicModule>();
         }
         public void Configure()
         {
@@ -28,8 +30,6 @@ namespace ModernRonin.Terrarium.Client.Windows
             TypesFromAllAssemblies.AssignableTo<ICommand>().SingleInstance();
             TypesFromAllAssemblies.EndingWith("View").AsSelf().SingleInstance();
             TypesFromAllAssemblies.EndingWith("ViewModel").AsSelf().SingleInstance();
-
-            mBuilder.RegisterType<ConcreteService>().As<ISampleService>().InstancePerDependency();
 
             mBuilder.RegisterAssemblyModules(Assemblies);
         }

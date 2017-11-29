@@ -1,13 +1,15 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.UI.Xaml;
 using Caliburn.Micro;
+using ModernRonin.Terrarium.Logic;
 
 namespace ModernRonin.Terrarium.Client.Windows.ViewModels
 {
     public class ShellViewModel : Screen
     {
-        readonly ISampleService mService;
-        public ShellViewModel(ISampleService service) => mService = service;
-        public string Message => mService.Message;
+        readonly ISimulation mSimulation;
+        public ShellViewModel(ISimulation simulation) => mSimulation = simulation;
+        public Func<ISimulationState> UpdateSimulationState => () => mSimulation.CurrentState;
         public void ExitApplication()
         {
             Application.Current.Exit();
