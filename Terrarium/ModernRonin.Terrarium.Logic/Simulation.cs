@@ -7,39 +7,22 @@ namespace ModernRonin.Terrarium.Logic
 {
     public class Simulation : ISimulation
     {
-        readonly ReaderWriterLockSlim mLock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
         readonly Stopwatch mWatch = new Stopwatch();
         ISimulationState mCurrentState;
         bool mIsStopRequested;
         Task mTask;
-        public Simulation(SimulationState initialState) => CurrentState = initialState;
+        public Simulation(SimulationState initialState) => mCurrentState = initialState;
         // ReSharper disable once UnusedMember.Global - used by IOC
         public Simulation() : this(SimulationState.Default) { }
-        public ISimulationState CurrentState
-        {
-            get
-            {
-                mLock.EnterReadLock();
-                try
-                {
-                    mLock.EnterReadLock();
-                    return mCurrentState;
-                }
-                finally { mLock.ExitReadLock(); }
-            }
-            private set
-            {
-                mLock.EnterWriteLock();
-                try { mCurrentState = value; }
-                finally { mLock.ExitWriteLock(); }
-            }
-        }
+        public ISimulationState CurrentState => mCurrentState;
         public int MaximumFramesPerSecond { get; set; } = 30;
         public bool IsRunning { get; set; }
         public void Tick()
         {
             mWatch.Restart();
-            CurrentState = new SimulationTicker(CurrentState).Tick();
+            var next = new SimulationTicker(CurrentState).Tick();
+            Interlocked.Exchange(ref mCurrentState, next);
+            mCurrentState = next;
             mWatch.Stop();
             var minimumTimePerFrame = TimeSpan.FromMilliseconds(1000d / MaximumFramesPerSecond);
             var timeLeftToWait = minimumTimePerFrame.Subtract(mWatch.Elapsed);
