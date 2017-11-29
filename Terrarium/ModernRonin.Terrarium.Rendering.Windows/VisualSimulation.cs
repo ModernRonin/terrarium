@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using ModernRonin.Standard;
 using ModernRonin.Terrarium.Logic;
 using MoreLinq;
@@ -12,16 +11,11 @@ namespace ModernRonin.Terrarium.Rendering.Windows
 {
     public class VisualSimulation : Game
     {
-        const int ScalingFactor = 100;
-        const float ZoomSpeed = 0.0001f;
-        const int PanSpeed = 5;
         readonly Camera mCamera = new Camera();
         readonly GraphicsDeviceManager mGraphics;
         readonly Dictionary<PartKind, Texture2D> mPartKindTextures = new Dictionary<PartKind, Texture2D>();
-        readonly Point mScalingVector = new Point(ScalingFactor, ScalingFactor);
+        CameraController mCameraController;
         Texture2D mGrayPixel;
-        KeyboardState mLastKeyboardState;
-        MouseState mLastMouseState;
         SpriteBatch mSpriteBatch;
         public VisualSimulation()
         {
@@ -30,19 +24,12 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         }
         public Func<ISimulationState> OnUpdate { get; set; } = () => new SimulationState();
         ISimulationState SimulationState { get; set; }
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
             SetCameraViewport();
             Window.ClientSizeChanged += (_, __) => SetCameraViewport();
             IsMouseVisible = true;
-            mLastMouseState = Mouse.GetState();
-            mLastKeyboardState = Keyboard.GetState();
+            mCameraController = new CameraController(mCamera);
             base.Initialize();
         }
         void SetCameraViewport()
@@ -58,39 +45,14 @@ namespace ModernRonin.Terrarium.Rendering.Windows
                 .ForEach(kvp => mPartKindTextures.Add(kvp.Key, kvp.Value));
             mGrayPixel = Content.Load<Texture2D>("GreyPoint");
         }
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
         }
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
             SimulationState = OnUpdate();
-
-            var currentMouseState = Mouse.GetState();
-            var currentKeyboardState = Keyboard.GetState();
-            if (currentMouseState.LeftButton == ButtonState.Pressed)
-            {
-                var dx = currentMouseState.X - mLastMouseState.X;
-                var dy = currentMouseState.Y - mLastMouseState.Y;
-                var movement = new Vector2(-dx*PanSpeed, -dy*PanSpeed);
-                mCamera.MoveCamera(movement);
-            }
-            var zoom = ZoomSpeed * (currentMouseState.ScrollWheelValue - mLastMouseState.ScrollWheelValue);
-            mCamera.AdjustZoom(zoom);
-            if (mLastKeyboardState.IsKeyDown(Keys.C) && currentKeyboardState.IsKeyUp(Keys.C))
-                mCamera.CenterOn(new Vector2(50, 50) * ScalingFactor);
-
-            mLastMouseState = currentMouseState;
-            mLastKeyboardState = currentKeyboardState;
+            mCameraController.Update();
             base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)
@@ -98,10 +60,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
             mSpriteBatch.Begin(transformMatrix: mCamera.TranslationMatrix);
             GraphicsDevice.Clear(Color.Black);
             mSpriteBatch.Draw(mGrayPixel,
-                new Rectangle(0,
-                    0,
-                    (int) (ScalingFactor * SimulationState.Size.X),
-                    (int) (ScalingFactor * SimulationState.Size.Y)),
+                new Rectangle(0, 0, (int) SimulationState.Size.X, (int) SimulationState.Size.Y),
                 Color.DarkGray);
             SimulationState.Entities.ForEach(Draw);
             mSpriteBatch.End();
@@ -113,11 +72,11 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         }
         Sprite ToSprite(Part part, Vector2D origin)
         {
-            var absolutePosition = (origin + part.RelativePosition) * ScalingFactor;
+            var absolutePosition = origin + part.RelativePosition;
             return new Sprite
             {
                 Image = mPartKindTextures[part.Kind],
-                BoundingBox = new Rectangle(absolutePosition.ToPoint(), mScalingVector)
+                BoundingBox = new Rectangle(absolutePosition.ToPoint(), new Point(1, 1))
             };
         }
 

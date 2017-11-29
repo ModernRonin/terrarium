@@ -5,7 +5,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
     public class Camera
     {
         Vector2 mPosition;
-        float mZoom = 0.05f;
+        float mZoom = 0f;
         public int ViewportWidth { get; set; }
         public int ViewportHeight { get; set; }
         Vector2 ViewportCenter => new Vector2(ViewportWidth * 0.5f, ViewportHeight * 0.5f);
