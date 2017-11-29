@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Windows.ApplicationModel.Activation;
+using Windows.Foundation.Metadata;
+using Windows.System.Profile;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Autofac;
 using Caliburn.Micro;
@@ -14,6 +17,10 @@ namespace ModernRonin.Terrarium.Client.Windows
         readonly ContainerBuilder mContainerBuilder = new ContainerBuilder();
         IContainer mContainer;
         FrameAdapter mRootFrame;
+        public App()
+        {
+            SetPointerMode();
+        }
         void ConfigureCaliburnMicro(IEnumerable<Assembly> assemblies)
         {
             LogManager.GetLog = _ => CreateCaliburnLogger();
@@ -29,7 +36,6 @@ namespace ModernRonin.Terrarium.Client.Windows
             AssemblySource.Instance.AddRange(assemblies);
 
             mContainerBuilder.Register(x => mRootFrame).As<INavigationService>().SingleInstance();
-            
         }
         ILog CreateCaliburnLogger() => new NullLogger();
         protected override void Configure()
@@ -65,6 +71,15 @@ namespace ModernRonin.Terrarium.Client.Windows
         protected override void BuildUp(object instance)
         {
             mContainer.InjectProperties(instance);
+        }
+        void SetPointerMode()
+        {
+            const string propertyName = "Windows.UI.Xaml.Application";
+            const string propertyValue = "RequiresPointerMode";
+            const string deviceFamilyXBox = "Windows.Xbox";
+            if (!ApiInformation.IsPropertyPresent(propertyName, propertyValue)) return;
+            var isXBox = AnalyticsInfo.VersionInfo.DeviceFamily == deviceFamilyXBox;
+            if (isXBox) Current.RequiresPointerMode = ApplicationRequiresPointerMode.WhenRequested;
         }
     }
 }
