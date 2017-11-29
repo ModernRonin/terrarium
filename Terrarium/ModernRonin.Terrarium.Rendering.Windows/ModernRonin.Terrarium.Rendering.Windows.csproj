@@ -108,6 +108,9 @@
   <ItemGroup>
     <Compile Include="Camera.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimulationView.xaml.cs">
+      <DependentUpon>SimulationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vector2DExtensions.cs" />
     <Compile Include="VisualSimulation.cs" />
     <EmbeddedResource Include="Properties\ModernRonon.Terrarium.Rendering.Windows.rd.xml" />
@@ -129,6 +132,12 @@
       <Project>{d50f8002-abf8-4570-bb1c-d05b10c00846}</Project>
       <Name>ModernRonin.Terrarium.Logic</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="SimulationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -28,8 +28,8 @@ namespace ModernRonin.Terrarium.Rendering.Windows
             mGraphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
-        public Func<SimulationState> OnUpdate { get; set; } = () => new SimulationState();
-        SimulationState SimulationState { get; set; }
+        public Func<ISimulationState> OnUpdate { get; set; } = () => new SimulationState();
+        ISimulationState SimulationState { get; set; }
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
