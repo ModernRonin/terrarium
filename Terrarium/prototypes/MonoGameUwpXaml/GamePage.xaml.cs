@@ -1,21 +1,15 @@
-﻿using System;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using ModernRonin.Terrarium.Logic;
-using ModernRonin.Terrarium.Rendering.Windows;
-using MonoGame.Framework;
 
 namespace MonoGameUwpXaml
 {
     public sealed partial class GamePage
     {
-        readonly VisualSimulation mVisualization;
         readonly Simulation mSimulation = new Simulation(SimulationState.Default);
         public GamePage()
         {
             InitializeComponent();
-            var launchArguments = string.Empty;
-            mVisualization = XamlGame<VisualSimulation>.Create(launchArguments, Window.Current.CoreWindow, SwapChainPanel);
-            mVisualization.OnUpdate = () => mSimulation.CurrentState;
+            SimulationView.SimulationStateSource = () => mSimulation.CurrentState;
 
             StartButton.IsEnabled = true;
             StopButton.IsEnabled = false;

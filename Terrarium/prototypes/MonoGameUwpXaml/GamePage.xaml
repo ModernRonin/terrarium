@@ -5,13 +5,14 @@
     xmlns:local="using:MonoGameUwpXaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:windows="using:ModernRonin.Terrarium.Rendering.Windows"
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <SwapChainPanel x:Name="SwapChainPanel" Grid.Row="0" />
+        <windows:SimulationView x:Name="SimulationView" Grid.Row="0" />
         <StackPanel Orientation="Horizontal" Grid.Row="1">
             <Button x:Name="StartButton" Click="OnStart">Start</Button>
             <Button x:Name="StopButton" Click="OnStop" IsEnabled="false">Stop</Button>
