@@ -28,7 +28,8 @@ namespace ModernRonin.Terrarium.Rendering.Windows
             mGraphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
-        public SimulationState SimulationState { get; set; }
+        public Func<SimulationState> OnUpdate { get; set; } = () => new SimulationState();
+        SimulationState SimulationState { get; set; }
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -72,6 +73,8 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            SimulationState = OnUpdate();
+
             var currentMouseState = Mouse.GetState();
             var currentKeyboardState = Keyboard.GetState();
             if (currentMouseState.LeftButton == ButtonState.Pressed)
