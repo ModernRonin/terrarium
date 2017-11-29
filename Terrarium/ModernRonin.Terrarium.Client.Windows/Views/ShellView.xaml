@@ -10,11 +10,15 @@
     mc:Ignorable="d">
 
     <Grid>
-        <!--<controls:Menu>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <controls:Menu Grid.Row="0">
             <controls:MenuItem Header="File">
                 <MenuFlyoutItem Name="ExitApplication" Text="Exit" />
             </controls:MenuItem>
-        </controls:Menu>-->
-        <windows:SimulationView SimulationStateSource="{Binding UpdateSimulationState}" />
+        </controls:Menu>
+        <windows:SimulationView SimulationStateSource="{Binding UpdateSimulationState}" Grid.Row="1"/>
     </Grid>
 </Page>
