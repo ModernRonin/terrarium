@@ -29,6 +29,7 @@ namespace ModernRonin.Terrarium.Client.Windows
             AssemblySource.Instance.AddRange(assemblies);
 
             mContainerBuilder.Register(x => mRootFrame).As<INavigationService>().SingleInstance();
+            
         }
         ILog CreateCaliburnLogger() => new NullLogger();
         protected override void Configure()
