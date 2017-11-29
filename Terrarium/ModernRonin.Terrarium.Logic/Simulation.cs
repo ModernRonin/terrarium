@@ -16,6 +16,7 @@ namespace ModernRonin.Terrarium.Logic
         public Simulation() : this(SimulationState.Default) { }
         public SimulationState CurrentState => mCurrentState;
         public int MaximumFramesPerSecond { get; set; } = 30;
+        public bool IsRunning => mIsRunning;
         public void Tick()
         {
             mWatch.Restart();

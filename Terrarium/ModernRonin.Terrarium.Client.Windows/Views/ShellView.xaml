@@ -5,8 +5,8 @@
     xmlns:local="using:ModernRonin.Terrarium.Client.Windows.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:windows="using:ModernRonin.Terrarium.Rendering.Windows"
+    xmlns:c="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:rendering="using:ModernRonin.Terrarium.Rendering.Windows"
     mc:Ignorable="d">
 
     <Grid>
@@ -14,11 +14,14 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <controls:Menu Grid.Row="0">
-            <controls:MenuItem Header="File">
+        <c:Menu Grid.Row="0">
+            <c:MenuItem Header="File">
                 <MenuFlyoutItem Name="ExitApplication" Text="Exit" />
-            </controls:MenuItem>
-        </controls:Menu>
-        <windows:SimulationView SimulationStateSource="{Binding UpdateSimulationState}" Grid.Row="1"/>
+            </c:MenuItem>
+            <c:MenuItem Header="Simulation">
+                <MenuFlyoutItem Name="ToggleRun" Text="{Binding ToggleRunText}"></MenuFlyoutItem>
+            </c:MenuItem>
+        </c:Menu>
+        <rendering:SimulationView SimulationStateSource="{Binding UpdateSimulationState}" Grid.Row="1"/>
     </Grid>
 </Page>

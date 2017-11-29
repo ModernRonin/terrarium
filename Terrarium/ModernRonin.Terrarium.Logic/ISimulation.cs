@@ -6,6 +6,7 @@ namespace ModernRonin.Terrarium.Logic
     {
         SimulationState CurrentState { get; }
         int MaximumFramesPerSecond { get; set; }
+        bool IsRunning { get; }
         void Tick();
         void Start();
         Task Stop();
