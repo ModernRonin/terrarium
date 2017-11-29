@@ -5,7 +5,6 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml.Controls;
 using Autofac;
 using Caliburn.Micro;
-using ModernRonin.Terrarium.Client.Windows.ViewModels;
 using ModernRonin.Terrarium.Client.Windows.Views;
 
 namespace ModernRonin.Terrarium.Client.Windows
@@ -31,7 +30,7 @@ namespace ModernRonin.Terrarium.Client.Windows
 
             mContainerBuilder.Register(x => mRootFrame).As<INavigationService>().SingleInstance();
         }
-        ILog CreateCaliburnLogger() => new DebugLogger();
+        ILog CreateCaliburnLogger() => new NullLogger();
         protected override void Configure()
         {
             var applicationSetup = new ApplicationSetup(mContainerBuilder);

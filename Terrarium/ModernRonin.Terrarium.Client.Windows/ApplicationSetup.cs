@@ -28,6 +28,9 @@ namespace ModernRonin.Terrarium.Client.Windows
             TypesFromAllAssemblies.AssignableTo<ICommand>().SingleInstance();
             TypesFromAllAssemblies.EndingWith("View").AsSelf().SingleInstance();
             TypesFromAllAssemblies.EndingWith("ViewModel").AsSelf().SingleInstance();
+
+            mBuilder.RegisterType<ConcreteService>().As<ISampleService>().InstancePerDependency();
+
             mBuilder.RegisterAssemblyModules(Assemblies);
         }
         static Assembly AssemblyOf<T>() => typeof(T).GetTypeInfo().Assembly;
