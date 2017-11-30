@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prototypes", "prototypes", "{A9156C50-C649-43FB-B594-660B0642FD80}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModernRonin.Terrarium.Logic", "ModernRonin.Terrarium.Logic\ModernRonin.Terrarium.Logic.csproj", "{D50F8002-ABF8-4570-BB1C-D05B10C00846}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModernRonin.Standard", "ModernRonin.Standard\ModernRonin.Standard.csproj", "{DC8CCA68-8837-4F10-8B61-523365CF9996}"
@@ -14,6 +12,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernRonin.Terrarium.Client.Windows", "ModernRonin.Terrarium.Client.Windows\ModernRonin.Terrarium.Client.Windows.csproj", "{E50D6E84-1260-4B0F-A426-B84B958568B9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernRonin.Terrarium.Rendering.Windows", "ModernRonin.Terrarium.Rendering.Windows\ModernRonin.Terrarium.Rendering.Windows.csproj", "{4FB64CF4-A57F-4C66-94ED-16DF8B20021D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A52B7DD2-AAB7-4183-98E8-C0FD14A27E5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernRonin.Terrarium.Logic.Tests", "ModernRonin.Terrarium.Logic.Tests\ModernRonin.Terrarium.Logic.Tests.csproj", "{FFD411EC-7729-4503-9272-60C81ADE129F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernRonin.Standard.Tests", "ModernRonin.Standard.Tests\ModernRonin.Standard.Tests.csproj", "{78021249-6345-4704-BA5F-7D4C72A15F45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +99,38 @@ Global
 		{4FB64CF4-A57F-4C66-94ED-16DF8B20021D}.Release|x64.Build.0 = Release|x64
 		{4FB64CF4-A57F-4C66-94ED-16DF8B20021D}.Release|x86.ActiveCfg = Release|x86
 		{4FB64CF4-A57F-4C66-94ED-16DF8B20021D}.Release|x86.Build.0 = Release|x86
+		{FFD411EC-7729-4503-9272-60C81ADE129F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFD411EC-7729-4503-9272-60C81ADE129F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFD411EC-7729-4503-9272-60C81ADE129F}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{FFD411EC-7729-4503-9272-60C81ADE129F}.Debug|ARM.Build.0 = Debug|Any CPU
+		{FFD411EC-7729-4503-9272-60C81ADE129F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FFD411EC-7729-4503-9272-60C81ADE129F}.Debug|x64.Build.0 = Debug|Any CPU
+		{FFD411EC-7729-4503-9272-60C81ADE129F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FFD411EC-7729-4503-9272-60C81ADE129F}.Debug|x86.Build.0 = Debug|Any CPU
+		{FFD411EC-7729-4503-9272-60C81ADE129F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFD411EC-7729-4503-9272-60C81ADE129F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFD411EC-7729-4503-9272-60C81ADE129F}.Release|ARM.ActiveCfg = Release|Any CPU
+		{FFD411EC-7729-4503-9272-60C81ADE129F}.Release|ARM.Build.0 = Release|Any CPU
+		{FFD411EC-7729-4503-9272-60C81ADE129F}.Release|x64.ActiveCfg = Release|Any CPU
+		{FFD411EC-7729-4503-9272-60C81ADE129F}.Release|x64.Build.0 = Release|Any CPU
+		{FFD411EC-7729-4503-9272-60C81ADE129F}.Release|x86.ActiveCfg = Release|Any CPU
+		{FFD411EC-7729-4503-9272-60C81ADE129F}.Release|x86.Build.0 = Release|Any CPU
+		{78021249-6345-4704-BA5F-7D4C72A15F45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78021249-6345-4704-BA5F-7D4C72A15F45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78021249-6345-4704-BA5F-7D4C72A15F45}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{78021249-6345-4704-BA5F-7D4C72A15F45}.Debug|ARM.Build.0 = Debug|Any CPU
+		{78021249-6345-4704-BA5F-7D4C72A15F45}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{78021249-6345-4704-BA5F-7D4C72A15F45}.Debug|x64.Build.0 = Debug|Any CPU
+		{78021249-6345-4704-BA5F-7D4C72A15F45}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{78021249-6345-4704-BA5F-7D4C72A15F45}.Debug|x86.Build.0 = Debug|Any CPU
+		{78021249-6345-4704-BA5F-7D4C72A15F45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78021249-6345-4704-BA5F-7D4C72A15F45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78021249-6345-4704-BA5F-7D4C72A15F45}.Release|ARM.ActiveCfg = Release|Any CPU
+		{78021249-6345-4704-BA5F-7D4C72A15F45}.Release|ARM.Build.0 = Release|Any CPU
+		{78021249-6345-4704-BA5F-7D4C72A15F45}.Release|x64.ActiveCfg = Release|Any CPU
+		{78021249-6345-4704-BA5F-7D4C72A15F45}.Release|x64.Build.0 = Release|Any CPU
+		{78021249-6345-4704-BA5F-7D4C72A15F45}.Release|x86.ActiveCfg = Release|Any CPU
+		{78021249-6345-4704-BA5F-7D4C72A15F45}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +138,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{D50F8002-ABF8-4570-BB1C-D05B10C00846} = {4BD447A3-7CF0-4A71-A0A4-FE70A9638077}
 		{DC8CCA68-8837-4F10-8B61-523365CF9996} = {4BD447A3-7CF0-4A71-A0A4-FE70A9638077}
+		{FFD411EC-7729-4503-9272-60C81ADE129F} = {A52B7DD2-AAB7-4183-98E8-C0FD14A27E5B}
+		{78021249-6345-4704-BA5F-7D4C72A15F45} = {A52B7DD2-AAB7-4183-98E8-C0FD14A27E5B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B4972CAA-9C50-4468-80AC-6D3928758C15}
