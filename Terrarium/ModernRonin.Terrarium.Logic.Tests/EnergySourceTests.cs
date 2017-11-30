@@ -9,11 +9,28 @@ namespace ModernRonin.Terrarium.Logic.Tests
     public class EnergySourceTests
     {
         [Test]
+        public void At_Returns_New_Instance_With_Equal_Intensity()
+        {
+            var underTest = new EnergySource(new Vector2D(), 13f);
+            underTest.At(new Vector2D(1f, 1f)).Intensity.Should().Be(13f);
+        }
+        [Test]
         public void At_Returns_New_Instance_With_Passed_Position()
         {
-            var result = new EnergySource(new Vector2D(), 13f).At(new Vector2D(1f, 1f));
-
-            result.Position.Should().Approximate(new Vector2D(1f, 1f));
+            var underTest = new EnergySource(new Vector2D(), 13f);
+            underTest.At(new Vector2D(1f, 1f)).Position.Should().Approximate(1f, 1f);
+        }
+        [Test]
+        public void WithIntensity_Returns_New_Instance_With_Passed_Intensity()
+        {
+            var underTest = new EnergySource(new Vector2D(), 13f);
+            underTest.WithIntensity(17f).Intensity.Should().Be(17f);
+        }
+        [Test]
+        public void WithIntensity_Returns_New_Instance_With_Equal_Position()
+        {
+            var underTest = new EnergySource(new Vector2D(1f, 2f), 13f);
+            underTest.WithIntensity(17f).Position.Should().Approximate(1f, 2f);
         }
         [Test]
         public void Construction()
