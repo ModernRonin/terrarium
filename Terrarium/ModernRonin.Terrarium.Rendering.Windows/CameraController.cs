@@ -1,14 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace ModernRonin.Terrarium.Rendering.Windows {
+namespace ModernRonin.Terrarium.Rendering.Windows
+{
     public class CameraController
     {
         const float ZoomSpeed = 0.001f;
-        const int PanSpeed = 1;
         readonly Camera mCamera;
-        KeyboardState mLastKeyboardState= Keyboard.GetState();
-        MouseState mLastMouseState = Mouse.GetState();
+        readonly KeyboardDelta mKeyboard = new KeyboardDelta();
+        readonly MouseDelta mMouse = new MouseDelta();
+        readonly float mPanSpeed = 1f;
         public CameraController(Camera camera)
         {
             mCamera = camera;
@@ -16,23 +17,18 @@ namespace ModernRonin.Terrarium.Rendering.Windows {
         }
         public void Update()
         {
-            var currentMouseState = Mouse.GetState();
-            var currentKeyboardState = Keyboard.GetState();
-            if (currentMouseState.LeftButton == ButtonState.Pressed)
+            mMouse.Update();
+            if (mMouse.IsLeftDown)
             {
-                var dx = currentMouseState.X - mLastMouseState.X;
-                var dy = currentMouseState.Y - mLastMouseState.Y;
-                var movement = new Vector2(-dx * PanSpeed, -dy * PanSpeed);
+                var movement = -mPanSpeed * mMouse.PointerDelta;
                 mCamera.MoveCamera(movement);
             }
-            var zoom = ZoomSpeed * (currentMouseState.ScrollWheelValue - mLastMouseState.ScrollWheelValue);
+            var zoom = ZoomSpeed * mMouse.WheelDelta;
             mCamera.AdjustZoom(zoom);
-            if (mLastKeyboardState.IsKeyDown(Keys.C) && currentKeyboardState.IsKeyUp(Keys.C))
-                mCamera.CenterOn(new Vector2(50, 50));
 
-            mLastMouseState = currentMouseState;
-            mLastKeyboardState = currentKeyboardState;
+            mKeyboard.Update();
 
+            if (mKeyboard.WasPressed(Keys.C)) mCamera.CenterOn(new Vector2(50, 50));
         }
     }
 }
