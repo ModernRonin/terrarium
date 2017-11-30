@@ -26,16 +26,14 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         ISimulationState SimulationState { get; set; }
         protected override void Initialize()
         {
-            SetCameraViewport();
-            Window.ClientSizeChanged += (_, __) => SetCameraViewport();
+            Window.ClientSizeChanged += (_, __) =>
+            {
+                mCamera.ViewportWidth = GraphicsDevice.Viewport.Width;
+                mCamera.ViewportHeight = GraphicsDevice.Viewport.Height;
+            };
             IsMouseVisible = true;
             mCameraController = new CameraController(mCamera);
             base.Initialize();
-        }
-        void SetCameraViewport()
-        {
-            mCamera.ViewportWidth = GraphicsDevice.Viewport.Width;
-            mCamera.ViewportHeight = GraphicsDevice.Viewport.Height;
         }
         protected override void LoadContent()
         {
