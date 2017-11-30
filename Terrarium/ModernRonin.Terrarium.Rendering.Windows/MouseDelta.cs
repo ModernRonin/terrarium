@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace ModernRonin.Terrarium.Rendering.Windows
@@ -8,6 +9,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         MouseState mLast = Mouse.GetState();
         public Vector2 PointerDelta { get; private set; }
         public float WheelDelta { get; private set; }
+        public bool HasWheelMoved => Math.Abs(WheelDelta) > 0.0001f;
         public bool IsLeftDown { get; private set; }
         public bool IsRightDown { get; private set; }
         public bool IsMiddleDown { get; private set; }

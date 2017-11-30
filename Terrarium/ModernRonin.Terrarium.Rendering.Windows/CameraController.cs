@@ -18,13 +18,8 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         public void Update()
         {
             mMouse.Update();
-            if (mMouse.IsLeftDown)
-            {
-                var movement = -mPanSpeed * mMouse.PointerDelta;
-                mCamera.MoveCamera(movement);
-            }
-            var zoom = ZoomSpeed * mMouse.WheelDelta;
-            mCamera.AdjustZoom(zoom);
+            if (mMouse.IsLeftDown) mCamera.MoveCamera(-mPanSpeed * mMouse.PointerDelta);
+            if (mMouse.HasWheelMoved) mCamera.AdjustZoom(ZoomSpeed * mMouse.WheelDelta);
 
             mKeyboard.Update();
 
