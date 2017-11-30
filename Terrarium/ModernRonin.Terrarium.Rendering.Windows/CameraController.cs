@@ -9,7 +9,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         readonly Camera mCamera;
         readonly KeyboardDelta mKeyboard = new KeyboardDelta();
         readonly MouseDelta mMouse = new MouseDelta();
-        readonly float mPanSpeed = 1f;
+        float mPanSpeed = 1f;
         public CameraController(Camera camera)
         {
             mCamera = camera;
@@ -20,11 +20,17 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         {
             mMouse.Update();
             if (mMouse.IsLeftDown) mCamera.MoveCamera(-mPanSpeed * mMouse.PointerDelta);
-            if (mMouse.HasWheelMoved) mCamera.AdjustZoom(ZoomSpeed * mMouse.WheelDelta);
+            if (mMouse.HasWheelMoved)
+            {
+                mCamera.AdjustZoom(ZoomSpeed * mMouse.WheelDelta);
+                mPanSpeed = 0.7f / mCamera.Zoom;
+            }
 
             mKeyboard.Update();
 
             if (mKeyboard.WasPressed(Keys.C)) Center();
+            if (mKeyboard.WasPressed(Keys.OemPlus)) mPanSpeed += 0.1f;
+            if (mKeyboard.WasPressed(Keys.OemMinus)) mPanSpeed -= 0.1f;
         }
         void Center()
         {
