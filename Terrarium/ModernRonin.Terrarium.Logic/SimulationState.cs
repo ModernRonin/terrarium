@@ -1,19 +1,36 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ModernRonin.Standard;
 
 namespace ModernRonin.Terrarium.Logic
 {
     public struct SimulationState : ISimulationState
     {
-        public SimulationState(IEnumerable<Entity> entities, Vector2D size = new Vector2D())
+        public SimulationState(
+            IEnumerable<Entity> entities,
+            IEnumerable<EnergySource>energySources,
+            Vector2D size = new Vector2D())
         {
             Size = size;
             Entities = entities;
+            EnergySources = energySources;
+            EnergyDensity = EnergySources.Aggregate(Size.ToEnergyDensity(), (g, s) => s.ApplyTo(g));
         }
-        public static SimulationState Default => new SimulationState(
-            new List<Entity> {Entity.Cross.At(new Vector2D(10, 10)), Entity.Snake.At(new Vector2D(90, 90))},
-            new Vector2D(100, 100));
+        public static SimulationState Default
+        {
+            get
+            {
+                var size = new Vector2D(100, 100);
+
+                return new SimulationState(
+                    new List<Entity> {Entity.Cross.At(new Vector2D(10, 10)), Entity.Snake.At(new Vector2D(90, 90))},
+                    new List<EnergySource> {new EnergySource(new Vector2D( 50f, 50f), 100f)},
+                    size);
+            }
+        }
         public Vector2D Size { get; }
         public IEnumerable<Entity> Entities { get; }
+        public float[,] EnergyDensity { get; }
+        public IEnumerable<EnergySource> EnergySources { get; }
     }
 }

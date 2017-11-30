@@ -7,5 +7,6 @@ namespace ModernRonin.Terrarium.Logic
     {
         Vector2D Size { get; }
         IEnumerable<Entity> Entities { get; }
+        float[,] EnergyDensity { get; }
     }
 }

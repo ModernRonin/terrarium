@@ -28,5 +28,6 @@ namespace ModernRonin.Terrarium.Logic
             new Part(PartKind.Store, new Vector2D(0, -1)),
             new Part(PartKind.Store, new Vector2D(0, 1))
         });
+        public Entity At(Vector2D position) => new Entity(Parts, position);
     }
 }
