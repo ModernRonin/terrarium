@@ -9,7 +9,7 @@ namespace ModernRonin.Terrarium.Logic.Tests
     public class EnergySourceTests
     {
         [Test]
-        public void ApplyTo_Adds_Radially_Diminishing_Values()
+        public void ApplyTo_Adds_Full_Intensity_At_Position()
         {
             var underTest = new EnergySource(new Vector2D(50f, 50f), 100f);
             var grid = new float[100, 100];

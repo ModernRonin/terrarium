@@ -1,4 +1,5 @@
-﻿using ModernRonin.Standard;
+﻿using System;
+using ModernRonin.Standard;
 
 namespace ModernRonin.Terrarium.Logic
 {
@@ -15,8 +16,9 @@ namespace ModernRonin.Terrarium.Logic
         public EnergySource WithIntensity(float newIntensity) => new EnergySource(Position, newIntensity);
         public float[,] ApplyTo(float[,] grid)
         {
-            grid[(int) Position.X, (int) Position.Y] = Intensity;
-            return grid;
+            var result = (float[,])grid.Clone();
+            result[(int) Position.X, (int) Position.Y] = Intensity;
+            return result;
         }
     }
 }
