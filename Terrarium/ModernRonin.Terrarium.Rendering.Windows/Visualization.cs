@@ -5,14 +5,14 @@ using ModernRonin.Terrarium.Logic;
 
 namespace ModernRonin.Terrarium.Rendering.Windows
 {
-    public class VisualSimulation : Game
+    public class Visualization : Game
     {
         readonly Camera mCamera = new Camera();
         readonly GraphicsDeviceManager mGraphics;
         readonly TextureDirectory mTextureDirectory = new TextureDirectory();
         CameraController mCameraController;
         SpriteBatch mSpriteBatch;
-        public VisualSimulation()
+        public Visualization()
         {
             mGraphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";

@@ -13,11 +13,11 @@ namespace ModernRonin.Terrarium.Rendering.Windows
                 typeof(Func<ISimulationState>),
                 typeof(SimulationView),
                 new PropertyMetadata((Func<ISimulationState>) (() => new NullSimulationState())));
-        readonly VisualSimulation mVisualization;
+        readonly Visualization mVisualization;
         public SimulationView()
         {
             InitializeComponent();
-            mVisualization = XamlGame<VisualSimulation>.Create(string.Empty, Window.Current.CoreWindow, SwapChainPanel);
+            mVisualization = XamlGame<Visualization>.Create(string.Empty, Window.Current.CoreWindow, SwapChainPanel);
             mVisualization.OnUpdate = () => SimulationStateSource();
         }
         public Func<ISimulationState> SimulationStateSource

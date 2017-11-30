@@ -117,7 +117,7 @@
     </Compile>
     <Compile Include="TextureDirectory.cs" />
     <Compile Include="Vector2DExtensions.cs" />
-    <Compile Include="VisualSimulation.cs" />
+    <Compile Include="Visualization.cs" />
     <EmbeddedResource Include="Properties\ModernRonon.Terrarium.Rendering.Windows.rd.xml" />
   </ItemGroup>
   <ItemGroup>
