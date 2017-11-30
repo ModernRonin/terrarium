@@ -14,6 +14,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         {
             mCamera = camera;
             mCamera.AdjustZoom(5);
+            Center();
         }
         public void Update()
         {
@@ -23,7 +24,11 @@ namespace ModernRonin.Terrarium.Rendering.Windows
 
             mKeyboard.Update();
 
-            if (mKeyboard.WasPressed(Keys.C)) mCamera.CenterOn(new Vector2(50, 50));
+            if (mKeyboard.WasPressed(Keys.C)) Center();
+        }
+        void Center()
+        {
+            mCamera.CenterOn(new Vector2(50, 50));
         }
     }
 }
