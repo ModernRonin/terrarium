@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using ModernRonin.Terrarium.Logic;
+using MoreLinq;
 
 namespace ModernRonin.Terrarium.Rendering.Windows
 {
@@ -13,5 +17,12 @@ namespace ModernRonin.Terrarium.Rendering.Windows
             mPartKindTextures[partKind] = texture;
         }
         public Texture2D ForPart(PartKind partKind) => mPartKindTextures[partKind];
+        public void Load(ContentManager content)
+        {
+            GrayPixel = content.Load<Texture2D>("GreyPoint");
+
+            Enum.GetNames(typeof(PartKind)).ToDictionary(Enum.Parse<PartKind>, content.Load<Texture2D>)
+                .ForEach(kvp => AddForPart(kvp.Key, kvp.Value));
+        }
     }
 }
