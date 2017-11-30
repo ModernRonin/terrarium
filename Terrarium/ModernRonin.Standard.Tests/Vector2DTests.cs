@@ -18,40 +18,31 @@ namespace ModernRonin.Standard.Tests
         {
             var scalarLeft = 3f * new Vector2D(1f, 2f);
             var scalarRight = new Vector2D(1f, 2f) * 3f;
-            scalarLeft.X.Should().BeApproximately(scalarRight.X, 0.001f);
-            scalarLeft.Y.Should().BeApproximately(scalarRight.Y, 0.001f);
+            scalarLeft.Should().Approximate(scalarRight);
         }
         [Test]
         public void OperatorBy_WithScalar_Multiplies()
         {
-            var result = new Vector2D(1f, 2f) * 3f;
-            result.X.Should().BeApproximately(3f, 0.001f);
-            result.Y.Should().BeApproximately(6f, 0.001f);
+            (new Vector2D(1f, 2f) * 3f).Should().Approximate(3f, 6f);
         }
         [Test]
         public void OperatorDivide_Divides()
         {
-            var result = new Vector2D(4f, 8f) / 2f;
-            result.X.Should().BeApproximately(2f, 0.001f);
-            result.Y.Should().BeApproximately(4f, 0.001f);
+            (new Vector2D(4f, 8f) / 2f).Should().Approximate(2f, 4f);
         }
         [Test]
         public void OperatorMinus_Subtracts()
         {
             var a = new Vector2D(1.1f, 2.2f);
             var b = new Vector2D(3.3f, 4.4f);
-            var result = b - a;
-            result.X.Should().BeApproximately(2.2f, 0.001f);
-            result.Y.Should().BeApproximately(2.2f, 0.001f);
+            (b - a).Should().Approximate(2.2f, 2.2f);
         }
         [Test]
         public void OperatorPlus_Adds()
         {
             var a = new Vector2D(1.1f, 2.2f);
             var b = new Vector2D(3.3f, 4.4f);
-            var result = a + b;
-            result.X.Should().BeApproximately(4.4f, 0.001f);
-            result.Y.Should().BeApproximately(6.6f, 0.001f);
+            (a + b).Should().Approximate(4.4f, 6.6f);
         }
     }
 }

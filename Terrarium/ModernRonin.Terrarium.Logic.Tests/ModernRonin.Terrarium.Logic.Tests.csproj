@@ -66,6 +66,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ModernRonin.Standard.Tests\ModernRonin.Standard.Tests.csproj">
+      <Project>{a04047bb-58e4-4eff-bce5-0cbcddefd659}</Project>
+      <Name>ModernRonin.Standard.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ModernRonin.Standard\ModernRonin.Standard.csproj">
       <Project>{dc8cca68-8837-4f10-8b61-523365cf9996}</Project>
       <Name>ModernRonin.Standard</Name>
