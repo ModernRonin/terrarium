@@ -9,12 +9,13 @@ namespace ModernRonin.Terrarium.Logic
         public SimulationState(
             IEnumerable<Entity> entities,
             IEnumerable<EnergySource>energySources,
-            Vector2D size = new Vector2D())
+            Vector2D size = new Vector2D(),
+            float[,] energyDensity = null)
         {
             Size = size;
             Entities = entities;
             EnergySources = energySources;
-            EnergyDensity = EnergySources.Aggregate(Size.ToEnergyDensity(), (g, s) => s.ApplyTo(g));
+            EnergyDensity = energyDensity ?? EnergySources.Aggregate(Size.ToEnergyDensity(), (g, s) => s.ApplyTo(g));
         }
         public static SimulationState Default
         {

@@ -18,7 +18,7 @@ namespace ModernRonin.Terrarium.Logic
         {
             mDirectionIndex = 0 == mDirectionIndex ? 1 : 0;
             var newPosition = (old.Position + mDirections[mDirectionIndex]).ClampWithin(mCurrent.Size);
-            return newPosition.At();
+            return old.At(newPosition);
         }
     }
 }
