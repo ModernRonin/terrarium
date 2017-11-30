@@ -31,5 +31,27 @@ namespace ModernRonin.Standard.Tests
             result.X.Should().BeApproximately(2.2f, 0.001f);
             result.Y.Should().BeApproximately(2.2f, 0.001f);
         }
+        [Test]
+        public void OperatorBy_WithScalar_Multiplies()
+        {
+            var result= new Vector2D(1f, 2f)*3f;
+            result.X.Should().BeApproximately(3f, 0.001f);
+            result.Y.Should().BeApproximately(6f, 0.001f);
+        }
+        [Test]
+        public void OperatorBy_Gives_The_Same_Result_No_Matter_Which_Side_The_Scalar_Is_On()
+        {
+            var scalarLeft = 3f * new Vector2D(1f, 2f);
+            var scalarRight = new Vector2D(1f, 2f) * 3f;
+            scalarLeft.X.Should().BeApproximately(scalarRight.X, 0.001f);
+            scalarLeft.Y.Should().BeApproximately(scalarRight.Y, 0.001f);
+        }
+        [Test]
+        public void OperatorDivide_Divides()
+        {
+            var result= new Vector2D(4f, 8f)/2f;
+            result.X.Should().BeApproximately(2f, 0.001f);
+            result.Y.Should().BeApproximately(4f, 0.001f);
+        }
     }
 }

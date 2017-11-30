@@ -15,7 +15,7 @@ namespace ModernRonin.Standard
         public bool Equals(Vector2D other) => X.Equals(other.X) && Y.Equals(other.Y);
         public override bool Equals(object obj)
         {
-            if (Object.ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(null, obj)) return false;
             return obj is Vector2D && Equals((Vector2D) obj);
         }
         public override int GetHashCode()
@@ -32,7 +32,7 @@ namespace ModernRonin.Standard
         public static Vector2D operator -(Vector2D lhs, Vector2D rhs) => new Vector2D(lhs.X - rhs.X, lhs.Y - rhs.Y);
         public static Vector2D operator *(Vector2D lhs, float scalar) => new Vector2D(scalar * lhs.X, scalar * lhs.Y);
         public static Vector2D operator *(float scalar, Vector2D rhs) => new Vector2D(scalar * rhs.X, scalar * rhs.Y);
-        public static Vector2D operator /(Vector2D lhs, float scalar) => new Vector2D(scalar / lhs.X, scalar / lhs.Y);
+        public static Vector2D operator /(Vector2D lhs, float scalar) => new Vector2D(lhs.X / scalar, lhs.Y / scalar);
         public Vector2D ScaleBy(Vector2D scale) => new Vector2D(X * scale.X, Y * scale.Y);
         public Vector2D ScaleTo(Vector2D destination) => new Vector2D(destination.X / X, destination.Y / Y);
         public Vector2D ClampWithin(Vector2D maximum)
@@ -55,7 +55,7 @@ namespace ModernRonin.Standard
             get
             {
                 var l = Length;
-                if (Math.Abs((float) l) < 0.001) return Zero;
+                if (Math.Abs(l) < 0.001) return Zero;
                 return this / l;
             }
         }
