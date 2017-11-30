@@ -114,6 +114,7 @@
     <Compile Include="SimulationView.xaml.cs">
       <DependentUpon>SimulationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TextureDirectory.cs" />
     <Compile Include="Vector2DExtensions.cs" />
     <Compile Include="VisualSimulation.cs" />
     <EmbeddedResource Include="Properties\ModernRonon.Terrarium.Rendering.Windows.rd.xml" />

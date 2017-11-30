@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,10 +11,9 @@ namespace ModernRonin.Terrarium.Rendering.Windows
     public class VisualSimulation : Game
     {
         readonly Camera mCamera = new Camera();
+        readonly TextureDirectory mTextureDirectory= new TextureDirectory();
         readonly GraphicsDeviceManager mGraphics;
-        readonly Dictionary<PartKind, Texture2D> mPartKindTextures = new Dictionary<PartKind, Texture2D>();
         CameraController mCameraController;
-        Texture2D mGrayPixel;
         SpriteBatch mSpriteBatch;
         public VisualSimulation()
         {
@@ -38,10 +36,10 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         protected override void LoadContent()
         {
             mSpriteBatch = new SpriteBatch(GraphicsDevice);
+            mTextureDirectory.GrayPixel= Content.Load<Texture2D>("GreyPoint");
 
             Enum.GetNames(typeof(PartKind)).ToDictionary(Enum.Parse<PartKind>, Content.Load<Texture2D>)
-                .ForEach(kvp => mPartKindTextures.Add(kvp.Key, kvp.Value));
-            mGrayPixel = Content.Load<Texture2D>("GreyPoint");
+                .ForEach(kvp => mTextureDirectory.AddForPart(kvp.Key, kvp.Value));
         }
         protected override void UnloadContent()
         {
@@ -57,11 +55,15 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         {
             mSpriteBatch.Begin(transformMatrix: mCamera.TranslationMatrix);
             GraphicsDevice.Clear(Color.Black);
-            mSpriteBatch.Draw(mGrayPixel,
+            Render();
+            mSpriteBatch.End();
+        }
+        void Render()
+        {
+            mSpriteBatch.Draw(mTextureDirectory.GrayPixel,
                 new Rectangle(0, 0, (int) SimulationState.Size.X, (int) SimulationState.Size.Y),
                 Color.DarkGray);
             SimulationState.Entities.ForEach(Draw);
-            mSpriteBatch.End();
         }
         void Draw(Entity entity)
         {
@@ -73,7 +75,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
             var absolutePosition = origin + part.RelativePosition;
             return new Sprite
             {
-                Image = mPartKindTextures[part.Kind],
+                Image = mTextureDirectory.ForPart(part.Kind),
                 BoundingBox = new Rectangle(absolutePosition.ToPoint(), new Point(1, 1))
             };
         }
@@ -83,5 +85,10 @@ namespace ModernRonin.Terrarium.Rendering.Windows
             public Rectangle BoundingBox { get; set; }
             public Texture2D Image { get; set; }
         }
+    }
+
+    public class Renderer
+    {
+        
     }
 }
