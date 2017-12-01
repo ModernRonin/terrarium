@@ -35,9 +35,9 @@ namespace ModernRonin.Terrarium.Logic
             get
             {
                 var minX = Parts.Min(p => p.RelativePosition.X);
-                var maxX = Parts.Max(p => p.RelativePosition.X);
+                var maxX = Parts.Max(p => p.RelativePosition.X)+1;
                 var minY = Parts.Min(p => p.RelativePosition.Y);
-                var maxY = Parts.Max(p => p.RelativePosition.Y);
+                var maxY = Parts.Max(p => p.RelativePosition.Y)+1;
                 return new Rectangle2D(new Vector2D(minX, minY), new Vector2D(maxX, maxY));
             }
         }

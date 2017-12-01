@@ -85,9 +85,9 @@ namespace ModernRonin.Terrarium.Logic.Tests
             Entity.Cross.LocalBoundingBox.Width.OughtTo().Approximate(3);
         }
         [Test]
-        public void LocalBoundingBox_Of_3HorizontalParts_Entity_Has_Width3()
+        public void LocalBoundingBox_Of_5HorizontalParts_Entity_Has_Width5()
         {
-            Entity.Snake.LocalBoundingBox.Width.OughtTo().Approximate(3);
+            Entity.Snake.LocalBoundingBox.Width.OughtTo().Approximate(5);
         }
         [Test]
         public void LocalBoundingBox_Of_3HorizontalParts_Entity_Has_Height1()
@@ -97,7 +97,7 @@ namespace ModernRonin.Terrarium.Logic.Tests
         [Test]
         public void AbsoluteBoundingBox()
         {
-            Entity.Cross.At(new Vector2D(10, 20)).AbsoluteBoundingBox.OughtTo().Approximate(9, 19, 11, 21);
+            Entity.Cross.At(new Vector2D(10, 20)).AbsoluteBoundingBox.OughtTo().Approximate(9, 19, 12, 22);
         }
         [Test]
         public void Code_Is_Different_If_Parts_Are()
