@@ -11,5 +11,6 @@ namespace ModernRonin.Terrarium.Logic
         }
         public Vector2D RelativePosition { get; }
         public PartKind Kind { get; }
+        public string Code => $"{Kind}!{RelativePosition.X}!{RelativePosition.Y}";
     }
 }

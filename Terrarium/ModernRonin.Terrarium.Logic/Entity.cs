@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ModernRonin.Standard;
 
 namespace ModernRonin.Terrarium.Logic
@@ -12,6 +13,7 @@ namespace ModernRonin.Terrarium.Logic
         }
         public Vector2D Position { get; }
         public IEnumerable<Part> Parts { get; }
+        public string Code => string.Join("?", Parts.Select(p => p.Code));
         public static Entity Snake => new Entity(new List<Part>
         {
             new Part(PartKind.Absorber, new Vector2D(-1, 0)),
