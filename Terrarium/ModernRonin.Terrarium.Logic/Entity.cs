@@ -30,7 +30,7 @@ namespace ModernRonin.Terrarium.Logic
             new Part(PartKind.Store, new Vector2D(0, -1)),
             new Part(PartKind.Store, new Vector2D(0, 1))
         });
-        public Rectangle BoundingBox
+        public Rectangle LocalBoundingBox
         {
             get
             {

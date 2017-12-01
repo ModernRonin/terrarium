@@ -9,10 +9,10 @@ namespace ModernRonin.Terrarium.Logic.Tests
     public class EntityTests
     {
         [Test]
-        public void BoundingBox()
+        public void LocalBoundingBox()
         {
-            Entity.Cross.BoundingBox.OughtTo().Approximate(-1, -1, 1, 1);
-            Entity.Snake.BoundingBox.OughtTo().Approximate(-2, 0, 2, 0);
+            Entity.Cross.LocalBoundingBox.OughtTo().Approximate(-1, -1, 1, 1);
+            Entity.Snake.LocalBoundingBox.OughtTo().Approximate(-2, 0, 2, 0);
         }
         [Test]
         public void Code_Is_Different_If_Parts_Are()
