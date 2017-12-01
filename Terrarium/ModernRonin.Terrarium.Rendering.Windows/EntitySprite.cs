@@ -15,9 +15,11 @@ namespace ModernRonin.Terrarium.Rendering.Windows
             Code = entity.Code;
             var localBoundingBox = entity.LocalBoundingBox;
             BoundingBox = localBoundingBox.RelativeTo(entity.Position).ToRectangle();
+            var width = Math.Max(1, localBoundingBox.Width).ToInt();
+            var height = Math.Max(1, localBoundingBox.Height).ToInt();
             mRenderTarget = new RenderTarget2D(device,
-                localBoundingBox.Width.ToInt(),
-                localBoundingBox.Height.ToInt(),
+                width,
+                height,
                 false,
                 SurfaceFormat.Color,
                 DepthFormat.Depth24);
