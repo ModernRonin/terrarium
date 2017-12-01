@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ModernRonin.Standard;
@@ -18,10 +19,18 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         }
         public void Render(ISimulationState simulationState)
         {
+            DrawBackground(simulationState.Size);
+            DrawEntities(simulationState.Entities);
+        }
+        void DrawEntities(IEnumerable<Entity> entities)
+        {
+            entities.ForEach(Draw);
+        }
+        void DrawBackground(Vector2D size)
+        {
             mSpriteBatch.Draw(mTextureDirectory.GrayPixel,
-                new Rectangle(0, 0, (int) simulationState.Size.X, (int) simulationState.Size.Y),
+                new Rectangle(0, 0, (int) size.X, (int) size.Y),
                 Color.DarkGray);
-            simulationState.Entities.ForEach(Draw);
         }
         void Draw(Entity entity)
         {
