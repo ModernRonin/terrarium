@@ -30,6 +30,17 @@ namespace ModernRonin.Terrarium.Logic
             new Part(PartKind.Store, new Vector2D(0, -1)),
             new Part(PartKind.Store, new Vector2D(0, 1))
         });
+        public Rectangle BoundingBox
+        {
+            get
+            {
+                var minX = Parts.Min(p => p.RelativePosition.X);
+                var maxX = Parts.Max(p => p.RelativePosition.X);
+                var minY = Parts.Min(p => p.RelativePosition.Y);
+                var maxY = Parts.Max(p => p.RelativePosition.Y);
+                return new Rectangle(new Vector2D(minX, minY), new Vector2D(maxX, maxY));
+            }
+        }
         public Entity At(Vector2D position) => new Entity(Parts, position);
     }
 }

@@ -65,6 +65,7 @@
     <Compile Include="AdditionalAssertionExtensions.cs" />
     <Compile Include="FloatAssertions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RectangleAssertions.cs" />
     <Compile Include="RectangleTests.cs" />
     <Compile Include="Vector2DAssertions.cs" />
     <Compile Include="Vector2DTests.cs" />

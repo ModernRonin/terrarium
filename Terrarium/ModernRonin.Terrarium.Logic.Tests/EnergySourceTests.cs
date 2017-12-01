@@ -17,7 +17,7 @@ namespace ModernRonin.Terrarium.Logic.Tests
         public void ApplyTo_Adds_Full_Intensity_At_Position()
         {
             var output = RunStandardScenario();
-            output[50, 50].Should().Approximate(11f);
+            output[50, 50].OughtTo().Approximate(11f);
         }
         static float[,] RunStandardScenario()
         {
@@ -71,32 +71,32 @@ namespace ModernRonin.Terrarium.Logic.Tests
         public void At_Returns_New_Instance_With_Equal_Intensity()
         {
             var underTest = new EnergySource(new Vector2D(), 13f);
-            underTest.At(new Vector2D(1f, 1f)).Intensity.Should().Be(13f);
+            underTest.At(new Vector2D(1f, 1f)).Intensity.OughtTo().Be(13f);
         }
         [Test]
         public void At_Returns_New_Instance_With_Passed_Position()
         {
             var underTest = new EnergySource(new Vector2D(), 13f);
-            underTest.At(new Vector2D(1f, 1f)).Position.Should().Approximate(1f, 1f);
+            underTest.At(new Vector2D(1f, 1f)).Position.OughtTo().Approximate(1f, 1f);
         }
         [Test]
         public void Construction()
         {
             var underTest = new EnergySource(new Vector2D(2.3f, 3.1f), 17f);
-            underTest.Position.Should().Approximate(2.3f, 3.1f);
-            underTest.Intensity.Should().Approximate(17f);
+            underTest.Position.OughtTo().Approximate(2.3f, 3.1f);
+            underTest.Intensity.OughtTo().Approximate(17f);
         }
         [Test]
         public void WithIntensity_Returns_New_Instance_With_Equal_Position()
         {
             var underTest = new EnergySource(new Vector2D(1f, 2f), 13f);
-            underTest.WithIntensity(17f).Position.Should().Approximate(1f, 2f);
+            underTest.WithIntensity(17f).Position.OughtTo().Approximate(1f, 2f);
         }
         [Test]
         public void WithIntensity_Returns_New_Instance_With_Passed_Intensity()
         {
             var underTest = new EnergySource(new Vector2D(), 13f);
-            underTest.WithIntensity(17f).Intensity.Should().Be(17f);
+            underTest.WithIntensity(17f).Intensity.OughtTo().Be(17f);
         }
     }
 }
