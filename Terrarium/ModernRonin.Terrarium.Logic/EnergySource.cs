@@ -17,7 +17,11 @@ namespace ModernRonin.Terrarium.Logic
         public float[,] ApplyTo(float[,] grid)
         {
             var result = (float[,])grid.Clone();
-            result[(int) Position.X, (int) Position.Y] = Intensity;
+            void set(Vector2D where, float value) => result[(int) where.X, (int) where.Y] = value;
+            float get(Vector2D where) => grid[(int)where.X, (int)where.Y];
+            void add(Vector2D where, float delta) => set(where, get(where) + delta);
+
+            add(Position, Intensity);
             return result;
         }
     }

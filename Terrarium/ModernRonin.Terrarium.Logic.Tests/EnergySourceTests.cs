@@ -13,8 +13,9 @@ namespace ModernRonin.Terrarium.Logic.Tests
         {
             var underTest = new EnergySource(new Vector2D(50f, 50f), 100f);
             var grid = new float[100, 100];
+            for (var x= 0; x<grid.GetLength(0); ++x) for (var y = 0; y < grid.GetLength(1); ++y) grid[x, y] = 1f;
             var output = underTest.ApplyTo(grid);
-            AdditionalAssertionExtensions.Should(output[50, 50]).Approximate(100f);
+            AdditionalAssertionExtensions.Should(output[50, 50]).Approximate(101f);
         }
         [Test]
         public void ApplyTo_DoesNot_Change_Input()
