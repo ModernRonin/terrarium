@@ -88,4 +88,16 @@ namespace ModernRonin.Terrarium.Rendering.Windows
             public Texture2D Image { get; set; }
         }
     }
+
+    public class EntitySprite
+    {
+        public EntitySprite(GraphicsDevice device, TextureDirectory textureDirectory, Entity entity)
+        {
+            Code = entity.Code;
+
+            //var renderTarget= new RenderTarget2D(device, );
+            
+        }
+        public string Code { get; }
+    }
 }
