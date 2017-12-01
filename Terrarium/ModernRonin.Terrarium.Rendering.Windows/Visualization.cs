@@ -46,7 +46,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         {
             mSpriteBatch.Begin(transformMatrix: mCamera.TranslationMatrix);
             GraphicsDevice.Clear(Color.Black);
-            new Renderer(mSpriteBatch, mTextureDirectory).Render(SimulationState);
+            new Renderer(GraphicsDevice, mSpriteBatch, mTextureDirectory).Render(SimulationState);
             mSpriteBatch.End();
         }
     }
