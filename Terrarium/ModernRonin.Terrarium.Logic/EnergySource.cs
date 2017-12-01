@@ -1,5 +1,4 @@
-﻿using System;
-using ModernRonin.Standard;
+﻿using ModernRonin.Standard;
 
 namespace ModernRonin.Terrarium.Logic
 {
@@ -16,12 +15,19 @@ namespace ModernRonin.Terrarium.Logic
         public EnergySource WithIntensity(float newIntensity) => new EnergySource(Position, newIntensity);
         public float[,] ApplyTo(float[,] grid)
         {
-            var result = (float[,])grid.Clone();
+            var result = (float[,]) grid.Clone();
             void set(Vector2D where, float value) => result[(int) where.X, (int) where.Y] = value;
-            float get(Vector2D where) => grid[(int)where.X, (int)where.Y];
+            float get(Vector2D where) => grid[(int) where.X, (int) where.Y];
             void add(Vector2D where, float delta) => set(where, get(where) + delta);
 
-            add(Position, Intensity);
+            for (var x = 0; x < grid.GetLength(0); ++x)
+            for (var y = 0; y < grid.GetLength(1); ++y)
+            {
+                var otherPosition = new Vector2D(x, y);
+                var distance = (Position - otherPosition).Length;
+                var toBeAdded = Intensity - distance;
+                if (toBeAdded > 0) add(otherPosition, toBeAdded);
+            }
             return result;
         }
     }
