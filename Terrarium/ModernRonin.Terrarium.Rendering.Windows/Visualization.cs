@@ -44,7 +44,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         }
         protected override void Draw(GameTime gameTime)
         {
-            mSpriteBatch.Begin(transformMatrix: mCamera.TranslationMatrix);
+            mSpriteBatch.Begin(transformMatrix: mCamera.TranslationMatrix, blendState:BlendState.Additive);
             GraphicsDevice.Clear(Color.Black);
             new Renderer(GraphicsDevice, mSpriteBatch, mTextureDirectory).Render(SimulationState);
             mSpriteBatch.End();

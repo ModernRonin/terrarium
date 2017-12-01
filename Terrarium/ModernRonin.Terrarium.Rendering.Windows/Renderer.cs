@@ -42,7 +42,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
             {
                 var index = x + y * width;
                 var value = energyDensity[x, y];
-                var alpha = ToAlpha(MapToOpacity(value));
+                var alpha = MapToOpacity(value);
                 var color = Color.Yellow;
                 color.A = alpha;
                 colorData[index] = color;
@@ -50,11 +50,12 @@ namespace ModernRonin.Terrarium.Rendering.Windows
             result.SetData(colorData);
             return result;
         }
-        static byte ToAlpha(byte opacity) => (byte) (255 - opacity);
         static byte MapToOpacity(float value)
         {
-            if (value > 100) return 255;
-            return (byte) (2 * value);
+            const byte factor = 5;
+            var result = factor * value;
+            if (result > 225) return 255;
+            return (byte) result;
         }
         void DrawEntities(IEnumerable<Entity> entities)
         {
