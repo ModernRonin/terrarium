@@ -2,11 +2,11 @@
 
 namespace ModernRonin.Standard
 {
-    public struct Rectangle : IEquatable<Rectangle>
+    public struct Rectangle2D : IEquatable<Rectangle2D>
     {
         public Vector2D MinCorner { get; }
         public Vector2D MaxCorner { get; }
-        public Rectangle(Vector2D minCorner, Vector2D maxCorner)
+        public Rectangle2D(Vector2D minCorner, Vector2D maxCorner)
         {
 #if DEBUG
             if (minCorner.X > maxCorner.X || minCorner.Y > maxCorner.Y)
@@ -20,11 +20,11 @@ namespace ModernRonin.Standard
         public float Height => MaxCorner.Y - MinCorner.Y;
         public Vector2D Diagonal => MaxCorner - MinCorner;
         #region Equality
-        public bool Equals(Rectangle other) => MinCorner.Equals(other.MinCorner) && MaxCorner.Equals(other.MaxCorner);
+        public bool Equals(Rectangle2D other) => MinCorner.Equals(other.MinCorner) && MaxCorner.Equals(other.MaxCorner);
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
-            return obj is Rectangle && Equals((Rectangle) obj);
+            return obj is Rectangle2D && Equals((Rectangle2D) obj);
         }
         public override int GetHashCode()
         {
@@ -33,9 +33,9 @@ namespace ModernRonin.Standard
                 return MinCorner.GetHashCode() * 397 ^ MaxCorner.GetHashCode();
             }
         }
-        public static bool operator ==(Rectangle left, Rectangle right) => left.Equals(right);
-        public static bool operator !=(Rectangle left, Rectangle right) => !left.Equals(right);
+        public static bool operator ==(Rectangle2D left, Rectangle2D right) => left.Equals(right);
+        public static bool operator !=(Rectangle2D left, Rectangle2D right) => !left.Equals(right);
         #endregion
-        public Rectangle RelativeTo(Vector2D center) => new Rectangle(center + MinCorner, center + MaxCorner);
+        public Rectangle2D RelativeTo(Vector2D center) => new Rectangle2D(center + MinCorner, center + MaxCorner);
     }
 }

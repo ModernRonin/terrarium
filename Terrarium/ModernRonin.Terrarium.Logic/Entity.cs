@@ -30,7 +30,7 @@ namespace ModernRonin.Terrarium.Logic
             new Part(PartKind.Store, new Vector2D(0, -1)),
             new Part(PartKind.Store, new Vector2D(0, 1))
         });
-        public Rectangle LocalBoundingBox
+        public Rectangle2D LocalBoundingBox
         {
             get
             {
@@ -38,10 +38,10 @@ namespace ModernRonin.Terrarium.Logic
                 var maxX = Parts.Max(p => p.RelativePosition.X);
                 var minY = Parts.Min(p => p.RelativePosition.Y);
                 var maxY = Parts.Max(p => p.RelativePosition.Y);
-                return new Rectangle(new Vector2D(minX, minY), new Vector2D(maxX, maxY));
+                return new Rectangle2D(new Vector2D(minX, minY), new Vector2D(maxX, maxY));
             }
         }
-        public Rectangle AbsoluteBoundingBox => LocalBoundingBox.RelativeTo(Position);
+        public Rectangle2D AbsoluteBoundingBox => LocalBoundingBox.RelativeTo(Position);
         public Entity At(Vector2D position) => new Entity(Parts, position);
     }
 }

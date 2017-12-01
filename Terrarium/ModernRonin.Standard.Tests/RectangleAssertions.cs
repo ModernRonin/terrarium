@@ -4,8 +4,8 @@ namespace ModernRonin.Standard.Tests
 {
     public class RectangleAssertions
     {
-        readonly Rectangle mUnderTest;
-        public RectangleAssertions(Rectangle underTest) => mUnderTest = underTest;
+        readonly Rectangle2D mUnderTest;
+        public RectangleAssertions(Rectangle2D underTest) => mUnderTest = underTest;
         public AndConstraint<RectangleAssertions> Approximate(float minX, float minY, float maxX, float maxY)
         {
             mUnderTest.MinCorner.OughtTo().Approximate(minX, minY);
