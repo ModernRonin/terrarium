@@ -19,7 +19,7 @@ namespace ModernRonin.Standard
         public float Width => MaxCorner.X - MinCorner.X;
         public float Height => MaxCorner.Y - MinCorner.Y;
         public Vector2D Diagonal => MaxCorner - MinCorner;
-        
+        public Rectangle2D Normalized => new Rectangle2D(Vector2D.Zero, new Vector2D(Width, Height));
         #region Equality
         public bool Equals(Rectangle2D other) => MinCorner.Equals(other.MinCorner) && MaxCorner.Equals(other.MaxCorner);
         public override bool Equals(object obj)
