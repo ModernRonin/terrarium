@@ -2,7 +2,7 @@
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-  <BuildForLiveUnitTesting>false</BuildForLiveUnitTesting>
+    <BuildForLiveUnitTesting>false</BuildForLiveUnitTesting>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4FB64CF4-A57F-4C66-94ED-16DF8B20021D}</ProjectGuid>
@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Camera.cs" />
     <Compile Include="CameraController.cs" />
+    <Compile Include="EntitySprite.cs" />
     <Compile Include="KeyboardDelta.cs" />
     <Compile Include="MouseDelta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -117,7 +118,7 @@
       <DependentUpon>SimulationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="TextureDirectory.cs" />
-    <Compile Include="Vector2DExtensions.cs" />
+    <Compile Include="GeometryTypeConversionExtensions.cs" />
     <Compile Include="Visualization.cs" />
     <EmbeddedResource Include="Properties\ModernRonon.Terrarium.Rendering.Windows.rd.xml" />
   </ItemGroup>

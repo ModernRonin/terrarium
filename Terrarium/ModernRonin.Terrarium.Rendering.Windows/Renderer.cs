@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -69,35 +68,23 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         }
         void Draw(Entity entity)
         {
-            void drawSprite(Sprite sprite) => mSpriteBatch.Draw(sprite.Image, sprite.BoundingBox, Color.White);
+            void drawSprite(PartSprite sprite) => mSpriteBatch.Draw(sprite.Image, sprite.BoundingBox, Color.White);
             entity.Parts.Select(p => ToSprite(p, entity.Position)).ForEach(drawSprite);
         }
-        Sprite ToSprite(Part part, Vector2D origin)
+        PartSprite ToSprite(Part part, Vector2D origin)
         {
             var absolutePosition = origin + part.RelativePosition;
-            return new Sprite
+            return new PartSprite
             {
                 Image = mTextureDirectory.ForPart(part.Kind),
                 BoundingBox = new Rectangle(absolutePosition.ToPoint(), new Point(1, 1))
             };
         }
 
-        class Sprite
+        public class PartSprite
         {
             public Rectangle BoundingBox { get; set; }
             public Texture2D Image { get; set; }
         }
-    }
-
-    public class EntitySprite
-    {
-        public EntitySprite(GraphicsDevice device, TextureDirectory textureDirectory, Entity entity)
-        {
-            Code = entity.Code;
-
-            //var renderTarget= new RenderTarget2D(device, );
-            
-        }
-        public string Code { get; }
     }
 }
