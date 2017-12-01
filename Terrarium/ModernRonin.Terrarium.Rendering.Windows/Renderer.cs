@@ -14,11 +14,13 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         readonly GraphicsDevice mGraphicsDevice;
         readonly SpriteBatch mSpriteBatch;
         readonly TextureDirectory mTextureDirectory;
-        public Renderer(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, TextureDirectory textureDirectory)
+        readonly EntitySpriteFactory mFactory;
+        public Renderer(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, TextureDirectory textureDirectory, EntitySpriteFactory factory)
         {
             mGraphicsDevice = graphicsDevice;
             mSpriteBatch = spriteBatch;
             mTextureDirectory = textureDirectory;
+            mFactory = factory;
         }
         public void Render(ISimulationState simulationState)
         {
@@ -67,37 +69,13 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         {
             entities.ForEach(Draw);
         }
-        static readonly Dictionary<string, EntitySprite> mEntitySprites= new Dictionary<string, EntitySprite>();
         
         void Draw(Entity entity)
         {
-            var sprite = GetOrCreateSprite(entity);
-            mSpriteBatch.Draw(sprite.Texture, sprite.BoundingBox, Color.White);
+            var texture = mFactory.GetTextureForEntity(entity);
 
-            //void drawSprite(PartSprite sprite) => mSpriteBatch.Draw(sprite.Image, sprite.BoundingBox, Color.White);
-            //entity.Parts.Select(p => ToSprite(p, entity.Position)).ForEach(drawSprite);
-        }
-        EntitySprite GetOrCreateSprite(Entity entity)
-        {
-            var entityCode = entity.Code;
-            if (!mEntitySprites.ContainsKey(entityCode))
-                mEntitySprites[entityCode] = new EntitySprite(mGraphicsDevice, mTextureDirectory, entity);
-            return mEntitySprites[entityCode];
-        }
-        PartSprite ToSprite(Part part, Vector2D origin)
-        {
-            var absolutePosition = origin + part.RelativePosition;
-            return new PartSprite
-            {
-                Image = mTextureDirectory.ForPart(part.Kind),
-                BoundingBox = new Rectangle(absolutePosition.ToPoint(), new Point(1, 1))
-            };
+            mSpriteBatch.Draw(texture, entity.Position.ToVector2(), Color.White);
         }
 
-        public class PartSprite
-        {
-            public Rectangle BoundingBox { get; set; }
-            public Texture2D Image { get; set; }
-        }
     }
 }

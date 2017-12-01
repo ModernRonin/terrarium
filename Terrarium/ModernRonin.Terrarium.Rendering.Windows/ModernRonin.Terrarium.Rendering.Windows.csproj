@@ -109,11 +109,12 @@
   <ItemGroup>
     <Compile Include="Camera.cs" />
     <Compile Include="CameraController.cs" />
-    <Compile Include="EntitySprite.cs" />
+    <Compile Include="EntitySpriteFactory.cs" />
     <Compile Include="KeyboardDelta.cs" />
     <Compile Include="MouseDelta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer.cs" />
+    <Compile Include="RenderTargetScope.cs" />
     <Compile Include="SimulationView.xaml.cs">
       <DependentUpon>SimulationView.xaml</DependentUpon>
     </Compile>
