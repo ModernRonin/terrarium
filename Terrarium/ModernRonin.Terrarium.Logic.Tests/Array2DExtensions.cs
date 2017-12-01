@@ -23,5 +23,10 @@ namespace ModernRonin.Terrarium.Logic.Tests
         {
             foreach (var element in self.ToEnumerable()) element.Should().Be(expected);
         }
+        public static IEnumerable<T> Where<T>(this T[,] self, Func<int, int, bool> predicate)
+        {
+            for (var x = 0; x < self.GetLength(0); ++x)
+            for (var y = 0; y < self.GetLength(1); ++y) if (predicate(x, y)) yield return self[x, y];
+        }
     }
 }
