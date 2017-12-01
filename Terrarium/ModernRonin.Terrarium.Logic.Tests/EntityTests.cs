@@ -9,10 +9,90 @@ namespace ModernRonin.Terrarium.Logic.Tests
     public class EntityTests
     {
         [Test]
-        public void LocalBoundingBox()
+        public void LocalBoundingBox_Of_Entity_With_One_Part_Only_Has_WidthOne()
         {
-            Entity.Cross.LocalBoundingBox.OughtTo().Approximate(-1, -1, 1, 1);
-            Entity.Snake.LocalBoundingBox.OughtTo().Approximate(-2, 0, 2, 0);
+            var underTest= CreateSinglePartEntity();
+            underTest.LocalBoundingBox.Width.OughtTo().Approximate(1);
+        }
+        [Test]
+        public void LocalBoundingBox_Of_Entity_With_One_Part_Only_Has_HeightOne()
+        {
+            var underTest= CreateSinglePartEntity();
+            underTest.LocalBoundingBox.Height.OughtTo().Approximate(1);
+        }
+        [Test]
+        public void LocalBoundingBox_Of_Entity_With_One_Part_Only_Has_MinCornerZeroZero()
+        {
+            var underTest= CreateSinglePartEntity();
+            underTest.LocalBoundingBox.MinCorner.OughtTo().Approximate(0, 0);
+        }
+        [Test]
+        public void LocalBoundingBox_Of_Entity_With_One_Part_Only_Has_MaxCornerOneOne()
+        {
+            var underTest= CreateSinglePartEntity();
+            underTest.LocalBoundingBox.MaxCorner.OughtTo().Approximate(1, 1);
+        }
+        static Entity CreateSinglePartEntity()
+        {
+            return new Entity(new []{new Part(PartKind.Core, Vector2D.Zero)});
+        }
+        [Test]
+        public void LocalBoundingBox_Of_Entity_With_Two_Parts_Horizontally_Aligned_Has_HeightOne()
+        {
+            var underTest= CreateTwoHorizontalPartsEntity();
+            underTest.LocalBoundingBox.Height.OughtTo().Approximate(1);
+        }
+        [Test]
+        public void LocalBoundingBox_Of_Entity_With_Two_Parts_Horizontally_Aligned_Has_WidthTwo()
+        {
+            var underTest= CreateTwoHorizontalPartsEntity();
+            underTest.LocalBoundingBox.Width.OughtTo().Approximate(2);
+        }
+        [Test]
+        public void LocalBoundingBox_Of_Entity_With_Two_Parts_Vertically_Aligned_Has_HeightTwo()
+        {
+            var underTest= CreateTwoVerticalPartsEntity();
+            underTest.LocalBoundingBox.Height.OughtTo().Approximate(2);
+        }
+        [Test]
+        public void LocalBoundingBox_Of_Entity_With_Two_Parts_Vertically_Aligned_Has_WidthOne()
+        {
+            var underTest= CreateTwoVerticalPartsEntity();
+            underTest.LocalBoundingBox.Width.OughtTo().Approximate(1);
+        }
+        static Entity CreateTwoHorizontalPartsEntity()
+        {
+            return new Entity(new []
+            {
+                new Part(PartKind.Core, Vector2D.Zero), new Part(PartKind.Absorber, new Vector2D(1, 0)),     
+            });
+        }
+        static Entity CreateTwoVerticalPartsEntity()
+        {
+            return new Entity(new []
+            {
+                new Part(PartKind.Core, Vector2D.Zero), new Part(PartKind.Absorber, new Vector2D(0, 1)),     
+            });
+        }
+        [Test]
+        public void LocalBoundingBox_Of_SwissCrossShaped_Entity_Has_Height3()
+        {
+            Entity.Cross.LocalBoundingBox.Height.OughtTo().Approximate(3);
+        }
+        [Test]
+        public void LocalBoundingBox_Of_SwissCrossShaped_Entity_Has_Width3()
+        {
+            Entity.Cross.LocalBoundingBox.Width.OughtTo().Approximate(3);
+        }
+        [Test]
+        public void LocalBoundingBox_Of_3HorizontalParts_Entity_Has_Width3()
+        {
+            Entity.Snake.LocalBoundingBox.Width.OughtTo().Approximate(3);
+        }
+        [Test]
+        public void LocalBoundingBox_Of_3HorizontalParts_Entity_Has_Height1()
+        {
+            Entity.Snake.LocalBoundingBox.Height.OughtTo().Approximate(1);
         }
         [Test]
         public void AbsoluteBoundingBox()
