@@ -12,12 +12,18 @@ namespace ModernRonin.Terrarium.Logic
         public ISimulationState Tick()
         {
             var entities = mCurrent.Entities.Select(Move).ToArray();
-            return mCurrent.WithEntities(entities);
+            var energySources = mCurrent.EnergySources.Select(Move).ToArray();
+            return mCurrent.WithEntities(entities).WithEnergySources(energySources);
         }
         Entity Move(Entity old)
         {
             mDirectionIndex = 0 == mDirectionIndex ? 1 : 0;
             var newPosition = (old.Position + mDirections[mDirectionIndex]).ClampWithin(mCurrent.Size);
+            return old.At(newPosition);
+        }
+        EnergySource Move(EnergySource old)
+        {
+            var newPosition = (old.Position + old.Speed).ClampWithin(mCurrent.Size);
             return old.At(newPosition);
         }
     }

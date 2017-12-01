@@ -6,13 +6,16 @@ namespace ModernRonin.Terrarium.Logic
     {
         public Vector2D Position { get; }
         public float Intensity { get; }
-        public EnergySource(Vector2D position, float intensity)
+        public Vector2D Speed { get; }
+        public EnergySource(Vector2D position, float intensity, Vector2D speed)
         {
             Position = position;
             Intensity = intensity;
+            Speed = speed;
         }
-        public EnergySource At(Vector2D newPosition) => new EnergySource(newPosition, Intensity);
-        public EnergySource WithIntensity(float newIntensity) => new EnergySource(Position, newIntensity);
+        public EnergySource(Vector2D position, float intensity) : this(position, intensity, Vector2D.Zero) { }
+        public EnergySource At(Vector2D newPosition) => new EnergySource(newPosition, Intensity, Speed);
+        public EnergySource WithIntensity(float newIntensity) => new EnergySource(Position, newIntensity, Speed);
         public float[,] ApplyTo(float[,] grid)
         {
             var result = (float[,]) grid.Clone();

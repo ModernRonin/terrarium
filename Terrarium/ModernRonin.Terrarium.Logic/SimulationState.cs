@@ -25,7 +25,7 @@ namespace ModernRonin.Terrarium.Logic
 
                 return new SimulationState(
                     new List<Entity> {Entity.Cross.At(new Vector2D(10, 10)), Entity.Snake.At(new Vector2D(90, 90))},
-                    new List<EnergySource> {new EnergySource(new Vector2D(50f, 50f), 25f)},
+                    new List<EnergySource> {new EnergySource(new Vector2D(50f, 50f), 25f, new Vector2D(-0.01f, -0.003f))},
                     size);
             }
         }
