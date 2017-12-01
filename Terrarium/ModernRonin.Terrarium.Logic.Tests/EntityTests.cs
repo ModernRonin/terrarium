@@ -15,6 +15,11 @@ namespace ModernRonin.Terrarium.Logic.Tests
             Entity.Snake.LocalBoundingBox.OughtTo().Approximate(-2, 0, 2, 0);
         }
         [Test]
+        public void AbsoluteBoundingBox()
+        {
+            Entity.Cross.At(new Vector2D(10, 20)).AbsoluteBoundingBox.OughtTo().Approximate(9, 19, 11, 21);
+        }
+        [Test]
         public void Code_Is_Different_If_Parts_Are()
         {
             Entity.Cross.Code.Should().NotBe(Entity.Snake.Code);

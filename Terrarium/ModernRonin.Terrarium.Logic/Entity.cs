@@ -41,6 +41,7 @@ namespace ModernRonin.Terrarium.Logic
                 return new Rectangle(new Vector2D(minX, minY), new Vector2D(maxX, maxY));
             }
         }
+        public Rectangle AbsoluteBoundingBox => LocalBoundingBox.RelativeTo(Position);
         public Entity At(Vector2D position) => new Entity(Parts, position);
     }
 }

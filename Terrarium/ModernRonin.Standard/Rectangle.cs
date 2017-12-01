@@ -36,5 +36,6 @@ namespace ModernRonin.Standard
         public static bool operator ==(Rectangle left, Rectangle right) => left.Equals(right);
         public static bool operator !=(Rectangle left, Rectangle right) => !left.Equals(right);
         #endregion
+        public Rectangle RelativeTo(Vector2D center) => new Rectangle(center + MinCorner, center + MaxCorner);
     }
 }
