@@ -10,6 +10,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
 {
     public class Renderer
     {
+
         readonly GraphicsDevice mGraphicsDevice;
         readonly SpriteBatch mSpriteBatch;
         readonly TextureDirectory mTextureDirectory;
@@ -56,20 +57,32 @@ namespace ModernRonin.Terrarium.Rendering.Windows
             if (result > 225) return 255;
             return (byte) result;
         }
+        void DrawBackground(Vector2D size)
+        {
+            mSpriteBatch.Draw(mTextureDirectory.GrayPixel,
+                new Rectangle(0, 0, (int)size.X, (int)size.Y),
+                Color.White);
+        }
         void DrawEntities(IEnumerable<Entity> entities)
         {
             entities.ForEach(Draw);
         }
-        void DrawBackground(Vector2D size)
-        {
-            mSpriteBatch.Draw(mTextureDirectory.GrayPixel,
-                new Rectangle(0, 0, (int) size.X, (int) size.Y),
-                Color.White);
-        }
+        static readonly Dictionary<string, EntitySprite> mEntitySprites= new Dictionary<string, EntitySprite>();
+        
         void Draw(Entity entity)
         {
-            void drawSprite(PartSprite sprite) => mSpriteBatch.Draw(sprite.Image, sprite.BoundingBox, Color.White);
-            entity.Parts.Select(p => ToSprite(p, entity.Position)).ForEach(drawSprite);
+            var sprite = GetOrCreateSprite(entity);
+            mSpriteBatch.Draw(sprite.Texture, sprite.BoundingBox, Color.White);
+
+            //void drawSprite(PartSprite sprite) => mSpriteBatch.Draw(sprite.Image, sprite.BoundingBox, Color.White);
+            //entity.Parts.Select(p => ToSprite(p, entity.Position)).ForEach(drawSprite);
+        }
+        EntitySprite GetOrCreateSprite(Entity entity)
+        {
+            var entityCode = entity.Code;
+            if (!mEntitySprites.ContainsKey(entityCode))
+                mEntitySprites[entityCode] = new EntitySprite(mGraphicsDevice, mTextureDirectory, entity);
+            return mEntitySprites[entityCode];
         }
         PartSprite ToSprite(Part part, Vector2D origin)
         {

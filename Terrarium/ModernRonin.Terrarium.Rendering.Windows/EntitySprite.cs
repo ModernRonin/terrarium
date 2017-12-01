@@ -14,6 +14,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         {
             Code = entity.Code;
             var localBoundingBox = entity.LocalBoundingBox;
+            BoundingBox = localBoundingBox.RelativeTo(entity.Position).ToRectangle();
             mRenderTarget = new RenderTarget2D(device,
                 localBoundingBox.Width.ToInt(),
                 localBoundingBox.Height.ToInt(),
@@ -43,6 +44,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         }
         public Texture2D Texture => mRenderTarget;
         public string Code { get; }
+        public Rectangle BoundingBox { get; }
         public void Dispose()
         {
             mRenderTarget.Dispose();
