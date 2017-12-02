@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ModernRonin.Standard;
@@ -10,14 +9,15 @@ namespace ModernRonin.Terrarium.Rendering.Windows
 {
     public abstract class ARenderer
     {
-        protected GraphicsDevice Device { get; }
-        protected SpriteBatch Batch { get; }
         protected ARenderer(GraphicsDevice device, SpriteBatch batch)
         {
             Device = device;
             Batch = batch;
         }
+        protected GraphicsDevice Device { get; }
+        protected SpriteBatch Batch { get; }
     }
+
     public class EnergyDensityRenderer : ARenderer
     {
         public EnergyDensityRenderer(GraphicsDevice device, SpriteBatch batch) : base(device, batch) { }
@@ -50,51 +50,58 @@ namespace ModernRonin.Terrarium.Rendering.Windows
             const byte factor = 5;
             var result = factor * value;
             if (result > 225) return 255;
-            return (byte)result;
+            return (byte) result;
         }
     }
-    public class BackgroundRenderer : ARenderer {
+
+    public class BackgroundRenderer : ARenderer
+    {
         readonly TextureDirectory mTextureDirectory;
-        public BackgroundRenderer(GraphicsDevice device, SpriteBatch batch, TextureDirectory textureDirectory) : base(device, batch)
-        {
-            mTextureDirectory = textureDirectory;
-        }
+        public BackgroundRenderer(GraphicsDevice device, SpriteBatch batch, TextureDirectory textureDirectory) :
+            base(device, batch) => mTextureDirectory = textureDirectory;
         public void Render(Vector2D size)
         {
-            Batch.Draw(mTextureDirectory.GrayPixel,
-                new Rectangle(0, 0, (int)size.X, (int)size.Y),
-                Color.White);
+            Batch.Draw(mTextureDirectory.GrayPixel, new Rectangle(0, 0, (int) size.X, (int) size.Y), Color.White);
         }
     }
-    public class Renderer : ARenderer
+
+    public class EntityRenderer : ARenderer
     {
         readonly EntitySpriteFactory mFactory;
-        readonly EnergyDensityRenderer mEnergyDensityRenderer;
-        readonly BackgroundRenderer mBackgroundRenderer;
-        public Renderer(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, TextureDirectory textureDirectory, EntitySpriteFactory factory)
-            :base(graphicsDevice, spriteBatch)
-        {
-            mEnergyDensityRenderer= new EnergyDensityRenderer(Device, Batch);
-            mBackgroundRenderer= new BackgroundRenderer(Device, Batch, textureDirectory);
-            mFactory = factory;
-        }
-        public void Render(ISimulationState simulationState)
-        {
-            mBackgroundRenderer.Render(simulationState.Size);
-            mEnergyDensityRenderer.Render(simulationState.EnergyDensity);
-            DrawEntities(simulationState.Entities);
-        }
-        void DrawEntities(IEnumerable<Entity> entities)
+        public EntityRenderer(GraphicsDevice device, SpriteBatch batch, EntitySpriteFactory factory) : base(device,
+            batch) => mFactory = factory;
+        public void Render(IEnumerable<Entity> entities)
         {
             entities.ForEach(Draw);
         }
-        
         void Draw(Entity entity)
         {
             var texture = mFactory.GetTextureForEntity(entity);
 
             Batch.Draw(texture, entity.AbsoluteBoundingBox.ToRectangle(), Color.White);
         }
+    }
 
+    public class Renderer : ARenderer
+    {
+        readonly BackgroundRenderer mBackgroundRenderer;
+        readonly EnergyDensityRenderer mEnergyDensityRenderer;
+        readonly EntityRenderer mEntityRenderer;
+        public Renderer(
+            GraphicsDevice graphicsDevice,
+            SpriteBatch spriteBatch,
+            TextureDirectory textureDirectory,
+            EntitySpriteFactory factory) : base(graphicsDevice, spriteBatch)
+        {
+            mEnergyDensityRenderer = new EnergyDensityRenderer(Device, Batch);
+            mBackgroundRenderer = new BackgroundRenderer(Device, Batch, textureDirectory);
+            mEntityRenderer = new EntityRenderer(Device, Batch, factory);
+        }
+        public void Render(ISimulationState simulationState)
+        {
+            mBackgroundRenderer.Render(simulationState.Size);
+            mEnergyDensityRenderer.Render(simulationState.EnergyDensity);
+            mEntityRenderer.Render(simulationState.Entities);
+        }
     }
 }
