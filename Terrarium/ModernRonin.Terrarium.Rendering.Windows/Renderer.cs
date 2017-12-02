@@ -53,30 +53,36 @@ namespace ModernRonin.Terrarium.Rendering.Windows
             return (byte)result;
         }
     }
-
-    public class Renderer : ARenderer
-    {
+    public class BackgroundRenderer : ARenderer {
         readonly TextureDirectory mTextureDirectory;
-        readonly EntitySpriteFactory mFactory;
-        readonly EnergyDensityRenderer mEnergyDensityRenderer;
-        public Renderer(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, TextureDirectory textureDirectory, EntitySpriteFactory factory)
-            :base(graphicsDevice, spriteBatch)
+        public BackgroundRenderer(GraphicsDevice device, SpriteBatch batch, TextureDirectory textureDirectory) : base(device, batch)
         {
-            mEnergyDensityRenderer= new EnergyDensityRenderer(Device, Batch);
             mTextureDirectory = textureDirectory;
-            mFactory = factory;
         }
-        public void Render(ISimulationState simulationState)
-        {
-            DrawBackground(simulationState.Size);
-            mEnergyDensityRenderer.Render(simulationState.EnergyDensity);
-            DrawEntities(simulationState.Entities);
-        }
-        void DrawBackground(Vector2D size)
+        public void Render(Vector2D size)
         {
             Batch.Draw(mTextureDirectory.GrayPixel,
                 new Rectangle(0, 0, (int)size.X, (int)size.Y),
                 Color.White);
+        }
+    }
+    public class Renderer : ARenderer
+    {
+        readonly EntitySpriteFactory mFactory;
+        readonly EnergyDensityRenderer mEnergyDensityRenderer;
+        readonly BackgroundRenderer mBackgroundRenderer;
+        public Renderer(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, TextureDirectory textureDirectory, EntitySpriteFactory factory)
+            :base(graphicsDevice, spriteBatch)
+        {
+            mEnergyDensityRenderer= new EnergyDensityRenderer(Device, Batch);
+            mBackgroundRenderer= new BackgroundRenderer(Device, Batch, textureDirectory);
+            mFactory = factory;
+        }
+        public void Render(ISimulationState simulationState)
+        {
+            mBackgroundRenderer.Render(simulationState.Size);
+            mEnergyDensityRenderer.Render(simulationState.EnergyDensity);
+            DrawEntities(simulationState.Entities);
         }
         void DrawEntities(IEnumerable<Entity> entities)
         {
