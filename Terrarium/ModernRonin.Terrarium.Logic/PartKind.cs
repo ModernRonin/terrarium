@@ -4,6 +4,7 @@
     {
         Core,
         Absorber,
-        Store
+        Store,
+        Thruster
     }
 }
