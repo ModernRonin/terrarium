@@ -1,33 +1,28 @@
 ﻿using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using ModernRonin.Terrarium.Logic;
-using MonoGame.Framework;
 
 namespace ModernRonin.Terrarium.Rendering.Windows
 {
-    public sealed partial class SimulationView : UserControl, IDisposable
+    public sealed partial class SimulationView
     {
-        public static readonly DependencyProperty SimulationStateSourceProperty =
-            DependencyProperty.Register(nameof(SimulationStateSource),
-                typeof(Func<ISimulationState>),
+        public static readonly DependencyProperty SwapChainPanelConsumerProperty =
+            DependencyProperty.Register(nameof(SwapChainPanelConsumer),
+                typeof(Action<SwapChainPanel>),
                 typeof(SimulationView),
-                new PropertyMetadata((Func<ISimulationState>) (() => new NullSimulationState())));
-        readonly Visualization mVisualization;
+                new PropertyMetadata((Action<SwapChainPanel>) (_ => { })));
         public SimulationView()
         {
             InitializeComponent();
-            mVisualization = XamlGame<Visualization>.Create(string.Empty, Window.Current.CoreWindow, SwapChainPanel);
-            mVisualization.OnUpdate = () => SimulationStateSource();
         }
-        public Func<ISimulationState> SimulationStateSource
+        public Action<SwapChainPanel> SwapChainPanelConsumer
         {
-            get => (Func<ISimulationState>) GetValue(SimulationStateSourceProperty);
-            set => SetValue(SimulationStateSourceProperty, value);
-        }
-        public void Dispose()
-        {
-            mVisualization.Dispose();
+            get => (Action<SwapChainPanel>) GetValue(SwapChainPanelConsumerProperty);
+            set
+            {
+                SetValue(SwapChainPanelConsumerProperty, value);
+                value?.Invoke(SwapChainPanel);
+            }
         }
     }
 }

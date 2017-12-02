@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Caliburn.Micro;
 using ModernRonin.Terrarium.Logic;
 
@@ -9,9 +10,13 @@ namespace ModernRonin.Terrarium.Client.Windows.ViewModels
     public class ShellViewModel : Screen
     {
         readonly ISimulation mSimulation;
-        string mToggleRunText= "Start";
-        public ShellViewModel(ISimulation simulation) => mSimulation = simulation;
-        public Func<ISimulationState> UpdateSimulationState => () => mSimulation.CurrentState;
+        string mToggleRunText = "Start";
+        public ShellViewModel(ISimulation simulation, Action<SwapChainPanel> setupView)
+        {
+            SetupView = setupView;
+            mSimulation = simulation;
+        }
+        public Action<SwapChainPanel> SetupView { get; }
         public string ToggleRunText
         {
             get => mToggleRunText;

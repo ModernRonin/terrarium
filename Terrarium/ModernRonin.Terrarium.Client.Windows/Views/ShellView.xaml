@@ -22,6 +22,6 @@
                 <MenuFlyoutItem Name="ToggleRun" Text="{Binding ToggleRunText}"></MenuFlyoutItem>
             </c:MenuItem>
         </c:Menu>
-        <rendering:SimulationView SimulationStateSource="{Binding UpdateSimulationState}" Grid.Row="1"/>
+        <rendering:SimulationView SwapChainPanelConsumer="{Binding SetupView}"  Grid.Row="1"/>
     </Grid>
 </Page>

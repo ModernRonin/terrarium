@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 
 namespace ModernRonin.Terrarium.Logic
 {
@@ -7,6 +8,7 @@ namespace ModernRonin.Terrarium.Logic
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<Simulation>().As<ISimulation>().SingleInstance();
+            builder.Register<Func<ISimulationState>>(ctx => () => ctx.Resolve<ISimulation>().CurrentState);
         }
     }
 }

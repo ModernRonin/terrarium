@@ -1,62 +1,51 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using ModernRonin.Terrarium.Logic;
-using ModernRonin.Terrarium.Rendering.Windows.Drawing;
-using ModernRonin.Terrarium.Rendering.Windows.Interaction;
 
 namespace ModernRonin.Terrarium.Rendering.Windows
 {
     public class Visualization : Game
     {
-        readonly Camera mCamera = new Camera();
-        readonly EntitySpriteFactory mEntitySpriteFactory;
-        readonly GraphicsDeviceManager mGraphics;
-        readonly TextureDirectory mTextureDirectory = new TextureDirectory();
-        CameraController mCameraController;
-        SpriteBatch mSpriteBatch;
+        readonly GraphicsDeviceManager mDeviceManager;
         public Visualization()
         {
-            mGraphics = new GraphicsDeviceManager(this);
-            mEntitySpriteFactory = new EntitySpriteFactory(() => GraphicsDevice, mTextureDirectory);
+            mDeviceManager = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
-        public Func<ISimulationState> OnUpdate { get; set; } = () => new SimulationState();
-        ISimulationState SimulationState { get; set; }
-        Renderer Renderer => new Renderer(EnergyDensityRenderer, BackgroundRenderer, EntityRenderer);
-        EntityRenderer EntityRenderer => new EntityRenderer(GraphicsDevice, mSpriteBatch, mEntitySpriteFactory);
-        BackgroundRenderer BackgroundRenderer =>
-            new BackgroundRenderer(GraphicsDevice, mSpriteBatch, mTextureDirectory);
-        EnergyDensityRenderer EnergyDensityRenderer => new EnergyDensityRenderer(GraphicsDevice, mSpriteBatch);
+        public SpriteBatch Batch { get; private set; }
+        public Action<ContentManager> OnLoading { get; set; }
+        public Action OnUpdating { get; set; }
+        public Func<Matrix> OnSettingTranslationMatrix { get; set; }
+        public Action OnRendering { get; set; }
         protected override void Initialize()
         {
-            Window.ClientSizeChanged += (_, __) =>
-            {
-                mCamera.ViewportWidth = GraphicsDevice.Viewport.Width;
-                mCamera.ViewportHeight = GraphicsDevice.Viewport.Height;
-            };
             IsMouseVisible = true;
-            mCameraController = new CameraController(mCamera);
             base.Initialize();
         }
         protected override void LoadContent()
         {
-            mSpriteBatch = new SpriteBatch(GraphicsDevice);
-            mTextureDirectory.Load(Content);
+            Batch = new SpriteBatch(GraphicsDevice);
+            OnLoading(Content);
         }
         protected override void UnloadContent() { }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) mDeviceManager.Dispose();
+            base.Dispose(disposing);
+        }
         protected override void Update(GameTime gameTime)
         {
-            SimulationState = OnUpdate();
-            mCameraController.Update();
+            OnUpdating();
             base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)
         {
-            mSpriteBatch.Begin(transformMatrix: mCamera.TranslationMatrix, blendState: BlendState.Additive);
+            var translationMatrix = OnSettingTranslationMatrix();
+            Batch.Begin(transformMatrix: translationMatrix, blendState: BlendState.Additive);
             GraphicsDevice.Clear(Color.Black);
-            Renderer.Render(SimulationState);
-            mSpriteBatch.End();
+            OnRendering();
+            Batch.End();
         }
     }
 }

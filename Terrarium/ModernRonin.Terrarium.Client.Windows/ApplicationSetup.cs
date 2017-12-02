@@ -6,8 +6,8 @@ using Autofac;
 using Autofac.Builder;
 using Autofac.Features.Scanning;
 using Caliburn.Micro;
-using ModernRonin.Terrarium.Client.Windows.ViewModels;
 using ModernRonin.Terrarium.Logic;
+using ModernRonin.Terrarium.Rendering.Windows;
 
 namespace ModernRonin.Terrarium.Client.Windows
 {
@@ -20,8 +20,9 @@ namespace ModernRonin.Terrarium.Client.Windows
             mBuilder.RegisterAssemblyTypes(Assemblies);
         static IEnumerable<Assembly> GetAssemblies()
         {
-            yield return AssemblyOf<ShellViewModel>();
+            yield return AssemblyOf<UwpClientModule>();
             yield return AssemblyOf<LogicModule>();
+            yield return AssemblyOf<VisualizationModule>();
         }
         public void Configure()
         {
