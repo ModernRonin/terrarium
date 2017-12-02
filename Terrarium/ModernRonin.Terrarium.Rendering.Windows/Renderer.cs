@@ -82,20 +82,19 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         }
     }
 
-    public class Renderer : ARenderer
+    public class Renderer
     {
         readonly BackgroundRenderer mBackgroundRenderer;
         readonly EnergyDensityRenderer mEnergyDensityRenderer;
         readonly EntityRenderer mEntityRenderer;
         public Renderer(
-            GraphicsDevice graphicsDevice,
-            SpriteBatch spriteBatch,
-            TextureDirectory textureDirectory,
-            EntitySpriteFactory factory) : base(graphicsDevice, spriteBatch)
+            EnergyDensityRenderer energyDensityRenderer,
+            BackgroundRenderer backgroundRenderer,
+            EntityRenderer entityRenderer)
         {
-            mEnergyDensityRenderer = new EnergyDensityRenderer(Device, Batch);
-            mBackgroundRenderer = new BackgroundRenderer(Device, Batch, textureDirectory);
-            mEntityRenderer = new EntityRenderer(Device, Batch, factory);
+            mEnergyDensityRenderer = energyDensityRenderer;
+            mBackgroundRenderer = backgroundRenderer;
+            mEntityRenderer = entityRenderer;
         }
         public void Render(ISimulationState simulationState)
         {

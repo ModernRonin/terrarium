@@ -8,15 +8,15 @@ namespace ModernRonin.Terrarium.Rendering.Windows
     public class Visualization : Game
     {
         readonly Camera mCamera = new Camera();
-        readonly GraphicsDeviceManager mGraphics;
         readonly EntitySpriteFactory mEntitySpriteFactory;
+        readonly GraphicsDeviceManager mGraphics;
         readonly TextureDirectory mTextureDirectory = new TextureDirectory();
         CameraController mCameraController;
         SpriteBatch mSpriteBatch;
         public Visualization()
         {
             mGraphics = new GraphicsDeviceManager(this);
-            mEntitySpriteFactory= new EntitySpriteFactory(() => GraphicsDevice, mTextureDirectory);
+            mEntitySpriteFactory = new EntitySpriteFactory(() => GraphicsDevice, mTextureDirectory);
             Content.RootDirectory = "Content";
         }
         public Func<ISimulationState> OnUpdate { get; set; } = () => new SimulationState();
@@ -46,9 +46,11 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         }
         protected override void Draw(GameTime gameTime)
         {
-            mSpriteBatch.Begin(transformMatrix: mCamera.TranslationMatrix, blendState:BlendState.Additive);
+            mSpriteBatch.Begin(transformMatrix: mCamera.TranslationMatrix, blendState: BlendState.Additive);
             GraphicsDevice.Clear(Color.Black);
-            new Renderer(GraphicsDevice, mSpriteBatch, mTextureDirectory, mEntitySpriteFactory).Render(SimulationState);
+            new Renderer(new EnergyDensityRenderer(GraphicsDevice, mSpriteBatch),
+                new BackgroundRenderer(GraphicsDevice, mSpriteBatch, mTextureDirectory),
+                new EntityRenderer(GraphicsDevice, mSpriteBatch, mEntitySpriteFactory)).Render(SimulationState);
             mSpriteBatch.End();
         }
     }
