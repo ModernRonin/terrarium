@@ -1,6 +1,6 @@
 ﻿using ModernRonin.Terrarium.Logic;
 
-namespace ModernRonin.Terrarium.Rendering.Windows
+namespace ModernRonin.Terrarium.Rendering.Windows.Drawing
 {
     public class Renderer
     {

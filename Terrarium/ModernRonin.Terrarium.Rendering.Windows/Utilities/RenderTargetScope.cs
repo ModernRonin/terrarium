@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ModernRonin.Terrarium.Rendering.Windows
+namespace ModernRonin.Terrarium.Rendering.Windows.Utilities
 {
     public class RenderTargetScope : IDisposable
     {

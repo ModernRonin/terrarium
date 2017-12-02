@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ModernRonin.Terrarium.Rendering.Windows
+namespace ModernRonin.Terrarium.Rendering.Windows.Utilities
 {
     public static class DebugHelpers
     {

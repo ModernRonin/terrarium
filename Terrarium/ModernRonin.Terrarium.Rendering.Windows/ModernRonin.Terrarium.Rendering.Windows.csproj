@@ -107,28 +107,33 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ARenderer.cs" />
-    <Compile Include="BackgroundRenderer.cs" />
-    <Compile Include="Camera.cs" />
-    <Compile Include="CameraController.cs" />
-    <Compile Include="DebugHelpers.cs" />
-    <Compile Include="EnergyDensityRenderer.cs" />
-    <Compile Include="EntityRenderer.cs" />
-    <Compile Include="EntitySpriteFactory.cs" />
-    <Compile Include="KeyboardDelta.cs" />
-    <Compile Include="MouseDelta.cs" />
+    <Compile Include="Drawing\ARenderer.cs" />
+    <Compile Include="Drawing\BackgroundRenderer.cs" />
+    <Compile Include="Interaction\Camera.cs" />
+    <Compile Include="Interaction\CameraController.cs" />
+    <Compile Include="Utilities\DebugHelpers.cs" />
+    <Compile Include="Drawing\EnergyDensityRenderer.cs" />
+    <Compile Include="Drawing\EntityRenderer.cs" />
+    <Compile Include="Drawing\EntitySpriteFactory.cs" />
+    <Compile Include="Interaction\ICamera.cs" />
+    <Compile Include="Interaction\KeyboardDelta.cs" />
+    <Compile Include="Interaction\MouseDelta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Renderer.cs" />
-    <Compile Include="RenderTargetScope.cs" />
+    <Compile Include="Drawing\Renderer.cs" />
+    <Compile Include="Utilities\RenderTargetScope.cs" />
     <Compile Include="SimulationView.xaml.cs">
       <DependentUpon>SimulationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="TextureDirectory.cs" />
-    <Compile Include="GeometryTypeConversionExtensions.cs" />
+    <Compile Include="Utilities\GeometryTypeConversionExtensions.cs" />
     <Compile Include="Visualization.cs" />
+    <Compile Include="VisualizationModule.cs" />
     <EmbeddedResource Include="Properties\ModernRonon.Terrarium.Rendering.Windows.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Autofac">
+      <Version>4.6.2</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.2</Version>
     </PackageReference>
@@ -152,6 +157,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

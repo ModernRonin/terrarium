@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace ModernRonin.Terrarium.Rendering.Windows
+namespace ModernRonin.Terrarium.Rendering.Windows.Interaction
 {
-    public class Camera
+    public class Camera : ICamera
     {
         Vector2 mPosition;
         public float Zoom { get; private set; }

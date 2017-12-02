@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using ModernRonin.Standard;
 
-namespace ModernRonin.Terrarium.Rendering.Windows
+namespace ModernRonin.Terrarium.Rendering.Windows.Utilities
 {
     public static class GeometryTypeConversionExtensions
     {

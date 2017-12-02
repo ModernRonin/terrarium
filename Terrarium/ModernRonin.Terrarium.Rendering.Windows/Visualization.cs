@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ModernRonin.Terrarium.Logic;
+using ModernRonin.Terrarium.Rendering.Windows.Drawing;
+using ModernRonin.Terrarium.Rendering.Windows.Interaction;
 
 namespace ModernRonin.Terrarium.Rendering.Windows
 {

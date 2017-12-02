@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using ModernRonin.Standard;
 
-namespace ModernRonin.Terrarium.Rendering.Windows
+namespace ModernRonin.Terrarium.Rendering.Windows.Drawing
 {
     public class BackgroundRenderer : ARenderer
     {

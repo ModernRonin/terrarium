@@ -5,9 +5,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ModernRonin.Standard;
 using ModernRonin.Terrarium.Logic;
+using ModernRonin.Terrarium.Rendering.Windows.Utilities;
 using MoreLinq;
 
-namespace ModernRonin.Terrarium.Rendering.Windows
+namespace ModernRonin.Terrarium.Rendering.Windows.Drawing
 {
     public class EntitySpriteFactory : IDisposable
     {
