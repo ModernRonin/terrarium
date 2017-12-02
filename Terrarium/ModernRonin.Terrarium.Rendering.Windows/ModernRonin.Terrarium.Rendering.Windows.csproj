@@ -111,6 +111,7 @@
     <Compile Include="Drawing\BackgroundRenderer.cs" />
     <Compile Include="Interaction\Camera.cs" />
     <Compile Include="Interaction\CameraController.cs" />
+    <Compile Include="Interaction\ICameraController.cs" />
     <Compile Include="Utilities\DebugHelpers.cs" />
     <Compile Include="Drawing\EnergyDensityRenderer.cs" />
     <Compile Include="Drawing\EntityRenderer.cs" />

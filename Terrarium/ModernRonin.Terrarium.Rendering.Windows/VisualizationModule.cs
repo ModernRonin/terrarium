@@ -7,7 +7,8 @@ namespace ModernRonin.Terrarium.Rendering.Windows
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<Camera>().As<ICamera>();
+            builder.RegisterType<Camera>().As<ICamera>().SingleInstance();
+            builder.RegisterType<CameraController>().As<ICameraController>().SingleInstance();
         }
     }
 }

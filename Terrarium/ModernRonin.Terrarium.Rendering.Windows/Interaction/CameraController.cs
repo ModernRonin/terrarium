@@ -3,14 +3,14 @@ using Microsoft.Xna.Framework.Input;
 
 namespace ModernRonin.Terrarium.Rendering.Windows.Interaction
 {
-    public class CameraController
+    public class CameraController : ICameraController
     {
         const float ZoomSpeed = 0.001f;
-        readonly Camera mCamera;
+        readonly ICamera mCamera;
         readonly KeyboardDelta mKeyboard = new KeyboardDelta();
         readonly MouseDelta mMouse = new MouseDelta();
         float mPanSpeed = 1f;
-        public CameraController(Camera camera)
+        public CameraController(ICamera camera)
         {
             mCamera = camera;
             mCamera.AdjustZoom(5);
