@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Camera.cs" />
     <Compile Include="CameraController.cs" />
+    <Compile Include="DebugHelpers.cs" />
     <Compile Include="EntitySpriteFactory.cs" />
     <Compile Include="KeyboardDelta.cs" />
     <Compile Include="MouseDelta.cs" />

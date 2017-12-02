@@ -74,7 +74,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         {
             var texture = mFactory.GetTextureForEntity(entity);
 
-            mSpriteBatch.Draw(texture, entity.Position.ToVector2(), Color.White);
+            mSpriteBatch.Draw(texture, new Rectangle(entity.Position.ToPoint(), new Point(1,1)), Color.White);
         }
 
     }
