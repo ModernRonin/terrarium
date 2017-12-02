@@ -21,6 +21,11 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         }
         public Func<ISimulationState> OnUpdate { get; set; } = () => new SimulationState();
         ISimulationState SimulationState { get; set; }
+        Renderer Renderer => new Renderer(EnergyDensityRenderer, BackgroundRenderer, EntityRenderer);
+        EntityRenderer EntityRenderer => new EntityRenderer(GraphicsDevice, mSpriteBatch, mEntitySpriteFactory);
+        BackgroundRenderer BackgroundRenderer =>
+            new BackgroundRenderer(GraphicsDevice, mSpriteBatch, mTextureDirectory);
+        EnergyDensityRenderer EnergyDensityRenderer => new EnergyDensityRenderer(GraphicsDevice, mSpriteBatch);
         protected override void Initialize()
         {
             Window.ClientSizeChanged += (_, __) =>
@@ -48,9 +53,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         {
             mSpriteBatch.Begin(transformMatrix: mCamera.TranslationMatrix, blendState: BlendState.Additive);
             GraphicsDevice.Clear(Color.Black);
-            new Renderer(new EnergyDensityRenderer(GraphicsDevice, mSpriteBatch),
-                new BackgroundRenderer(GraphicsDevice, mSpriteBatch, mTextureDirectory),
-                new EntityRenderer(GraphicsDevice, mSpriteBatch, mEntitySpriteFactory)).Render(SimulationState);
+            Renderer.Render(SimulationState);
             mSpriteBatch.End();
         }
     }
