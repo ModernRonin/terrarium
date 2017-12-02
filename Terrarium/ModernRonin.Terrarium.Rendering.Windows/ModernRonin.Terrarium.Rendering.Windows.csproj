@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Drawing\ARenderer.cs" />
     <Compile Include="Drawing\BackgroundRenderer.cs" />
+    <Compile Include="Drawing\IEntitySpriteFactory.cs" />
     <Compile Include="Interaction\Camera.cs" />
     <Compile Include="Interaction\CameraController.cs" />
     <Compile Include="Interaction\ICameraController.cs" />

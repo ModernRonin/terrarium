@@ -10,7 +10,7 @@ using MoreLinq;
 
 namespace ModernRonin.Terrarium.Rendering.Windows.Drawing
 {
-    public class EntitySpriteFactory : IDisposable
+    public class EntitySpriteFactory : IEntitySpriteFactory
     {
         const int PartTextureSizeScalar = 100;
         readonly Dictionary<string, Texture2D> mCodesToTextures = new Dictionary<string, Texture2D>();

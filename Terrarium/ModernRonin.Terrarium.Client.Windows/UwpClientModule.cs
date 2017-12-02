@@ -2,7 +2,6 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Autofac;
-using ModernRonin.Terrarium.Logic;
 using ModernRonin.Terrarium.Rendering.Windows;
 using MonoGame.Framework;
 
@@ -16,12 +15,10 @@ namespace ModernRonin.Terrarium.Client.Windows
         }
         Action<SwapChainPanel> SetupVisualization(IComponentContext context)
         {
-            var simulation = context.Resolve<ISimulation>();
             var visualizationFinisher = context.Resolve<Action<Visualization>>();
             return panel =>
             {
                 var visualization = XamlGame<Visualization>.Create(string.Empty, Window.Current.CoreWindow, panel);
-                visualization.OnUpdate = () => simulation.CurrentState;
                 visualizationFinisher(visualization);
             };
         }

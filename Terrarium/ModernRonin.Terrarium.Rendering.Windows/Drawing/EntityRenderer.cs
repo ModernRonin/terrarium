@@ -9,8 +9,8 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Drawing
 {
     public class EntityRenderer : ARenderer
     {
-        readonly EntitySpriteFactory mFactory;
-        public EntityRenderer(GraphicsDevice device, SpriteBatch batch, EntitySpriteFactory factory) : base(device,
+        readonly IEntitySpriteFactory mFactory;
+        public EntityRenderer(GraphicsDevice device, SpriteBatch batch, IEntitySpriteFactory factory) : base(device,
             batch) => mFactory = factory;
         public void Render(IEnumerable<Entity> entities)
         {
