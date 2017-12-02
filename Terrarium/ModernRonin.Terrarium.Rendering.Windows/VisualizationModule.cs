@@ -12,6 +12,13 @@ namespace ModernRonin.Terrarium.Rendering.Windows
 {
     public class VisualizationModule : Module
     {
+        /* CAVEAT: because of how XamlGame<>.Create() works, there is no way to hook between construction of a MonoGame Game and it running.
+         * so in order to make all the parts of this system IOC constructable, we gotta work around Visualization/Game not being IOC constructable.
+         * As it's not constructed by the container, the container wouldn't know to resolve it, either, when it needs to access properties
+         * like GraphicsDevice or (Sprite)Batch. Thus we save the instance in SetupVisualization/OnLoading.
+         * BUT BEWARE: this means we cannot have multiple instances of Visualization/Game running!
+         * 
+        */
         Visualization mVisualization;
         static ResolvedParameter CreateParameter<T>(Func<T> getter)
         {
