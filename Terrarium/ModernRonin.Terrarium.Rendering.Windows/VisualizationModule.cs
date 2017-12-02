@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using Autofac;
+using Autofac.Core;
 using Microsoft.Xna.Framework.Graphics;
 using ModernRonin.Terrarium.Logic;
 using ModernRonin.Terrarium.Rendering.Windows.Drawing;
@@ -11,44 +12,53 @@ namespace ModernRonin.Terrarium.Rendering.Windows
 {
     public class VisualizationModule : Module
     {
+        Visualization mVisualization;
+        static ResolvedParameter CreateParameter<T>(Func<T> getter)
+        {
+            return new ResolvedParameter((paramInfo, _) => paramInfo.ParameterType == typeof(T), (_, __) => getter());
+        }
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(ctx => SetupVisualization(ctx.Resolve<IComponentContext>()));
+            builder.RegisterBuildCallback(SetupVisualization);
             builder.RegisterType<Camera>().As<ICamera>().SingleInstance();
             builder.RegisterType<CameraController>().As<ICameraController>().SingleInstance();
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).AssignableTo<ARenderer>().AsSelf()
-                   .InstancePerDependency();
+                   .InstancePerDependency().WithParameters(new Parameter[]
+                   {
+                       CreateParameter(() => mVisualization.GraphicsDevice),
+                       CreateParameter(() => mVisualization.Batch)
+                   });
+
             builder.RegisterType<Renderer>().AsSelf().InstancePerDependency();
             builder.RegisterType<TextureDirectory>().AsSelf().SingleInstance();
             builder.RegisterType<EntitySpriteFactory>().As<IEntitySpriteFactory>().SingleInstance();
-            builder.Register(ctx => GraphicsDeviceProvider(ctx.Resolve<IComponentContext>()));
-            builder.Register(ctx => SpriteBatchProvider(ctx.Resolve<IComponentContext>()));
+            builder.Register<Func<GraphicsDevice>>(_ => () => mVisualization.GraphicsDevice);
         }
-        static Func<GraphicsDevice> GraphicsDeviceProvider(IComponentContext context)
+        void SetupVisualization(IComponentContext context)
         {
-            return () => context.Resolve<Visualization>().GraphicsDevice;
-        }
-        static Func<SpriteBatch> SpriteBatchProvider(IComponentContext context)
-        {
-            return () => context.Resolve<Visualization>().Batch;
-        }
-        static Action<Visualization> SetupVisualization(IComponentContext context)
-        {
-            return vis =>
+
+            Visualization.OnLoading = instance =>
             {
-                var textureDirectory = context.Resolve<TextureDirectory>();
+                context.Resolve<TextureDirectory>().Load(instance.Content);
                 var camera = context.Resolve<ICamera>();
-                var renderer = context.Resolve<Renderer>();
-                var simulationSnapshotter = context.Resolve<Func<ISimulationState>>();
-                vis.OnLoading = textureDirectory.Load;
-                vis.Window.ClientSizeChanged += (_, __) =>
+                instance.Window.ClientSizeChanged += (_, __) =>
                 {
-                    camera.ViewportWidth = vis.GraphicsDevice.Viewport.Width;
-                    camera.ViewportHeight = vis.GraphicsDevice.Viewport.Height;
+                    camera.ViewportWidth = instance.GraphicsDevice.Viewport.Width;
+                    camera.ViewportHeight = instance.GraphicsDevice.Viewport.Height;
                 };
-                vis.OnUpdating = context.Resolve<ICameraController>().Update;
-                vis.OnSettingTranslationMatrix = () => camera.TranslationMatrix;
-                vis.OnRendering = () => { renderer.Render(simulationSnapshotter()); };
+                mVisualization = instance;
+            };
+            Visualization.OnUpdating = instance =>
+            {
+                context.Resolve<ICameraController>().Update();
+                instance.TranslationMatrix = context.Resolve<ICamera>().TranslationMatrix;
+            };
+            Visualization.OnRendering = instance =>
+            {
+                var cc = context.Resolve<IComponentContext>();
+                var simulationSnapshotter = cc.Resolve<Func<ISimulationState>>();
+                var renderer = context.Resolve<Renderer>();
+                renderer.Render(simulationSnapshotter());
             };
         }
     }

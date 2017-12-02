@@ -11,16 +11,11 @@ namespace ModernRonin.Terrarium.Client.Windows
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(ctx => SetupVisualization(ctx.Resolve<IComponentContext>())).SingleInstance();
+            builder.Register(ctx => SetupVisualization()).SingleInstance();
         }
-        Action<SwapChainPanel> SetupVisualization(IComponentContext context)
+        Action<SwapChainPanel> SetupVisualization()
         {
-            var visualizationFinisher = context.Resolve<Action<Visualization>>();
-            return panel =>
-            {
-                var visualization = XamlGame<Visualization>.Create(string.Empty, Window.Current.CoreWindow, panel);
-                visualizationFinisher(visualization);
-            };
+            return panel => XamlGame<Visualization>.Create(string.Empty, Window.Current.CoreWindow, panel);
         }
     }
 }

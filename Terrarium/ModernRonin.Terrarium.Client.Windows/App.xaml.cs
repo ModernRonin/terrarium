@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation.Metadata;
@@ -20,6 +21,10 @@ namespace ModernRonin.Terrarium.Client.Windows
         public App()
         {
             SetPointerMode();
+            Current.UnhandledException += (_, args) =>
+            {
+                Trace.TraceError($"Exception: {args.Message}, {args.Exception}");
+            };
         }
         void ConfigureCaliburnMicro(IEnumerable<Assembly> assemblies)
         {
