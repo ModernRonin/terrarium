@@ -18,24 +18,10 @@ namespace ModernRonin.Terrarium.Rendering.Windows
             Batch = batch;
         }
     }
-
-    public class Renderer : ARenderer
+    public class EnergyDensityRenderer : ARenderer
     {
-        readonly TextureDirectory mTextureDirectory;
-        readonly EntitySpriteFactory mFactory;
-        public Renderer(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, TextureDirectory textureDirectory, EntitySpriteFactory factory)
-            :base(graphicsDevice, spriteBatch)
-        {
-            mTextureDirectory = textureDirectory;
-            mFactory = factory;
-        }
-        public void Render(ISimulationState simulationState)
-        {
-            DrawBackground(simulationState.Size);
-            DrawEnergyDensity(simulationState.EnergyDensity);
-            DrawEntities(simulationState.Entities);
-        }
-        void DrawEnergyDensity(float[,] energyDensity)
+        public EnergyDensityRenderer(GraphicsDevice device, SpriteBatch batch) : base(device, batch) { }
+        public void Render(float[,] energyDensity)
         {
             var texture = ToTexture(energyDensity);
             Batch.Draw(texture, Vector2.Zero, Color.White);
@@ -44,9 +30,9 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         {
             var width = energyDensity.GetLength(0);
             var height = energyDensity.GetLength(1);
-            var result= new Texture2D(Device, width, height, false, SurfaceFormat.Color);
-            var colorData= new Color[width* height];
-            for (var x=0; x<width; ++x)
+            var result = new Texture2D(Device, width, height, false, SurfaceFormat.Color);
+            var colorData = new Color[width * height];
+            for (var x = 0; x < width; ++x)
             for (var y = 0; y < height; ++y)
             {
                 var index = x + y * width;
@@ -64,7 +50,27 @@ namespace ModernRonin.Terrarium.Rendering.Windows
             const byte factor = 5;
             var result = factor * value;
             if (result > 225) return 255;
-            return (byte) result;
+            return (byte)result;
+        }
+    }
+
+    public class Renderer : ARenderer
+    {
+        readonly TextureDirectory mTextureDirectory;
+        readonly EntitySpriteFactory mFactory;
+        readonly EnergyDensityRenderer mEnergyDensityRenderer;
+        public Renderer(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, TextureDirectory textureDirectory, EntitySpriteFactory factory)
+            :base(graphicsDevice, spriteBatch)
+        {
+            mEnergyDensityRenderer= new EnergyDensityRenderer(Device, Batch);
+            mTextureDirectory = textureDirectory;
+            mFactory = factory;
+        }
+        public void Render(ISimulationState simulationState)
+        {
+            DrawBackground(simulationState.Size);
+            mEnergyDensityRenderer.Render(simulationState.EnergyDensity);
+            DrawEntities(simulationState.Entities);
         }
         void DrawBackground(Vector2D size)
         {
