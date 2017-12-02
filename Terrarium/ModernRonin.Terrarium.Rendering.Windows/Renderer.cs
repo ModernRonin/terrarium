@@ -8,17 +8,24 @@ using MoreLinq;
 
 namespace ModernRonin.Terrarium.Rendering.Windows
 {
-    public class Renderer
+    public abstract class ARenderer
     {
+        protected GraphicsDevice Device { get; }
+        protected SpriteBatch Batch { get; }
+        protected ARenderer(GraphicsDevice device, SpriteBatch batch)
+        {
+            Device = device;
+            Batch = batch;
+        }
+    }
 
-        readonly GraphicsDevice mGraphicsDevice;
-        readonly SpriteBatch mSpriteBatch;
+    public class Renderer : ARenderer
+    {
         readonly TextureDirectory mTextureDirectory;
         readonly EntitySpriteFactory mFactory;
         public Renderer(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, TextureDirectory textureDirectory, EntitySpriteFactory factory)
+            :base(graphicsDevice, spriteBatch)
         {
-            mGraphicsDevice = graphicsDevice;
-            mSpriteBatch = spriteBatch;
             mTextureDirectory = textureDirectory;
             mFactory = factory;
         }
@@ -31,13 +38,13 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         void DrawEnergyDensity(float[,] energyDensity)
         {
             var texture = ToTexture(energyDensity);
-            mSpriteBatch.Draw(texture, Vector2.Zero, Color.White);
+            Batch.Draw(texture, Vector2.Zero, Color.White);
         }
         Texture2D ToTexture(float[,] energyDensity)
         {
             var width = energyDensity.GetLength(0);
             var height = energyDensity.GetLength(1);
-            var result= new Texture2D(mGraphicsDevice, width, height, false, SurfaceFormat.Color);
+            var result= new Texture2D(Device, width, height, false, SurfaceFormat.Color);
             var colorData= new Color[width* height];
             for (var x=0; x<width; ++x)
             for (var y = 0; y < height; ++y)
@@ -61,7 +68,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         }
         void DrawBackground(Vector2D size)
         {
-            mSpriteBatch.Draw(mTextureDirectory.GrayPixel,
+            Batch.Draw(mTextureDirectory.GrayPixel,
                 new Rectangle(0, 0, (int)size.X, (int)size.Y),
                 Color.White);
         }
@@ -74,7 +81,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         {
             var texture = mFactory.GetTextureForEntity(entity);
 
-            mSpriteBatch.Draw(texture, entity.AbsoluteBoundingBox.ToRectangle(), Color.White);
+            Batch.Draw(texture, entity.AbsoluteBoundingBox.ToRectangle(), Color.White);
         }
 
     }
