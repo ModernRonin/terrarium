@@ -26,7 +26,9 @@ namespace ModernRonin.Terrarium.Client.Windows.ViewModels
         
         void OnEntitiesPicked(IEnumerable<Entity> entities)
         {
-            Debug.WriteLine(string.Join("\r\n", entities.Select(e => e.Code)));
+            var frozen = entities.ToArray();
+            if (frozen.Any())
+                Debug.WriteLine(string.Join("\r\n", frozen.Select(e => e.Code)));
         }
         public Action<SwapChainPanel> SetupView { get; }
         public string ToggleRunText
