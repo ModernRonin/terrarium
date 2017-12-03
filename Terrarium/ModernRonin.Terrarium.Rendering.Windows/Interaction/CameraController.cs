@@ -19,7 +19,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Interaction
         public void Update()
         {
             mMouse.Update();
-            if (mMouse.IsLeftDown) mCamera.MoveCamera(-mPanSpeed * mMouse.PointerDelta);
+            if (mMouse.IsRightDown) mCamera.MoveCamera(-mPanSpeed * mMouse.PointerDelta);
             if (mMouse.HasWheelMoved)
             {
                 mCamera.AdjustZoom(ZoomSpeed * mMouse.WheelDelta);
