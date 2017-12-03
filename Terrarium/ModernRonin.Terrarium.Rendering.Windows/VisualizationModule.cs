@@ -26,6 +26,8 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         }
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<KeyboardDelta>().AsSelf().SingleInstance();
+            builder.RegisterType<MouseDelta>().AsSelf().SingleInstance();
             builder.RegisterBuildCallback(SetupVisualization);
             builder.RegisterType<Camera>().As<ICamera>().SingleInstance();
             builder.RegisterType<CameraController>().As<ICameraController>().SingleInstance();

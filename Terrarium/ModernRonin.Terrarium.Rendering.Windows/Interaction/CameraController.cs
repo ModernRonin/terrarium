@@ -7,12 +7,14 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Interaction
     {
         const float ZoomSpeed = 0.001f;
         readonly ICamera mCamera;
-        readonly KeyboardDelta mKeyboard = new KeyboardDelta();
-        readonly MouseDelta mMouse = new MouseDelta();
+        readonly KeyboardDelta mKeyboard;
+        readonly MouseDelta mMouse;
         float mPanSpeed = 1f;
-        public CameraController(ICamera camera)
+        public CameraController(ICamera camera, KeyboardDelta keyboard, MouseDelta mouse)
         {
             mCamera = camera;
+            mKeyboard = keyboard;
+            mMouse = mouse;
             mCamera.AdjustZoom(5);
             Center();
         }
