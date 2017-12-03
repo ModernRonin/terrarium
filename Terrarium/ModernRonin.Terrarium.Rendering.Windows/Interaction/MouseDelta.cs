@@ -13,6 +13,9 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Interaction
         public bool IsLeftDown { get; private set; }
         public bool IsRightDown { get; private set; }
         public bool IsMiddleDown { get; private set; }
+        public bool HasLeftBeenClicked { get; private set; }
+        public bool HasRightBeenClicked { get; private set; }
+        public bool HasMiddleBeenClicked { get; private set; }
         public void Update()
         {
             var current = Mouse.GetState();
@@ -21,10 +24,13 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Interaction
             var dy = current.Y - mLast.Y;
             PointerDelta = new Vector2(dx, dy);
             WheelDelta = current.ScrollWheelValue - mLast.ScrollWheelValue;
+            HasLeftBeenClicked = IsLeftDown && current.LeftButton == ButtonState.Released;
+            HasRightBeenClicked = IsRightDown && current.RightButton == ButtonState.Released;
+            HasMiddleBeenClicked = IsMiddleDown && current.MiddleButton == ButtonState.Released;
+
             IsLeftDown = current.LeftButton == ButtonState.Pressed;
             IsRightDown = current.RightButton == ButtonState.Pressed;
             IsMiddleDown = current.MiddleButton == ButtonState.Pressed;
-
             mLast = current;
         }
     }
