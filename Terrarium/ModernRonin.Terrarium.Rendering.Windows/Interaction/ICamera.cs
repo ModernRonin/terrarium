@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using ModernRonin.Standard;
 
 namespace ModernRonin.Terrarium.Rendering.Windows.Interaction
 {
@@ -12,5 +13,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Interaction
         void MoveCamera(Vector2 cameraMovement);
         void CenterOn(Vector2 position);
         void Center();
+        Vector2D ScreenToWorldCoordinates(Vector2 screen);
+        Vector2 WorldToScreenCoordinates(Vector2D world);
     }
 }

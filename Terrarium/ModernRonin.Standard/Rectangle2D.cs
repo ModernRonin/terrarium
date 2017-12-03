@@ -20,7 +20,7 @@ namespace ModernRonin.Standard
         public float Height => MaxCorner.Y - MinCorner.Y;
         public Vector2D Diagonal => MaxCorner - MinCorner;
         public Rectangle2D Normalized => new Rectangle2D(Vector2D.Zero, new Vector2D(Width, Height));
-        public Rectangle2D ScaleBy(float factor) => new Rectangle2D(MinCorner, MinCorner+ factor*Diagonal);
+        public Rectangle2D ScaleBy(float factor) => new Rectangle2D(MinCorner, MinCorner + factor * Diagonal);
         #region Equality
         public bool Equals(Rectangle2D other) => MinCorner.Equals(other.MinCorner) && MaxCorner.Equals(other.MaxCorner);
         public override bool Equals(object obj)
@@ -39,5 +39,13 @@ namespace ModernRonin.Standard
         public static bool operator !=(Rectangle2D left, Rectangle2D right) => !left.Equals(right);
         #endregion
         public Rectangle2D RelativeTo(Vector2D center) => new Rectangle2D(center + MinCorner, center + MaxCorner);
+        public bool Contains(Vector2D position)
+        {
+            if (position.X < MinCorner.X) return false;
+            if (position.X >= MaxCorner.X) return false;
+            if (position.Y < MinCorner.Y) return false;
+            if (position.Y >= MaxCorner.Y) return false;
+            return true;
+        }
     }
 }

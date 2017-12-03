@@ -33,5 +33,9 @@ namespace ModernRonin.Terrarium.Logic
         public IEnumerable<Entity> Entities { get; }
         public float[,] EnergyDensity { get; }
         public IEnumerable<EnergySource> EnergySources { get; }
+        public IEnumerable<Entity> GetEntityAt(Vector2D position)
+        {
+            return Entities.Where(e => e.AbsoluteBoundingBox.Contains(position));
+        }
     }
 }

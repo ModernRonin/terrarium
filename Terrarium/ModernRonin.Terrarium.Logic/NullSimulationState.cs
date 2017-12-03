@@ -9,5 +9,6 @@ namespace ModernRonin.Terrarium.Logic
         public IEnumerable<Entity> Entities => new Entity[0];
         public float[,] EnergyDensity => new float[100, 100];
         public IEnumerable<EnergySource> EnergySources => new EnergySource[0];
+        public IEnumerable<Entity> GetEntityAt(Vector2D position) => Null.Enumerable<Entity>();
     }
 }

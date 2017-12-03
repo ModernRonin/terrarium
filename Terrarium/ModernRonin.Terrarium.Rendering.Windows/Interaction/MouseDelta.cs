@@ -16,10 +16,11 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Interaction
         public bool HasLeftBeenClicked { get; private set; }
         public bool HasRightBeenClicked { get; private set; }
         public bool HasMiddleBeenClicked { get; private set; }
+        public Vector2 PointerPosition { get; private set; }
         public void Update()
         {
             var current = Mouse.GetState();
-
+            PointerPosition= new Vector2(current.X, current.Y);
             var dx = current.X - mLast.X;
             var dy = current.Y - mLast.Y;
             PointerDelta = new Vector2(dx, dy);

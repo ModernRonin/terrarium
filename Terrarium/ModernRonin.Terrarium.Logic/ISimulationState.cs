@@ -9,5 +9,6 @@ namespace ModernRonin.Terrarium.Logic
         IEnumerable<Entity> Entities { get; }
         float[,] EnergyDensity { get; }
         IEnumerable<EnergySource> EnergySources { get; }
+        IEnumerable<Entity> GetEntityAt(Vector2D position);
     }
 }
