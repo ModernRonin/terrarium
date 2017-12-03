@@ -4,9 +4,8 @@ using ModernRonin.Terrarium.Logic;
 
 namespace ModernRonin.Terrarium.Rendering.Windows.Interaction
 {
-    public interface IPicker
+    public interface IPicker : IUpdateable
     {
         event Action<IEnumerable<Entity>> OnEntitiesPicked;
-        void Update();
     }
 }

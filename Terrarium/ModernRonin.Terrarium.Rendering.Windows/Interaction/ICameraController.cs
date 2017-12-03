@@ -1,7 +1,4 @@
 ﻿namespace ModernRonin.Terrarium.Rendering.Windows.Interaction
 {
-    public interface ICameraController
-    {
-        void Update();
-    }
+    public interface ICameraController : IUpdateable { }
 }

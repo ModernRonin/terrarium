@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Autofac;
 using Autofac.Core;
@@ -6,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ModernRonin.Terrarium.Logic;
 using ModernRonin.Terrarium.Rendering.Windows.Drawing;
 using ModernRonin.Terrarium.Rendering.Windows.Interaction;
+using MoreLinq;
 using Module = Autofac.Module;
 
 namespace ModernRonin.Terrarium.Rendering.Windows
@@ -26,11 +28,11 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         }
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<KeyboardDelta>().AsSelf().SingleInstance();
-            builder.RegisterType<MouseDelta>().AsSelf().SingleInstance();
+            builder.RegisterType<KeyboardDelta>().AsImplementedInterfaces().AsSelf().SingleInstance();
+            builder.RegisterType<MouseDelta>().AsImplementedInterfaces().AsSelf().SingleInstance();
             builder.RegisterBuildCallback(SetupVisualization);
             builder.RegisterType<Camera>().As<ICamera>().SingleInstance();
-            builder.RegisterType<CameraController>().As<ICameraController>().SingleInstance();
+            builder.RegisterType<CameraController>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).AssignableTo<ARenderer>().AsSelf()
                    .InstancePerDependency().WithParameters(new Parameter[]
                    {
@@ -42,6 +44,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
             builder.RegisterType<TextureDirectory>().AsSelf().SingleInstance();
             builder.RegisterType<EntitySpriteFactory>().As<IEntitySpriteFactory>().SingleInstance();
             builder.Register<Func<GraphicsDevice>>(_ => () => mVisualization.GraphicsDevice);
+            builder.RegisterType<Picker>().AsImplementedInterfaces().SingleInstance();
         }
         void SetupVisualization(IComponentContext context)
         {
@@ -59,9 +62,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
             };
             Visualization.OnUpdating = instance =>
             {
-                context.Resolve<MouseDelta>().Update();
-                context.Resolve<KeyboardDelta>().Update();
-                context.Resolve<ICameraController>().Update();
+                context.Resolve<IEnumerable<IUpdateable>>().ForEach(u =>u.Update());
                 instance.TransformationMatrix = context.Resolve<ICamera>().TransformationMatrix;
             };
             Visualization.OnRendering = instance =>

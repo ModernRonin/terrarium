@@ -2,7 +2,7 @@
 
 namespace ModernRonin.Terrarium.Rendering.Windows.Interaction
 {
-    public class KeyboardDelta
+    public class KeyboardDelta : IUpdateable
     {
         KeyboardState mCurrent = Keyboard.GetState();
         KeyboardState mLast = Keyboard.GetState();

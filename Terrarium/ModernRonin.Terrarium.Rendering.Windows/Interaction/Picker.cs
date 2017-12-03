@@ -8,19 +8,19 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Interaction
     {
         readonly ICamera mCamera;
         readonly MouseDelta mMouseDelta;
-        readonly ISimulationState mSimulationState;
-        public Picker(MouseDelta mouseDelta, ICamera camera, ISimulationState simulationState)
+        readonly Func<ISimulationState> mSimulationStateGetter;
+        public Picker(MouseDelta mouseDelta, ICamera camera, Func<ISimulationState> simulationStateGetter)
         {
             mMouseDelta = mouseDelta;
             mCamera = camera;
-            mSimulationState = simulationState;
+            mSimulationStateGetter = simulationStateGetter;
         }
         public event Action<IEnumerable<Entity>> OnEntitiesPicked;
         public void Update()
         {
             if (!mMouseDelta.HasLeftBeenClicked) return;
             var worldCoordinates = mCamera.ScreenToWorldCoordinates(mMouseDelta.PointerPosition);
-            var entities = mSimulationState.GetEntityAt(worldCoordinates);
+            var entities = mSimulationStateGetter().GetEntitiesAt(worldCoordinates);
             OnEntitiesPicked(entities);
         }
     }
