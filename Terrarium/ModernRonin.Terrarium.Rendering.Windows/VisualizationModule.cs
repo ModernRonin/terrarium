@@ -59,13 +59,14 @@ namespace ModernRonin.Terrarium.Rendering.Windows
             };
             Visualization.OnUpdating = instance =>
             {
+                context.Resolve<MouseDelta>().Update();
+                context.Resolve<KeyboardDelta>().Update();
                 context.Resolve<ICameraController>().Update();
                 instance.TransformationMatrix = context.Resolve<ICamera>().TransformationMatrix;
             };
             Visualization.OnRendering = instance =>
             {
-                var cc = context.Resolve<IComponentContext>();
-                var simulationSnapshotter = cc.Resolve<Func<ISimulationState>>();
+                var simulationSnapshotter = context.Resolve<Func<ISimulationState>>();
                 var renderer = context.Resolve<Renderer>();
                 renderer.Render(simulationSnapshotter());
             };

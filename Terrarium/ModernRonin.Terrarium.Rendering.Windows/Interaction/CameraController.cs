@@ -21,15 +21,12 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Interaction
         }
         public void Update()
         {
-            mMouse.Update();
             if (mMouse.IsRightDown) mCamera.MoveCamera(-mPanSpeed * mMouse.PointerDelta);
             if (mMouse.HasWheelMoved)
             {
                 mCamera.AdjustZoom(ZoomSpeed * mMouse.WheelDelta);
                 AdjustPanSpeed();
             }
-
-            mKeyboard.Update();
 
             if (mKeyboard.WasPressed(Keys.C)) Center();
             if (mKeyboard.WasPressed(Keys.OemPlus)) mPanSpeed += 0.1f;
