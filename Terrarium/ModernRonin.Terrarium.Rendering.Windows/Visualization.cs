@@ -16,7 +16,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         }
         public SpriteBatch Batch { get; private set; }
 
-        public Matrix TranslationMatrix { get; set; }
+        public Matrix TransformationMatrix { get; set; }
 
         public static VisualizationEventDelegate OnLoading { get; set; }
         public static VisualizationEventDelegate OnUpdating { get; set; }
@@ -45,7 +45,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
         }
         protected override void Draw(GameTime gameTime)
         {
-            Batch.Begin(transformMatrix: TranslationMatrix, blendState: BlendState.Additive);
+            Batch.Begin(transformMatrix: TransformationMatrix, blendState: BlendState.Additive);
             GraphicsDevice.Clear(Color.Black);
             Invoke(OnRendering);
             Batch.End();

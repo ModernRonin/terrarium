@@ -58,7 +58,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows
             Visualization.OnUpdating = instance =>
             {
                 context.Resolve<ICameraController>().Update();
-                instance.TranslationMatrix = context.Resolve<ICamera>().TranslationMatrix;
+                instance.TransformationMatrix = context.Resolve<ICamera>().TransformationMatrix;
             };
             Visualization.OnRendering = instance =>
             {

@@ -7,7 +7,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Interaction
         float Zoom { get; }
         int ViewportWidth { get; set; }
         int ViewportHeight { get; set; }
-        Matrix TranslationMatrix { get; }
+        Matrix TransformationMatrix { get; }
         void AdjustZoom(float amount);
         void MoveCamera(Vector2 cameraMovement);
         void CenterOn(Vector2 position);
