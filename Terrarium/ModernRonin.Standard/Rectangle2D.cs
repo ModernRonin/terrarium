@@ -47,5 +47,11 @@ namespace ModernRonin.Standard
             if (position.Y >= MaxCorner.Y) return false;
             return true;
         }
+        public Rectangle2D Grow(float dx, float dy)
+        {
+            var half = new Vector2D(dx / 2, dy / 2);
+            return new Rectangle2D(MinCorner - half, MaxCorner + half);
+        }
+        public Rectangle2D Grow(float delta) => Grow(delta, delta);
     }
 }
