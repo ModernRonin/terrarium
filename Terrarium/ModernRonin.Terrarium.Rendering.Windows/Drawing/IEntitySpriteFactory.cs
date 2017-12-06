@@ -7,7 +7,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Drawing
 {
     public interface IEntitySpriteFactory : IDisposable
     {
-        Texture2D GetTextureForEntity(EntityState entityState);
+        Texture2D GetTextureForEntity(IEntityState entityState);
         void CleanAllExcept(IEnumerable<string> codes);
     }
 }

@@ -4,7 +4,7 @@ using ModernRonin.Standard;
 
 namespace ModernRonin.Terrarium.Logic
 {
-    public class EntityState
+    public class EntityState : IEntityState
     {
         public EntityState(IEnumerable<Part> parts, Vector2D position = new Vector2D())
         {

@@ -12,11 +12,11 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Drawing
         readonly IEntitySpriteFactory mFactory;
         public EntityRenderer(GraphicsDevice device, SpriteBatch batch, IEntitySpriteFactory factory) : base(device,
             batch) => mFactory = factory;
-        public void Render(IEnumerable<EntityState> entities)
+        public void Render(IEnumerable<IEntityState> entities)
         {
             entities.ForEach(Draw);
         }
-        void Draw(EntityState entityState)
+        void Draw(IEntityState entityState)
         {
             var texture = mFactory.GetTextureForEntity(entityState);
 

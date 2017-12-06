@@ -24,7 +24,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Drawing
         }
         public void Dispose() => Clear();
         void Clear() => mCodesToTextures.Keys.ToArray().ForEach(Remove);
-        public Texture2D GetTextureForEntity(EntityState entityState)
+        public Texture2D GetTextureForEntity(IEntityState entityState)
         {
             var key = entityState.Code;
             if (!mCodesToTextures.ContainsKey(key)) mCodesToTextures[key] = CreateTexture(entityState);
@@ -40,7 +40,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Drawing
             mCodesToTextures[code].Dispose();
             mCodesToTextures.Remove(code);
         }
-        Texture2D CreateTexture(EntityState entityState)
+        Texture2D CreateTexture(IEntityState entityState)
         {
             var device = mDeviceGetter();
             var boundingBox = entityState.LocalBoundingBox.Normalized.ScaleBy(PartTextureSizeScalar).ToRectangle();
