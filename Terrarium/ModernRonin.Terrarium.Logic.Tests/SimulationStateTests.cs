@@ -13,10 +13,28 @@ namespace ModernRonin.Terrarium.Logic.Tests
     public class SimulationStateTests
     {
         [Test]
-        public void Constructor_Sets_Entities()
+        public void Constructor_Sets_EnergyDensity_From_Density_If_Present()
         {
-            var entities = new Entity[] {new Entity(new EntityState(Null.Enumerable<Part>()), new Genome()),};
-            new SimulationState(entities, Null.Enumerable<IEnergySource>()).Entities.Should().BeSameAs(entities);
+            var energySources = new[]
+                {new EnergySource(Vector2D.Zero, 10f), new EnergySource(new Vector2D(2f, 0), 100f)};
+            var underTest = new SimulationState(null,
+                energySources,
+                new Vector2D(5, 1),
+                new float[2, 2] {{17f, 17f}, {17f, 17f}});
+            underTest.EnergyDensity[0, 0].OughtTo().Approximate(17f);
+            underTest.EnergyDensity[0, 1].OughtTo().Approximate(17f);
+            underTest.EnergyDensity[1, 1].OughtTo().Approximate(17f);
+            underTest.EnergyDensity[1, 0].OughtTo().Approximate(17f);
+        }
+        [Test]
+        public void Constructor_Sets_EnergyDensity_From_EnergySources_If_No_Density_Passed()
+        {
+            var energySources = new[]
+                {new EnergySource(Vector2D.Zero, 10f), new EnergySource(new Vector2D(2f, 0), 100f)};
+            var underTest = new SimulationState(null, energySources, new Vector2D(5, 1));
+            underTest.EnergyDensity[0, 0].OughtTo().Approximate(108f);
+            underTest.EnergyDensity[2, 0].OughtTo().Approximate(108f);
+            underTest.EnergyDensity[4, 0].OughtTo().Approximate(104f);
         }
         [Test]
         public void Constructor_Sets_EnergySources()
@@ -25,23 +43,10 @@ namespace ModernRonin.Terrarium.Logic.Tests
             new SimulationState(null, energySources).EnergySources.Should().BeSameAs(energySources);
         }
         [Test]
-        public void Constructor_Sets_EnergyDensity_From_EnergySources_If_No_Density_Passed()
+        public void Constructor_Sets_Entities()
         {
-            var energySources = new[] { new EnergySource(Vector2D.Zero, 10f), new EnergySource(new Vector2D(2f, 0), 100f)   };
-            var underTest = new SimulationState(null, energySources, new Vector2D(5, 1));
-            underTest.EnergyDensity[0, 0].OughtTo().Approximate(108f);
-            underTest.EnergyDensity[2, 0].OughtTo().Approximate(108f);
-            underTest.EnergyDensity[4, 0].OughtTo().Approximate(104f);
-        }
-        [Test]
-        public void Constructor_Sets_EnergyDensity_From_Density_If_Present()
-        {
-            var energySources = new[] { new EnergySource(Vector2D.Zero, 10f), new EnergySource(new Vector2D(2f, 0), 100f) };
-            var underTest = new SimulationState(null, energySources, new Vector2D(5, 1), new float[2,2]{{17f, 17f}, {17f, 17f}});
-            underTest.EnergyDensity[0, 0].OughtTo().Approximate(17f);
-            underTest.EnergyDensity[0, 1].OughtTo().Approximate(17f);
-            underTest.EnergyDensity[1, 1].OughtTo().Approximate(17f);
-            underTest.EnergyDensity[1, 0].OughtTo().Approximate(17f);
+            var entities = new[] {new Entity(new EntityState(Null.Enumerable<Part>()), new Genome())};
+            new SimulationState(entities, Null.Enumerable<IEnergySource>()).Entities.Should().BeSameAs(entities);
         }
         [Test]
         public void Constructor_Sets_Size_If_Present()
@@ -50,17 +55,20 @@ namespace ModernRonin.Terrarium.Logic.Tests
                 .Size.OughtTo().Approximate(13, 17);
         }
         [Test]
+        public void EnergyDensityAt_Gives_Density_At_Nearest_Integer_Coordinates()
+        {
+            var underTest = new SimulationState(Null.Enumerable<Entity>(),
+                Null.Enumerable<IEnergySource>(),
+                new Vector2D(3, 3),
+                new float[,] {{1, 2, 3}, {10, 20, 30}, {100, 200, 300}});
+            underTest.EnergyDensityAt(Vector2D.Zero).OughtTo().Approximate(1);
+            underTest.EnergyDensityAt(new Vector2D(1.5f, 1.5f)).OughtTo().Approximate(20);
+        }
+        [Test]
         public void GetEntitiesAt_Returns_Entities_Whose_BoundingBox_Contains_Position()
         {
-            var entities = new[]
-            {
-                Defaults.CrossPlant, Defaults.SnakePlant
-            };
-            var underTest = new SimulationState(
-                entities,
-                Null.Enumerable<IEnergySource>(),
-                new Vector2D(100, 100)
-                );
+            var entities = new[] {Defaults.CrossPlant, Defaults.SnakePlant};
+            var underTest = new SimulationState(entities, Null.Enumerable<IEnergySource>(), new Vector2D(100, 100));
             underTest.GetEntitiesAt(new Vector2D(11, 10)).Single().Should().BeSameAs(entities[0]);
             underTest.GetEntitiesAt(new Vector2D(89, 90)).Single().Should().BeSameAs(entities[1]);
         }
@@ -71,17 +79,17 @@ namespace ModernRonin.Terrarium.Logic.Tests
             underTest.WithEnergySources(Null.Enumerable<IEnergySource>()).Should().NotBeSameAs(underTest);
         }
         [Test]
+        public void WithEnergySources_Sets_EnergySources()
+        {
+            var underTest = new SimulationState(Null.Enumerable<Entity>(), Null.Enumerable<IEnergySource>());
+            var energySources = new[] {Substitute.For<IEnergySource>(), Substitute.For<IEnergySource>()};
+            underTest.WithEnergySources(energySources).EnergySources.Should().BeSameAs(energySources);
+        }
+        [Test]
         public void WithEntities_Returns_Different_Instance()
         {
             var underTest = new SimulationState(Null.Enumerable<Entity>(), Null.Enumerable<IEnergySource>());
             underTest.WithEntities(Null.Enumerable<Entity>()).Should().NotBeSameAs(underTest);
-        }
-        [Test]
-        public void WithEnergySources_Sets_EnergySources()
-        {
-            var underTest = new SimulationState(Null.Enumerable<Entity>(), Null.Enumerable<IEnergySource>());
-            var energySources = new[] { Substitute.For<IEnergySource>(), Substitute.For<IEnergySource>() };
-            underTest.WithEnergySources(energySources).EnergySources.Should().BeSameAs(energySources);
         }
         [Test]
         public void WithEntities_Sets_Entities()
