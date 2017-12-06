@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using Autofac;
+using ModernRonin.Terrarium.Logic.Transformations;
 using Module = Autofac.Module;
 
 namespace ModernRonin.Terrarium.Logic
