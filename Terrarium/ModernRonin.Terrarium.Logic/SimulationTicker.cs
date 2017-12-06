@@ -75,5 +75,27 @@ namespace ModernRonin.Terrarium.Logic
         }
     }
 
-    public class DummyEntityMovingTransformer : ISimulationTransformer { }
+    public abstract class AnEntityTransformer : AEnumeratingSimulationTransformer<Entity>
+    {
+        protected override IEnumerable<Entity> ExtractStateProperty(ISimulationState state)
+        {
+            return state.Entities;
+        }
+        protected override ISimulationState SetStateProperty(ISimulationState state, IEnumerable<Entity> property)
+        {
+           return  state.WithEntities(property);
+        }
+    }
+    public class DummyEntityMovingTransformer : AnEntityTransformer {
+        readonly Vector2D[] mDirections = { new Vector2D(1, 1).Normalized, new Vector2D(-3, -7).Normalized };
+        int mDirectionIndex;
+        protected override Entity Transform(Entity entity, ISimulationState state)
+        {
+            var old = entity.State;
+            mDirectionIndex = 0 == mDirectionIndex ? 1 : 0;
+            var newPosition = (old.Position + mDirections[mDirectionIndex]).ClampWithin(state.Size);
+            return entity.WithState(old.At(newPosition));
+
+        }
+    }
 }
