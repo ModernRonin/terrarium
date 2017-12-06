@@ -2,7 +2,7 @@
 
 namespace ModernRonin.Terrarium.Logic
 {
-    public struct EnergySource
+    public class EnergySource
     {
         public Vector2D Position { get; }
         public float Intensity { get; }
