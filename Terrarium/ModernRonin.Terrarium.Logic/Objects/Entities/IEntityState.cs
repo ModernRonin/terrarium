@@ -15,5 +15,6 @@ namespace ModernRonin.Terrarium.Logic.Objects.Entities
         IEntityState WithParts(IEnumerable<Part> parts);
         IEntityState AddTickEnergy(float delta);
         IEntityState SubtractTickEnergy(float delta);
+        IEntityState ResetTickEnergy();
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using ModernRonin.Standard;
 
@@ -7,7 +6,7 @@ namespace ModernRonin.Terrarium.Logic.Objects.Entities
 {
     public class EntityState : IEntityState
     {
-        public EntityState(IEnumerable<Part> parts, Vector2D position = new Vector2D(), float tickEnergy=0)
+        public EntityState(IEnumerable<Part> parts, Vector2D position = new Vector2D(), float tickEnergy = 0)
         {
             Position = position;
             TickEnergy = tickEnergy;
@@ -31,7 +30,8 @@ namespace ModernRonin.Terrarium.Logic.Objects.Entities
         public Rectangle2D AbsoluteBoundingBox => LocalBoundingBox.RelativeTo(Position);
         public IEntityState At(Vector2D position) => new EntityState(Parts, position);
         public IEntityState WithParts(IEnumerable<Part> parts) => new EntityState(parts, Position, TickEnergy);
-        public IEntityState AddTickEnergy(float delta) => new EntityState(Parts, Position, TickEnergy+delta);
+        public IEntityState AddTickEnergy(float delta) => new EntityState(Parts, Position, TickEnergy + delta);
         public IEntityState SubtractTickEnergy(float delta) => AddTickEnergy(-delta);
+        public IEntityState ResetTickEnergy() => new EntityState(Parts, Position);
     }
 }

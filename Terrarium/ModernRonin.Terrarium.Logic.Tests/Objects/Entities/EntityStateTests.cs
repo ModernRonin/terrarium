@@ -152,6 +152,30 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
             Defaults.Cross.LocalBoundingBox.Width.OughtTo().Approximate(3);
         }
         [Test]
+        public void ResetTickEnergy_Leaves_Parts_Equal()
+        {
+            var parts = new Part[2];
+            new EntityState(parts).ResetTickEnergy().Parts.Should().BeSameAs(parts);
+        }
+        [Test]
+        public void ResetTickEnergy_Leaves_Position_Equal()
+        {
+            new EntityState(Null.Enumerable<Part>(), new Vector2D(13f, 17f))
+                .ResetTickEnergy().Position.Should().Be(new Vector2D(13f, 17f));
+        }
+        [Test]
+        public void ResetTickEnergy_Returns_Different_Instance()
+        {
+            var underTest = new EntityState(Null.Enumerable<Part>());
+            underTest.ResetTickEnergy().Should().NotBeSameAs(underTest);
+        }
+        [Test]
+        public void ResetTickEnergy_Sets_TickEnergy_To_Zero()
+        {
+            new EntityState(Null.Enumerable<Part>(), tickEnergy: 17f)
+                .ResetTickEnergy().TickEnergy.OughtTo().Approximate(0f);
+        }
+        [Test]
         public void SubtractTickEnergy_Leaves_Parts_Equal()
         {
             var parts = new Part[2];
