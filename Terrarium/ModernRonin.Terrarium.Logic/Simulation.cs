@@ -8,19 +8,24 @@ namespace ModernRonin.Terrarium.Logic
     public class Simulation : ISimulation
     {
         readonly Stopwatch mWatch = new Stopwatch();
+        readonly Func<ISimulationTicker> mTickerFactory;
         ISimulationState mCurrentState;
         bool mIsStopRequested;
         Task mTask;
-        public Simulation(ISimulationState initialState) => mCurrentState = initialState;
+        public Simulation(Func<ISimulationTicker> tickerFactory, ISimulationState initialState)
+        {
+            mTickerFactory = tickerFactory;
+            mCurrentState = initialState;
+        }
         // ReSharper disable once UnusedMember.Global - used by IOC
-        public Simulation() : this(Defaults.SimulationState) { }
+        public Simulation(Func<ISimulationTicker> tickerFactory) : this(tickerFactory, Defaults.SimulationState) { }
         public ISimulationState CurrentState => mCurrentState;
         public int MaximumFramesPerSecond { get; set; } = 30;
         public bool IsRunning { get; set; }
         public void Tick()
         {
             mWatch.Restart();
-            var next = new SimulationTicker(CurrentState).Tick();
+            var next = mTickerFactory().Tick(mCurrentState);
             Interlocked.Exchange(ref mCurrentState, next);
             mCurrentState = next;
             mWatch.Stop();

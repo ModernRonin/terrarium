@@ -4,38 +4,28 @@ using ModernRonin.Standard;
 
 namespace ModernRonin.Terrarium.Logic
 {
-    public class SimulationTicker
+    public interface ISimulationTicker
     {
-        readonly ISimulationState mCurrent;
-        readonly Vector2D[] mDirections = {new Vector2D(1, 1).Normalized, new Vector2D(-3, -7).Normalized};
-        int mDirectionIndex;
-        public SimulationTicker(ISimulationState current) => mCurrent = current;
-        public ISimulationState Tick()
+        ISimulationState Tick(ISimulationState state);
+    }
+
+    public class SimulationTicker : ISimulationTicker
+    {
+        readonly IEnumerable<ISimulationStateTransformer> mTransformers;
+        public SimulationTicker(IEnumerable<ISimulationStateTransformer> transformers) => mTransformers = transformers;
+        public ISimulationState Tick(ISimulationState state)
         {
-            var energySources = mCurrent.EnergySources.Select(Move).ToArray();
-            var entities = mCurrent.Entities.Select(Move).ToArray();
-            return mCurrent.WithEnergySources(energySources).WithEntities(entities);
-        }
-        Entity Move(Entity entity)
-        {
-            var old = entity.State;
-            mDirectionIndex = 0 == mDirectionIndex ? 1 : 0;
-            var newPosition = (old.Position + mDirections[mDirectionIndex]).ClampWithin(mCurrent.Size);
-            return entity.WithState(old.At(newPosition));
-        }
-        IEnergySource Move(IEnergySource old)
-        {
-            var newPosition = (old.Position + old.Speed).ClampWithin(mCurrent.Size);
-            return old.At(newPosition);
+            return mTransformers.OrderBy(t => t.Priority).Aggregate(state, (s, t) => t.Transform(s));
         }
     }
 
-    public interface ISimulationTransformer
+    public interface ISimulationStateTransformer
     {
+        int Priority { get; }
         ISimulationState Transform(ISimulationState state);
     }
 
-    public abstract class ASimulationTransformer<T> : ISimulationTransformer
+    public abstract class ASimulationStateTransformer<T> : ISimulationStateTransformer
     {
         public ISimulationState Transform(ISimulationState state)
         {
@@ -43,12 +33,13 @@ namespace ModernRonin.Terrarium.Logic
             var nu = Transform(old, state);
             return SetStateProperty(state, nu);
         }
+        public virtual int Priority => 0;
         protected abstract T Transform(T old, ISimulationState state);
         protected abstract T ExtractStateProperty(ISimulationState state);
         protected abstract ISimulationState SetStateProperty(ISimulationState state, T property);
     }
 
-    public abstract class AEnumeratingSimulationTransformer<T> : ASimulationTransformer<IEnumerable<T>>
+    public abstract class AEnumeratingSimulationStateTransformer<T> : ASimulationStateTransformer<IEnumerable<T>>
     {
         protected override IEnumerable<T> Transform(IEnumerable<T> old, ISimulationState state)
         {
@@ -57,7 +48,7 @@ namespace ModernRonin.Terrarium.Logic
         protected abstract T Transform(T old, ISimulationState state);
     }
 
-    public abstract class AnEnergySourceTransformer : AEnumeratingSimulationTransformer<IEnergySource>
+    public abstract class AnEnergySourceTransformer : AEnumeratingSimulationStateTransformer<IEnergySource>
     {
         protected override IEnumerable<IEnergySource> ExtractStateProperty(ISimulationState state) =>
             state.EnergySources;
@@ -75,19 +66,16 @@ namespace ModernRonin.Terrarium.Logic
         }
     }
 
-    public abstract class AnEntityTransformer : AEnumeratingSimulationTransformer<Entity>
+    public abstract class AnEntityTransformer : AEnumeratingSimulationStateTransformer<Entity>
     {
-        protected override IEnumerable<Entity> ExtractStateProperty(ISimulationState state)
-        {
-            return state.Entities;
-        }
-        protected override ISimulationState SetStateProperty(ISimulationState state, IEnumerable<Entity> property)
-        {
-           return  state.WithEntities(property);
-        }
+        protected override IEnumerable<Entity> ExtractStateProperty(ISimulationState state) => state.Entities;
+        protected override ISimulationState SetStateProperty(ISimulationState state, IEnumerable<Entity> property) =>
+            state.WithEntities(property);
     }
-    public class DummyEntityMovingTransformer : AnEntityTransformer {
-        readonly Vector2D[] mDirections = { new Vector2D(1, 1).Normalized, new Vector2D(-3, -7).Normalized };
+
+    public class DummyEntityMovingTransformer : AnEntityTransformer
+    {
+        readonly Vector2D[] mDirections = {new Vector2D(1, 1).Normalized, new Vector2D(-3, -7).Normalized};
         int mDirectionIndex;
         protected override Entity Transform(Entity entity, ISimulationState state)
         {
@@ -95,7 +83,6 @@ namespace ModernRonin.Terrarium.Logic
             mDirectionIndex = 0 == mDirectionIndex ? 1 : 0;
             var newPosition = (old.Position + mDirections[mDirectionIndex]).ClampWithin(state.Size);
             return entity.WithState(old.At(newPosition));
-
         }
     }
 }
