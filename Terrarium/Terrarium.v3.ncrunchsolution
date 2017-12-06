@@ -1,6 +1,10 @@
 ﻿<SolutionConfiguration>
   <Settings>
     <AllowParallelTestExecution>True</AllowParallelTestExecution>
+    <MetricsExclusionList>
+      <Value>ModernRonin.Standard.Tests\ModernRonin.Standard.Tests.csproj</Value>
+      <Value>ModernRonin.Terrarium.Logic.Tests\ModernRonin.Terrarium.Logic.Tests.csproj</Value>
+    </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>
 </SolutionConfiguration>

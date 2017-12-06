@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Linq;
+using FluentAssertions;
 using ModernRonin.Standard;
 using ModernRonin.Standard.Tests;
 using ModernRonin.Terrarium.Logic.Objects;
@@ -30,6 +31,37 @@ namespace ModernRonin.Terrarium.Logic.Tests
             underTest.EnergyDensity[0, 0].OughtTo().Approximate(108f);
             underTest.EnergyDensity[2, 0].OughtTo().Approximate(108f);
             underTest.EnergyDensity[4, 0].OughtTo().Approximate(104f);
+        }
+        [Test]
+        public void Constructor_Sets_EnergyDensity_From_Density_If_Present()
+        {
+            var energySources = new[] { new EnergySource(Vector2D.Zero, 10f), new EnergySource(new Vector2D(2f, 0), 100f) };
+            var underTest = new SimulationState(null, energySources, new Vector2D(5, 1), new float[2,2]{{17f, 17f}, {17f, 17f}});
+            underTest.EnergyDensity[0, 0].OughtTo().Approximate(17f);
+            underTest.EnergyDensity[0, 1].OughtTo().Approximate(17f);
+            underTest.EnergyDensity[1, 1].OughtTo().Approximate(17f);
+            underTest.EnergyDensity[1, 0].OughtTo().Approximate(17f);
+        }
+        [Test]
+        public void Constructor_Sets_Size_If_Present()
+        {
+            new SimulationState(Null.Enumerable<Entity>(), Null.Enumerable<IEnergySource>(), new Vector2D(13, 17))
+                .Size.OughtTo().Approximate(13, 17);
+        }
+        [Test]
+        public void GetEntitiesAt_Returns_Entities_Whose_BoundingBox_Contains_Position()
+        {
+            var entities = new[]
+            {
+                Defaults.CrossPlant, Defaults.SnakePlant
+            };
+            var underTest = new SimulationState(
+                entities,
+                Null.Enumerable<IEnergySource>(),
+                new Vector2D(100, 100)
+                );
+            underTest.GetEntitiesAt(new Vector2D(11, 10)).Single().Should().BeSameAs(entities[0]);
+            underTest.GetEntitiesAt(new Vector2D(89, 90)).Single().Should().BeSameAs(entities[1]);
         }
     }
 }
