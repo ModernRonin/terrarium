@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ModernRonin.Terrarium.Logic;
+using ModernRonin.Terrarium.Logic.Objects.Entities;
 
 namespace ModernRonin.Terrarium.Rendering.Windows.Interaction
 {

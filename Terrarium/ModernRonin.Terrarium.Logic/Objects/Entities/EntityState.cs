@@ -2,7 +2,7 @@
 using System.Linq;
 using ModernRonin.Standard;
 
-namespace ModernRonin.Terrarium.Logic
+namespace ModernRonin.Terrarium.Logic.Objects.Entities
 {
     public class EntityState : IEntityState
     {
@@ -13,7 +13,7 @@ namespace ModernRonin.Terrarium.Logic
         }
         public Vector2D Position { get; }
         public IEnumerable<Part> Parts { get; }
-        public string Code => string.Join("?", Parts.Select(p => p.Code));
+        public string Code => string.Join("?", Enumerable.Select(Parts, p => p.Code));
         public Rectangle2D LocalBoundingBox
         {
             get

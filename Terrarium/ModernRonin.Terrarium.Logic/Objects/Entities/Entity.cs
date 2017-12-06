@@ -1,4 +1,4 @@
-﻿namespace ModernRonin.Terrarium.Logic
+﻿namespace ModernRonin.Terrarium.Logic.Objects.Entities
 {
     public class Entity
     {

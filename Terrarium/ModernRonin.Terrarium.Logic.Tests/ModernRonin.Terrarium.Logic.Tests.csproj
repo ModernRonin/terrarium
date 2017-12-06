@@ -64,8 +64,8 @@
   <ItemGroup>
     <Compile Include="Array2DExtensions.cs" />
     <Compile Include="EnergySourceTests.cs" />
-    <Compile Include="EntityStateTests.cs" />
-    <Compile Include="PartTests.cs" />
+    <Compile Include="Objects\Entities\EntityStateTests.cs" />
+    <Compile Include="Objects\Entities\PartTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

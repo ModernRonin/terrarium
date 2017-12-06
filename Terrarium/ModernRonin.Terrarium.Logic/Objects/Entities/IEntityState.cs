@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ModernRonin.Standard;
 
-namespace ModernRonin.Terrarium.Logic {
+namespace ModernRonin.Terrarium.Logic.Objects.Entities {
     public interface IEntityState {
         Vector2D Position { get; }
         IEnumerable<Part> Parts { get; }

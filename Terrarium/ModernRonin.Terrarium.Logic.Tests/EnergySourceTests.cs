@@ -1,24 +1,14 @@
 ﻿using System;
-using System.Linq;
 using ModernRonin.Standard;
 using ModernRonin.Standard.Tests;
+using ModernRonin.Terrarium.Logic.Objects;
 using NUnit.Framework;
 
 namespace ModernRonin.Terrarium.Logic.Tests
 {
-    public static class Vector2DExtensions
-    {
-        
-    }
     [TestFixture]
     public class EnergySourceTests
     {
-        [Test]
-        public void ApplyTo_Adds_Full_Intensity_At_Position()
-        {
-            var output = RunStandardScenario();
-            output[50, 50].OughtTo().Approximate(11f);
-        }
         static float[,] RunStandardScenario()
         {
             var underTest = new EnergySource(new Vector2D(50f, 50f), 10f);
@@ -37,6 +27,12 @@ namespace ModernRonin.Terrarium.Logic.Tests
             var dx = 50 - x;
             var dy = 50 - y;
             return Math.Sqrt(dx * dx + dy * dy);
+        }
+        [Test]
+        public void ApplyTo_Adds_Full_Intensity_At_Position()
+        {
+            var output = RunStandardScenario();
+            output[50, 50].OughtTo().Approximate(11f);
         }
         [Test]
         public void ApplyTo_Adds_IntensityMinusOne_At_All_Positions_With_DistanceOne_From_Center()

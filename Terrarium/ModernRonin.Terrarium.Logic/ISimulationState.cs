@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using ModernRonin.Standard;
+using ModernRonin.Terrarium.Logic.Objects;
+using ModernRonin.Terrarium.Logic.Objects.Entities;
 
 namespace ModernRonin.Terrarium.Logic
 {

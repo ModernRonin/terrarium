@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using ModernRonin.Terrarium.Logic.Objects.Entities;
 
-namespace ModernRonin.Terrarium.Logic.Transformations {
+namespace ModernRonin.Terrarium.Logic.Transformations
+{
     public abstract class AnEntityTransformer : AEnumeratingSimulationStateTransformer<Entity>
     {
         protected override IEnumerable<Entity> Get(ISimulationState state) => state.Entities;

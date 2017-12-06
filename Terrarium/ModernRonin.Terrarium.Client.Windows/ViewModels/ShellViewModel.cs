@@ -7,6 +7,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Caliburn.Micro;
 using ModernRonin.Terrarium.Logic;
+using ModernRonin.Terrarium.Logic.Objects.Entities;
 using ModernRonin.Terrarium.Rendering.Windows.Interaction;
 
 namespace ModernRonin.Terrarium.Client.Windows.ViewModels

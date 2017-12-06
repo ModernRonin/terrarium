@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ModernRonin.Standard;
-using ModernRonin.Terrarium.Logic;
+using ModernRonin.Terrarium.Logic.Objects.Entities;
 using ModernRonin.Terrarium.Rendering.Windows.Utilities;
 using MoreLinq;
 
@@ -23,7 +23,6 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Drawing
             mTextureDirectory = textureDirectory;
         }
         public void Dispose() => Clear();
-        void Clear() => mCodesToTextures.Keys.ToArray().ForEach(Remove);
         public Texture2D GetTextureForEntity(IEntityState entityState)
         {
             var key = entityState.Code;
@@ -35,6 +34,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Drawing
             var toBeDeletedKeys = mCodesToTextures.Keys.Except(codes).ToArray();
             toBeDeletedKeys.ForEach(Remove);
         }
+        void Clear() => mCodesToTextures.Keys.ToArray().ForEach(Remove);
         void Remove(string code)
         {
             mCodesToTextures[code].Dispose();

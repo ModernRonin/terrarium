@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using ModernRonin.Terrarium.Logic;
+using ModernRonin.Terrarium.Logic.Objects.Entities;
 using MoreLinq;
 
 namespace ModernRonin.Terrarium.Rendering.Windows
