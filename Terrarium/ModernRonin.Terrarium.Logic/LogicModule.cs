@@ -10,8 +10,7 @@ namespace ModernRonin.Terrarium.Logic
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<Simulation>().As<ISimulation>().SingleInstance();
-            builder.RegisterType<SimulationTicker>().As<ISimulationTicker>().InstancePerDependency();
-            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).AssignableTo<ISimulationStateTransformer>()
+            builder.RegisterAssemblyTypes(ThisAssembly).AssignableTo<ISimulationStateTransformer>().As<ISimulationStateTransformer>()
                    .InstancePerDependency();
             builder.Register<Func<ISimulationState>>(c =>
             {

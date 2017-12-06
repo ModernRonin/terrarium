@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,24 +10,24 @@ namespace ModernRonin.Terrarium.Logic
     public class Simulation : ISimulation
     {
         readonly Stopwatch mWatch = new Stopwatch();
-        readonly Func<ISimulationTicker> mTickerFactory;
+        readonly IEnumerable<ISimulationStateTransformer> mTransformers;
         ISimulationState mCurrentState;
         bool mIsStopRequested;
         Task mTask;
-        public Simulation(Func<ISimulationTicker> tickerFactory, ISimulationState initialState)
+        public Simulation(ISimulationState initialState, IEnumerable<ISimulationStateTransformer> transformers)
         {
-            mTickerFactory = tickerFactory;
             mCurrentState = initialState;
+            mTransformers = transformers;
         }
         // ReSharper disable once UnusedMember.Global - used by IOC
-        public Simulation(Func<ISimulationTicker> tickerFactory) : this(tickerFactory, Defaults.SimulationState) { }
+        public Simulation(IEnumerable<ISimulationStateTransformer> transformers) : this(Defaults.SimulationState, transformers) { }
         public ISimulationState CurrentState => mCurrentState;
         public int MaximumFramesPerSecond { get; set; } = 30;
         public bool IsRunning { get; set; }
         public void Tick()
         {
             mWatch.Restart();
-            var next = mTickerFactory().Tick(mCurrentState);
+            var next= mTransformers.OrderBy(t => t.Priority).Aggregate(mCurrentState, (s, t) => t.Transform(s));
             Interlocked.Exchange(ref mCurrentState, next);
             mCurrentState = next;
             mWatch.Stop();

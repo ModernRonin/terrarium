@@ -4,21 +4,6 @@ using ModernRonin.Standard;
 
 namespace ModernRonin.Terrarium.Logic
 {
-    public interface ISimulationTicker
-    {
-        ISimulationState Tick(ISimulationState state);
-    }
-
-    public class SimulationTicker : ISimulationTicker
-    {
-        readonly IEnumerable<ISimulationStateTransformer> mTransformers;
-        public SimulationTicker(IEnumerable<ISimulationStateTransformer> transformers) => mTransformers = transformers;
-        public ISimulationState Tick(ISimulationState state)
-        {
-            return mTransformers.OrderBy(t => t.Priority).Aggregate(state, (s, t) => t.Transform(s));
-        }
-    }
-
     public interface ISimulationStateTransformer
     {
         int Priority { get; }
@@ -75,13 +60,16 @@ namespace ModernRonin.Terrarium.Logic
 
     public class DummyEntityMovingTransformer : AnEntityTransformer
     {
-        readonly Vector2D[] mDirections = {new Vector2D(1, 1).Normalized, new Vector2D(-3, -7).Normalized};
-        int mDirectionIndex;
+        readonly Dictionary<string, Vector2D> mDirectionsForCodes = new Dictionary<string, Vector2D>()
+        {
+            {Defaults.Cross.Code, new Vector2D(1, 1).Normalized},
+            {Defaults.Snake.Code, new Vector2D(-3, -7).Normalized}
+        };
         protected override Entity Transform(Entity entity, ISimulationState state)
         {
             var old = entity.State;
-            mDirectionIndex = 0 == mDirectionIndex ? 1 : 0;
-            var newPosition = (old.Position + mDirections[mDirectionIndex]).ClampWithin(state.Size);
+            var delta = mDirectionsForCodes[old.Code];
+            var newPosition = (old.Position + delta).ClampWithin(state.Size);
             return entity.WithState(old.At(newPosition));
         }
     }
