@@ -2,7 +2,7 @@
 
 namespace ModernRonin.Terrarium.Logic
 {
-    public class EnergySource
+    public class EnergySource : IEnergySource
     {
         public Vector2D Position { get; }
         public float Intensity { get; }

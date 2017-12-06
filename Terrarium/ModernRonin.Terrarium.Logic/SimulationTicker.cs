@@ -11,9 +11,9 @@ namespace ModernRonin.Terrarium.Logic
         public SimulationTicker(ISimulationState current) => mCurrent = current;
         public ISimulationState Tick()
         {
-            var entities = mCurrent.Entities.Select(Move).ToArray();
             var energySources = mCurrent.EnergySources.Select(Move).ToArray();
-            return mCurrent.WithEntities(entities).WithEnergySources(energySources);
+            var entities = mCurrent.Entities.Select(Move).ToArray();
+            return mCurrent.WithEnergySources(energySources).WithEntities(entities);
         }
         Entity Move(Entity entity)
         {
@@ -22,7 +22,7 @@ namespace ModernRonin.Terrarium.Logic
             var newPosition = (old.Position + mDirections[mDirectionIndex]).ClampWithin(mCurrent.Size);
             return entity.WithState(old.At(newPosition));
         }
-        EnergySource Move(EnergySource old)
+        IEnergySource Move(IEnergySource old)
         {
             var newPosition = (old.Position + old.Speed).ClampWithin(mCurrent.Size);
             return old.At(newPosition);
