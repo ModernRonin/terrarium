@@ -7,8 +7,11 @@ namespace ModernRonin.Terrarium.Logic.Transformations
     {
         protected override Entity Transform(Entity old, ISimulationState state)
         {
-            float absorbed = old.State.Parts.Where(p => p.Kind == PartKind.Absorber)
-                                .Select(a => state.EnergyDensityAt(old.State.Position + a.RelativePosition)).Sum();
+            bool isAbsorber(Part part) => part.Kind == PartKind.Absorber;
+            float energyFor(Part absorber) => state.EnergyDensityAt(old.State.Position + absorber.RelativePosition);
+
+            var absorbers = old.State.Parts.Where(isAbsorber);
+            var absorbed = absorbers.Select(energyFor).Sum();
             return old.WithState(old.State.AddTickEnergy(absorbed));
         }
     }
