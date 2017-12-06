@@ -24,7 +24,7 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
                     new Part(PartKind.Absorber, Vector2D.Zero), new Part(PartKind.Core, Vector2D.Zero),
                     new Part(PartKind.Store, Vector2D.Zero), new Part(PartKind.Store, Vector2D.Zero)
                 }),
-                new Genome());
+                new Genome(null, null));
             var state = new SimulationState(entity.AsEnumerable(), Null.Enumerable<IEnergySource>());
 
             var underTest = new EntityPartsEnergyCostTransformer(configuration);

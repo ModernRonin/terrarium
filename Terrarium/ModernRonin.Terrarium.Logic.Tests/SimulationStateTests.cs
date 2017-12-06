@@ -45,7 +45,7 @@ namespace ModernRonin.Terrarium.Logic.Tests
         [Test]
         public void Constructor_Sets_Entities()
         {
-            var entities = new[] {new Entity(new EntityState(Null.Enumerable<Part>()), new Genome())};
+            var entities = new[] {new Entity(new EntityState(Null.Enumerable<Part>()), new Genome(null, null))};
             new SimulationState(entities, Null.Enumerable<IEnergySource>()).Entities.Should().BeSameAs(entities);
         }
         [Test]

@@ -2,6 +2,7 @@
 using ModernRonin.Standard;
 using ModernRonin.Terrarium.Logic.Objects;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
+using ModernRonin.Terrarium.Logic.Objects.Entities.Instructions;
 
 namespace ModernRonin.Terrarium.Logic
 {
@@ -37,7 +38,9 @@ namespace ModernRonin.Terrarium.Logic
                     size);
             }
         }
-        public static Entity CrossPlant => new Entity(Cross.At(new Vector2D(10, 10)), new Genome());
-        public static Entity SnakePlant => new Entity(Snake.At(new Vector2D(90, 90)), new Genome());
+        public static Entity CrossPlant => new Entity(Cross.At(new Vector2D(10, 10)),
+            new Genome(new Parameters(), new List<IInstruction>()));
+        public static Entity SnakePlant => new Entity(Snake.At(new Vector2D(90, 90)),
+            new Genome(new Parameters(), new List<IInstruction>()));
     }
 }
