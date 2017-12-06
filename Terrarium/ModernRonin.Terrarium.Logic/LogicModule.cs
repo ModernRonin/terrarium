@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Reflection;
 using Autofac;
 using ModernRonin.Terrarium.Logic.Transformations;
-using Module = Autofac.Module;
 
 namespace ModernRonin.Terrarium.Logic
 {
@@ -11,8 +9,9 @@ namespace ModernRonin.Terrarium.Logic
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<Simulation>().As<ISimulation>().SingleInstance();
-            builder.RegisterAssemblyTypes(ThisAssembly).AssignableTo<ISimulationStateTransformerWithDependencies>().As<ISimulationStateTransformerWithDependencies>()
-                   .InstancePerDependency();
+            builder.RegisterType<SimulationStateTransformer>().As<ISimulationStateTransformer>().SingleInstance();
+            builder.RegisterAssemblyTypes(ThisAssembly).AssignableTo<ISimulationStateTransformerWithDependencies>()
+                   .As<ISimulationStateTransformerWithDependencies>().InstancePerDependency();
             builder.Register<Func<ISimulationState>>(c =>
             {
                 var ctx = c.Resolve<IComponentContext>();
