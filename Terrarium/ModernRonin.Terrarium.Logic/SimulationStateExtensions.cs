@@ -4,7 +4,7 @@ namespace ModernRonin.Terrarium.Logic
 {
     public static class SimulationStateExtensions
     {
-        public static ISimulationState WithEntities(this ISimulationState self, IEnumerable<EntityState> entities) =>
+        public static ISimulationState WithEntities(this ISimulationState self, IEnumerable<Entity> entities) =>
             new SimulationState(entities, self.EnergySources, self.Size, self.EnergyDensity);
         public static ISimulationState WithEnergySources(
             this ISimulationState self,

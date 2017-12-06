@@ -6,6 +6,6 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Interaction
 {
     public interface IPicker : IUpdateable
     {
-        event Action<IEnumerable<EntityState>> OnEntitiesPicked;
+        event Action<IEnumerable<Entity>> OnEntitiesPicked;
     }
 }

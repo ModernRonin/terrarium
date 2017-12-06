@@ -14,22 +14,6 @@ namespace ModernRonin.Terrarium.Logic
         public Vector2D Position { get; }
         public IEnumerable<Part> Parts { get; }
         public string Code => string.Join("?", Parts.Select(p => p.Code));
-        public static EntityState Snake => new EntityState(new List<Part>
-        {
-            new Part(PartKind.Absorber, new Vector2D(-1, 0)),
-            new Part(PartKind.Absorber, new Vector2D(-2, 0)),
-            new Part(PartKind.Store, new Vector2D(1, 0)),
-            new Part(PartKind.Store, new Vector2D(2, 0)),
-            new Part(PartKind.Core, new Vector2D())
-        });
-        public static EntityState Cross => new EntityState(new List<Part>
-        {
-            new Part(PartKind.Core, new Vector2D()),
-            new Part(PartKind.Absorber, new Vector2D(-1, 0)),
-            new Part(PartKind.Absorber, new Vector2D(1, 0)),
-            new Part(PartKind.Store, new Vector2D(0, -1)),
-            new Part(PartKind.Store, new Vector2D(0, 1))
-        });
         public Rectangle2D LocalBoundingBox
         {
             get

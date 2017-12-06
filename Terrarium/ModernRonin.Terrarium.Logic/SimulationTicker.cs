@@ -15,11 +15,12 @@ namespace ModernRonin.Terrarium.Logic
             var energySources = mCurrent.EnergySources.Select(Move).ToArray();
             return mCurrent.WithEntities(entities).WithEnergySources(energySources);
         }
-        EntityState Move(EntityState old)
+        Entity Move(Entity entity)
         {
+            var old = entity.State;
             mDirectionIndex = 0 == mDirectionIndex ? 1 : 0;
             var newPosition = (old.Position + mDirections[mDirectionIndex]).ClampWithin(mCurrent.Size);
-            return old.At(newPosition);
+            return entity.WithState(old.At(newPosition));
         }
         EnergySource Move(EnergySource old)
         {

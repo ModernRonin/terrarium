@@ -77,38 +77,38 @@ namespace ModernRonin.Terrarium.Logic.Tests
         [Test]
         public void LocalBoundingBox_Of_SwissCrossShaped_Entity_Has_Height3()
         {
-            EntityState.Cross.LocalBoundingBox.Height.OughtTo().Approximate(3);
+            Defaults.Cross.LocalBoundingBox.Height.OughtTo().Approximate(3);
         }
         [Test]
         public void LocalBoundingBox_Of_SwissCrossShaped_Entity_Has_Width3()
         {
-            EntityState.Cross.LocalBoundingBox.Width.OughtTo().Approximate(3);
+            Defaults.Cross.LocalBoundingBox.Width.OughtTo().Approximate(3);
         }
         [Test]
         public void LocalBoundingBox_Of_5HorizontalParts_Entity_Has_Width5()
         {
-            EntityState.Snake.LocalBoundingBox.Width.OughtTo().Approximate(5);
+            Defaults.Snake.LocalBoundingBox.Width.OughtTo().Approximate(5);
         }
         [Test]
         public void LocalBoundingBox_Of_3HorizontalParts_Entity_Has_Height1()
         {
-            EntityState.Snake.LocalBoundingBox.Height.OughtTo().Approximate(1);
+            Defaults.Snake.LocalBoundingBox.Height.OughtTo().Approximate(1);
         }
         [Test]
         public void AbsoluteBoundingBox()
         {
-            EntityState.Cross.At(new Vector2D(10, 20)).AbsoluteBoundingBox.OughtTo().Approximate(9, 19, 12, 22);
+            Defaults.Cross.At(new Vector2D(10, 20)).AbsoluteBoundingBox.OughtTo().Approximate(9, 19, 12, 22);
         }
         [Test]
         public void Code_Is_Different_If_Parts_Are()
         {
-            EntityState.Cross.Code.Should().NotBe(EntityState.Snake.Code);
+            Defaults.Cross.Code.Should().NotBe(Defaults.Snake.Code);
         }
         [Test]
         public void Code_Is_Equal_If_Parts_Are()
         {
-            var cross1 = EntityState.Cross.At(new Vector2D(2f, 3f));
-            var cross2 = EntityState.Cross.At(new Vector2D(4f, 5f));
+            var cross1 = Defaults.Cross.At(new Vector2D(2f, 3f));
+            var cross2 = Defaults.Cross.At(new Vector2D(4f, 5f));
             cross1.Code.Should().Be(cross2.Code);
         }
     }

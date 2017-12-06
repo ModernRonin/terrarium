@@ -1,4 +1,5 @@
-﻿using ModernRonin.Terrarium.Logic;
+﻿using System.Linq;
+using ModernRonin.Terrarium.Logic;
 
 namespace ModernRonin.Terrarium.Rendering.Windows.Drawing
 {
@@ -20,7 +21,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Drawing
         {
             mBackgroundRenderer.Render(simulationState.Size);
             mEnergyDensityRenderer.Render(simulationState.EnergyDensity);
-            mEntityRenderer.Render(simulationState.Entities);
+            mEntityRenderer.Render(simulationState.Entities.Select(e => e.State));
         }
     }
 }

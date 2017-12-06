@@ -11,9 +11,9 @@ namespace ModernRonin.Terrarium.Logic
         ISimulationState mCurrentState;
         bool mIsStopRequested;
         Task mTask;
-        public Simulation(SimulationState initialState) => mCurrentState = initialState;
+        public Simulation(ISimulationState initialState) => mCurrentState = initialState;
         // ReSharper disable once UnusedMember.Global - used by IOC
-        public Simulation() : this(SimulationState.Default) { }
+        public Simulation() : this(Defaults.SimulationState) { }
         public ISimulationState CurrentState => mCurrentState;
         public int MaximumFramesPerSecond { get; set; } = 30;
         public bool IsRunning { get; set; }

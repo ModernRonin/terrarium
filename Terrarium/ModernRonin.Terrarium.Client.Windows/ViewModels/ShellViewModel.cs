@@ -13,8 +13,8 @@ namespace ModernRonin.Terrarium.Client.Windows.ViewModels
 {
     public class ShellViewModel : Screen, IDisposable
     {
-        readonly ISimulation mSimulation;
         readonly IPicker mPicker;
+        readonly ISimulation mSimulation;
         string mToggleRunText = "Start";
         public ShellViewModel(ISimulation simulation, Action<SwapChainPanel> setupView, IPicker picker)
         {
@@ -22,13 +22,6 @@ namespace ModernRonin.Terrarium.Client.Windows.ViewModels
             mSimulation = simulation;
             mPicker = picker;
             mPicker.OnEntitiesPicked += OnEntitiesPicked;
-        }
-        
-        void OnEntitiesPicked(IEnumerable<EntityState> entities)
-        {
-            var frozen = entities.ToArray();
-            if (frozen.Any())
-                Debug.WriteLine(string.Join("\r\n", frozen.Select(e => e.Code)));
         }
         public Action<SwapChainPanel> SetupView { get; }
         public string ToggleRunText
@@ -40,6 +33,15 @@ namespace ModernRonin.Terrarium.Client.Windows.ViewModels
                 mToggleRunText = value;
                 NotifyOfPropertyChange(() => ToggleRunText);
             }
+        }
+        public void Dispose()
+        {
+            mPicker.OnEntitiesPicked -= OnEntitiesPicked;
+        }
+        void OnEntitiesPicked(IEnumerable<Entity> entities)
+        {
+            var frozen = entities.ToArray();
+            if (frozen.Any()) Debug.WriteLine(string.Join("\r\n", frozen.Select(e => e.ToString())));
         }
         public void ExitApplication()
         {
@@ -57,10 +59,6 @@ namespace ModernRonin.Terrarium.Client.Windows.ViewModels
                 mSimulation.Start();
                 ToggleRunText = "Stop";
             }
-        }
-        public void Dispose()
-        {
-            mPicker.OnEntitiesPicked -= OnEntitiesPicked;
         }
     }
 }
