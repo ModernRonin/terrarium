@@ -1,10 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using ModernRonin.Standard;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
 
 namespace ModernRonin.Terrarium.Logic.Transformations
 {
     public class EntityEnergyAbsorptionTransformer : AnEntityTransformer
     {
+        public override IEnumerable<Type> Dependencies => typeof(EntityResetTickEnergyTransformer).AsEnumerable();
         protected override Entity Transform(Entity old, ISimulationState state)
         {
             bool isAbsorber(Part part) => part.Kind == PartKind.Absorber;

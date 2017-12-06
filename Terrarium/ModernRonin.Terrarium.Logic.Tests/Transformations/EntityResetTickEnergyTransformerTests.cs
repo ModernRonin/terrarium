@@ -12,11 +12,6 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
     public class EntityResetTickEnergyTransformerTests
     {
         [Test]
-        public void Priority_Is_IntMin()
-        {
-            new EntityResetTickEnergyTransformer().Priority.Should().Be(int.MinValue);
-        }
-        [Test]
         public void Sets_Entities_TickEnergy_To_Zero()
         {
             var underTest = new EntityResetTickEnergyTransformer();

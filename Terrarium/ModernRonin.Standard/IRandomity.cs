@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ModernRonin.Standard {
+namespace ModernRonin.Standard
+{
     /// <summary>   Defines a provider of randomity with all sorts of typical operations you
     /// 			would use a random number generator for. </summary>
     public interface IRandomity
