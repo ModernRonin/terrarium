@@ -2,7 +2,7 @@
 
 namespace ModernRonin.Terrarium.Logic
 {
-    public struct Part
+    public class Part
     {
         public Part(PartKind kind, Vector2D relativePosition)
         {
