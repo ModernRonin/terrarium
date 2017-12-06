@@ -21,6 +21,30 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
             Defaults.Cross.At(new Vector2D(10, 20)).AbsoluteBoundingBox.OughtTo().Approximate(9, 19, 12, 22);
         }
         [Test]
+        public void AddTickEnergy_Adds()
+        {
+            new EntityState(Null.Enumerable<Part>(), tickEnergy: 17f)
+                .AddTickEnergy(13f).TickEnergy.OughtTo().Approximate(30f);
+        }
+        [Test]
+        public void AddTickEnergy_Leaves_Parts_Equal()
+        {
+            var parts = new Part[2];
+            new EntityState(parts).AddTickEnergy(14f).Parts.Should().BeSameAs(parts);
+        }
+        [Test]
+        public void AddTickEnergy_Leaves_Position_Equal()
+        {
+            new EntityState(Null.Enumerable<Part>(), new Vector2D(13f, 17f))
+                .AddTickEnergy(14f).Position.Should().Be(new Vector2D(13f, 17f));
+        }
+        [Test]
+        public void AddTickEnergy_Returns_Different_Instance()
+        {
+            var underTest = new EntityState(Null.Enumerable<Part>());
+            underTest.AddTickEnergy(13f).Should().NotBeSameAs(underTest);
+        }
+        [Test]
         public void Code_Is_Different_If_Parts_Are()
         {
             Defaults.Cross.Code.Should().NotBe(Defaults.Snake.Code);
@@ -31,6 +55,33 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
             var cross1 = Defaults.Cross.At(new Vector2D(2f, 3f));
             var cross2 = Defaults.Cross.At(new Vector2D(4f, 5f));
             cross1.Code.Should().Be(cross2.Code);
+        }
+        [Test]
+        public void Constructor_Sets_Parts()
+        {
+            var parts = new List<Part>();
+            new EntityState(parts).Parts.Should().BeSameAs(parts);
+        }
+        [Test]
+        public void Constructor_Sets_Position_If_Passed()
+        {
+            new EntityState(Null.Enumerable<Part>(), new Vector2D(13f, 17f))
+                .Position.Should().Be(new Vector2D(13f, 17f));
+        }
+        [Test]
+        public void Constructor_Sets_Position_To_ZeroZero_If_Not_Passed()
+        {
+            new EntityState(Null.Enumerable<Part>()).Position.Should().Be(Vector2D.Zero);
+        }
+        [Test]
+        public void Constructor_Sets_TickEnergy_If_Passed()
+        {
+            new EntityState(Null.Enumerable<Part>(), tickEnergy: 14f).TickEnergy.Should().Be(14f);
+        }
+        [Test]
+        public void Constructor_Sets_TickEnergy_To_Zero_If_Not_Passed()
+        {
+            new EntityState(Null.Enumerable<Part>()).TickEnergy.Should().Be(0);
         }
         [Test]
         public void LocalBoundingBox_Of_3HorizontalParts_Entity_Has_Height1()
@@ -101,43 +152,16 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
             Defaults.Cross.LocalBoundingBox.Width.OughtTo().Approximate(3);
         }
         [Test]
-        public void Constructor_Sets_Parts()
+        public void SubtractTickEnergy_Leaves_Parts_Equal()
         {
-            var parts= new List<Part>();
-            new EntityState(parts).Parts.Should().BeSameAs(parts);
+            var parts = new Part[2];
+            new EntityState(parts).SubtractTickEnergy(14f).Parts.Should().BeSameAs(parts);
         }
         [Test]
-        public void Constructor_Sets_TickEnergy_To_Zero_If_Not_Passed()
-        {
-            new EntityState(Null.Enumerable<Part>()).TickEnergy.Should().Be(0);
-        }
-        [Test]
-        public void Constructor_Sets_TickEnergy_If_Passed()
-        {
-            new EntityState(Null.Enumerable<Part>(), tickEnergy: 14f).TickEnergy.Should().Be(14f);
-        }
-        [Test]
-        public void Constructor_Sets_Position_To_ZeroZero_If_Not_Passed()
-        {
-            new EntityState(Null.Enumerable<Part>()).Position.Should().Be(Vector2D.Zero);
-        }
-        [Test]
-        public void Constructor_Sets_Position_If_Passed()
+        public void SubtractTickEnergy_Leaves_Position_Equal()
         {
             new EntityState(Null.Enumerable<Part>(), new Vector2D(13f, 17f))
-                .Position.Should().Be(new Vector2D(13f, 17f));
-        }
-        [Test]
-        public void WithParts_Returns_Different_Instance()
-        {
-            var underTest = new EntityState(Null.Enumerable<Part>());
-            underTest.WithParts(Null.Enumerable<Part>()).Should().NotBeSameAs(underTest);
-        }
-        [Test]
-        public void AddTickEnergy_Returns_Different_Instance()
-        {
-            var underTest = new EntityState(Null.Enumerable<Part>());
-            underTest.AddTickEnergy(13f).Should().NotBeSameAs(underTest);
+                .SubtractTickEnergy(14f).Position.Should().Be(new Vector2D(13f, 17f));
         }
         [Test]
         public void SubtractTickEnergy_Returns_Different_Instance()
@@ -146,10 +170,10 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
             underTest.SubtractTickEnergy(13f).Should().NotBeSameAs(underTest);
         }
         [Test]
-        public void WithParts_Sets_Parts()
+        public void SubtractTickEnergy_Subtracts()
         {
-            var parts = new Part[2];
-            new EntityState(Null.Enumerable<Part>()).WithParts(parts).Parts.Should().BeSameAs(parts);
+            new EntityState(Null.Enumerable<Part>(), tickEnergy: 17f)
+                .SubtractTickEnergy(13f).TickEnergy.OughtTo().Approximate(4f);
         }
         [Test]
         public void WithParts_Leaves_Position_Equal()
@@ -163,6 +187,17 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
             new EntityState(Null.Enumerable<Part>(), tickEnergy: 17f)
                 .WithParts(new Part[2]).TickEnergy.Should().Be(17f);
         }
-
+        [Test]
+        public void WithParts_Returns_Different_Instance()
+        {
+            var underTest = new EntityState(Null.Enumerable<Part>());
+            underTest.WithParts(Null.Enumerable<Part>()).Should().NotBeSameAs(underTest);
+        }
+        [Test]
+        public void WithParts_Sets_Parts()
+        {
+            var parts = new Part[2];
+            new EntityState(Null.Enumerable<Part>()).WithParts(parts).Parts.Should().BeSameAs(parts);
+        }
     }
 }
