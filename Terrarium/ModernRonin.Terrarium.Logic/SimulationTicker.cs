@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using ModernRonin.Standard;
 
 namespace ModernRonin.Terrarium.Logic
@@ -28,4 +29,51 @@ namespace ModernRonin.Terrarium.Logic
             return old.At(newPosition);
         }
     }
+
+    public interface ISimulationTransformer
+    {
+        ISimulationState Transform(ISimulationState state);
+    }
+
+    public abstract class ASimulationTransformer<T> : ISimulationTransformer
+    {
+        public ISimulationState Transform(ISimulationState state)
+        {
+            var old = ExtractStateProperty(state);
+            var nu = Transform(old, state);
+            return SetStateProperty(state, nu);
+        }
+        protected abstract T Transform(T old, ISimulationState state);
+        protected abstract T ExtractStateProperty(ISimulationState state);
+        protected abstract ISimulationState SetStateProperty(ISimulationState state, T property);
+    }
+
+    public abstract class AEnumeratingSimulationTransformer<T> : ASimulationTransformer<IEnumerable<T>>
+    {
+        protected override IEnumerable<T> Transform(IEnumerable<T> old, ISimulationState state)
+        {
+            return old.Select(e => Transform(e, state));
+        }
+        protected abstract T Transform(T old, ISimulationState state);
+    }
+
+    public abstract class AnEnergySourceTransformer : AEnumeratingSimulationTransformer<IEnergySource>
+    {
+        protected override IEnumerable<IEnergySource> ExtractStateProperty(ISimulationState state) =>
+            state.EnergySources;
+        protected override ISimulationState SetStateProperty(
+            ISimulationState state,
+            IEnumerable<IEnergySource> property) => state.WithEnergySources(property);
+    }
+
+    public class EnergySourceMovingTransformer : AnEnergySourceTransformer
+    {
+        protected override IEnergySource Transform(IEnergySource old, ISimulationState state)
+        {
+            var newPosition = (old.Position + old.Speed).ClampWithin(state.Size);
+            return old.At(newPosition);
+        }
+    }
+
+    public class DummyEntityMovingTransformer : ISimulationTransformer { }
 }
