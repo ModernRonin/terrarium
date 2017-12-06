@@ -127,5 +127,42 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
             new EntityState(Null.Enumerable<Part>(), new Vector2D(13f, 17f))
                 .Position.Should().Be(new Vector2D(13f, 17f));
         }
+        [Test]
+        public void WithParts_Returns_Different_Instance()
+        {
+            var underTest = new EntityState(Null.Enumerable<Part>());
+            underTest.WithParts(Null.Enumerable<Part>()).Should().NotBeSameAs(underTest);
+        }
+        [Test]
+        public void AddTickEnergy_Returns_Different_Instance()
+        {
+            var underTest = new EntityState(Null.Enumerable<Part>());
+            underTest.AddTickEnergy(13f).Should().NotBeSameAs(underTest);
+        }
+        [Test]
+        public void SubtractTickEnergy_Returns_Different_Instance()
+        {
+            var underTest = new EntityState(Null.Enumerable<Part>());
+            underTest.SubtractTickEnergy(13f).Should().NotBeSameAs(underTest);
+        }
+        [Test]
+        public void WithParts_Sets_Parts()
+        {
+            var parts = new Part[2];
+            new EntityState(Null.Enumerable<Part>()).WithParts(parts).Parts.Should().BeSameAs(parts);
+        }
+        [Test]
+        public void WithParts_Leaves_Position_Equal()
+        {
+            new EntityState(Null.Enumerable<Part>(), new Vector2D(13f, 17f))
+                .WithParts(new Part[2]).Position.Should().Be(new Vector2D(13f, 17f));
+        }
+        [Test]
+        public void WithParts_Leaves_TickEnergy_Equal()
+        {
+            new EntityState(Null.Enumerable<Part>(), tickEnergy: 17f)
+                .WithParts(new Part[2]).TickEnergy.Should().Be(17f);
+        }
+
     }
 }
