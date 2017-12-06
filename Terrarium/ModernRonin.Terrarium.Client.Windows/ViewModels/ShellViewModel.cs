@@ -24,7 +24,7 @@ namespace ModernRonin.Terrarium.Client.Windows.ViewModels
             mPicker.OnEntitiesPicked += OnEntitiesPicked;
         }
         
-        void OnEntitiesPicked(IEnumerable<Entity> entities)
+        void OnEntitiesPicked(IEnumerable<EntityState> entities)
         {
             var frozen = entities.ToArray();
             if (frozen.Any())

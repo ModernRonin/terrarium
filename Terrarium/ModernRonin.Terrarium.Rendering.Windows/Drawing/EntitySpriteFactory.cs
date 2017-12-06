@@ -24,10 +24,10 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Drawing
         }
         public void Dispose() => Clear();
         void Clear() => mCodesToTextures.Keys.ToArray().ForEach(Remove);
-        public Texture2D GetTextureForEntity(Entity entity)
+        public Texture2D GetTextureForEntity(EntityState entityState)
         {
-            var key = entity.Code;
-            if (!mCodesToTextures.ContainsKey(key)) mCodesToTextures[key] = CreateTexture(entity);
+            var key = entityState.Code;
+            if (!mCodesToTextures.ContainsKey(key)) mCodesToTextures[key] = CreateTexture(entityState);
             return mCodesToTextures[key];
         }
         public void CleanAllExcept(IEnumerable<string> codes)
@@ -40,10 +40,10 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Drawing
             mCodesToTextures[code].Dispose();
             mCodesToTextures.Remove(code);
         }
-        Texture2D CreateTexture(Entity entity)
+        Texture2D CreateTexture(EntityState entityState)
         {
             var device = mDeviceGetter();
-            var boundingBox = entity.LocalBoundingBox.Normalized.ScaleBy(PartTextureSizeScalar).ToRectangle();
+            var boundingBox = entityState.LocalBoundingBox.Normalized.ScaleBy(PartTextureSizeScalar).ToRectangle();
             var result = new RenderTarget2D(device,
                 boundingBox.Width,
                 boundingBox.Height,
@@ -55,7 +55,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Drawing
                 using (var batch = new SpriteBatch(device))
                 {
                     batch.Begin(SpriteSortMode.Immediate);
-                    RenderParts(entity.Parts, batch);
+                    RenderParts(entityState.Parts, batch);
                     batch.End();
                 }
             }
