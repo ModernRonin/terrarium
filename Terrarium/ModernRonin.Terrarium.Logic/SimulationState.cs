@@ -6,7 +6,7 @@ using ModernRonin.Terrarium.Logic.Objects.Entities;
 
 namespace ModernRonin.Terrarium.Logic
 {
-    public struct SimulationState : ISimulationState
+    public class SimulationState : ISimulationState
     {
         public SimulationState(
             IEnumerable<Entity> entities,

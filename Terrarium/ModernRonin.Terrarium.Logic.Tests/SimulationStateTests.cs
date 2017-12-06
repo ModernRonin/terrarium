@@ -63,5 +63,17 @@ namespace ModernRonin.Terrarium.Logic.Tests
             underTest.GetEntitiesAt(new Vector2D(11, 10)).Single().Should().BeSameAs(entities[0]);
             underTest.GetEntitiesAt(new Vector2D(89, 90)).Single().Should().BeSameAs(entities[1]);
         }
+        [Test]
+        public void WithEnergySources_Returns_Different_Instance()
+        {
+            var underTest = new SimulationState(Null.Enumerable<Entity>(), Null.Enumerable<IEnergySource>());
+            underTest.WithEnergySources(Null.Enumerable<IEnergySource>()).Should().NotBeSameAs(underTest);
+        }
+        [Test]
+        public void WithEntities_Returns_Different_Instance()
+        {
+            var underTest = new SimulationState(Null.Enumerable<Entity>(), Null.Enumerable<IEnergySource>());
+            underTest.WithEntities(Null.Enumerable<Entity>()).Should().NotBeSameAs(underTest);
+        }
     }
 }
