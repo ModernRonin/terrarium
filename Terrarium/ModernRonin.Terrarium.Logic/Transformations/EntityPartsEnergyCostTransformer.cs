@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ModernRonin.Standard;
+﻿using System.Linq;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
 
 namespace ModernRonin.Terrarium.Logic.Transformations
 {
-    public class EntityPartsEnergyCostTransformer : AnEntityTransformer
+    public class EntityPartsEnergyCostTransformer : AnEntityEnergyCostTransformer
     {
-        readonly IEnergyCostConfiguration mConfiguration;
-        public EntityPartsEnergyCostTransformer(IEnergyCostConfiguration configuration) => mConfiguration = configuration;
-        public override IEnumerable<Type> Dependencies => typeof(EntityResetTickEnergyTransformer).AsEnumerable();
-        protected override Entity Transform(Entity old, ISimulationState state)
+        public EntityPartsEnergyCostTransformer(IEnergyCostConfiguration configuration) : base(configuration) { }
+        protected override float CalculateCost(Entity entity)
         {
-            float partCost(Part part) => mConfiguration.GetEnergyCostForPartKind(part.Kind);
-            var cost = old.State.Parts.Select(partCost).Sum();
-            return old.WithState(old.State.SubtractTickEnergy(cost));
+            float partCost(Part part) => Configuration.GetEnergyCostForPartKind(part.Kind);
+            var cost = entity.State.Parts.Select(partCost).Sum();
+            return cost;
         }
     }
 }
