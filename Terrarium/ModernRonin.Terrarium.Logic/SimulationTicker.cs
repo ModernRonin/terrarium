@@ -29,14 +29,14 @@ namespace ModernRonin.Terrarium.Logic
     {
         public ISimulationState Transform(ISimulationState state)
         {
-            var old = ExtractStateProperty(state);
+            var old = Get(state);
             var nu = Transform(old, state);
-            return SetStateProperty(state, nu);
+            return Set(state, nu);
         }
         public virtual int Priority => 0;
         protected abstract T Transform(T old, ISimulationState state);
-        protected abstract T ExtractStateProperty(ISimulationState state);
-        protected abstract ISimulationState SetStateProperty(ISimulationState state, T property);
+        protected abstract T Get(ISimulationState state);
+        protected abstract ISimulationState Set(ISimulationState state, T property);
     }
 
     public abstract class AEnumeratingSimulationStateTransformer<T> : ASimulationStateTransformer<IEnumerable<T>>
@@ -50,9 +50,9 @@ namespace ModernRonin.Terrarium.Logic
 
     public abstract class AnEnergySourceTransformer : AEnumeratingSimulationStateTransformer<IEnergySource>
     {
-        protected override IEnumerable<IEnergySource> ExtractStateProperty(ISimulationState state) =>
+        protected override IEnumerable<IEnergySource> Get(ISimulationState state) =>
             state.EnergySources;
-        protected override ISimulationState SetStateProperty(
+        protected override ISimulationState Set(
             ISimulationState state,
             IEnumerable<IEnergySource> property) => state.WithEnergySources(property);
     }
@@ -68,8 +68,8 @@ namespace ModernRonin.Terrarium.Logic
 
     public abstract class AnEntityTransformer : AEnumeratingSimulationStateTransformer<Entity>
     {
-        protected override IEnumerable<Entity> ExtractStateProperty(ISimulationState state) => state.Entities;
-        protected override ISimulationState SetStateProperty(ISimulationState state, IEnumerable<Entity> property) =>
+        protected override IEnumerable<Entity> Get(ISimulationState state) => state.Entities;
+        protected override ISimulationState Set(ISimulationState state, IEnumerable<Entity> property) =>
             state.WithEntities(property);
     }
 
