@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ModernRonin.Terrarium.Logic;
@@ -14,7 +15,9 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Drawing
             batch) => mFactory = factory;
         public void Render(IEnumerable<IEntityState> entities)
         {
-            entities.ForEach(Draw);
+            var frozen = entities as IEntityState[] ?? entities.ToArray();
+            frozen.ForEach(Draw);
+            mFactory.CleanAllExcept(frozen.Select(e => e.Code));
         }
         void Draw(IEntityState entityState)
         {
