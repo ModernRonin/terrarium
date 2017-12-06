@@ -46,5 +46,18 @@ namespace ModernRonin.Standard.Tests
 
             unsorted.SortByDependencies().Should().Equal(bravo, delta, charlie, alpha);
         }
+        [Test]
+        public void SortByDependencies_Throws_ArgumentException_If_Circular_Dependencies()
+        {
+            var alpha = new Alpha(typeof(Bravo), typeof(Charlie));
+            var bravo = new Bravo();
+            var charlie = new Charlie(typeof(Bravo), typeof(Delta));
+            var delta = new Delta(typeof(Alpha));
+
+            var unsorted = new ATestable[] {alpha, bravo, charlie, delta};
+
+            Action act = () => unsorted.SortByDependencies();
+            act.ShouldThrow<ArgumentException>();
+        }
     }
 }
