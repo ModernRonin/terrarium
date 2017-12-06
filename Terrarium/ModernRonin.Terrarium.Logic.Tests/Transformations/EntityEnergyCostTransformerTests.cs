@@ -30,7 +30,7 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
             var underTest = new EntityEnergyCostTransformer(configuration);
             var changed = underTest.Transform(state).Entities.Single();
 
-            changed.State.TickEnergy.OughtTo().Approximate(1 * 0 + 1 * 3 + 2 * 7);
+            changed.State.TickEnergy.OughtTo().Approximate(-(1 * 0 + 1 * 3 + 2 * 7));
         }
     }
 }
