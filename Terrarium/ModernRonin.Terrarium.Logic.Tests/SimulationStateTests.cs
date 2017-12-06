@@ -4,6 +4,7 @@ using ModernRonin.Standard;
 using ModernRonin.Standard.Tests;
 using ModernRonin.Terrarium.Logic.Objects;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace ModernRonin.Terrarium.Logic.Tests
@@ -74,6 +75,20 @@ namespace ModernRonin.Terrarium.Logic.Tests
         {
             var underTest = new SimulationState(Null.Enumerable<Entity>(), Null.Enumerable<IEnergySource>());
             underTest.WithEntities(Null.Enumerable<Entity>()).Should().NotBeSameAs(underTest);
+        }
+        [Test]
+        public void WithEnergySources_Sets_EnergySources()
+        {
+            var underTest = new SimulationState(Null.Enumerable<Entity>(), Null.Enumerable<IEnergySource>());
+            var energySources = new[] { Substitute.For<IEnergySource>(), Substitute.For<IEnergySource>() };
+            underTest.WithEnergySources(energySources).EnergySources.Should().BeSameAs(energySources);
+        }
+        [Test]
+        public void WithEntities_Sets_Entities()
+        {
+            var underTest = new SimulationState(Null.Enumerable<Entity>(), Null.Enumerable<IEnergySource>());
+            var entities = new Entity[2];
+            underTest.WithEntities(entities).Entities.Should().BeSameAs(entities);
         }
     }
 }
