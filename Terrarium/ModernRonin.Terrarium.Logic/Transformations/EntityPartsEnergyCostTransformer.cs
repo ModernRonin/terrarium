@@ -10,8 +10,7 @@ namespace ModernRonin.Terrarium.Logic.Transformations
         {
             float partCost(Part part) => Configuration.GetEnergyCostForPartKind(part.Kind);
 
-            var cost = entity.State.Parts.Select(partCost).Sum();
-            return cost;
+            return entity.State.Parts.Select(partCost).Sum();
         }
     }
 }

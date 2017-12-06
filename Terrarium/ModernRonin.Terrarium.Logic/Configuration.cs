@@ -23,13 +23,13 @@ namespace ModernRonin.Terrarium.Logic
                 case GrowInstruction _:
                     return 10;
                 case JumpIfInstruction _:
-                    return 2;
+                    return 0.2f;
                 case JumpInstruction _:
-                    return 1;
+                    return 0.1f;
                 case RotateThrusterInstruction _:
-                    return 4;
-                case TurnThrusterOnOrOffInstruction _:
-                    return 5;
+                    return 0.75f;
+                case PulseThrusterInstruction _:
+                    return 1;
             }
             throw new NotImplementedException();
         }

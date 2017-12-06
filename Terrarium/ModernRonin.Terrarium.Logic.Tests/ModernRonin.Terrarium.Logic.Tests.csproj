@@ -68,6 +68,7 @@
     <Compile Include="Objects\Entities\PartTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimulationStateTests.cs" />
+    <Compile Include="Transformations\EntityCurrentInstructionCostTransformerTests.cs" />
     <Compile Include="Transformations\EntityEnergyAbsorptionTransformerTests.cs" />
     <Compile Include="Transformations\EntityPartsEnergyCostTransformerTests.cs" />
     <Compile Include="Transformations\EntityResetTickEnergyTransformerTests.cs" />
