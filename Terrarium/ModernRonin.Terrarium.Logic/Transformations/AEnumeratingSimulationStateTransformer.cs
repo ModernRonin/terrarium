@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace ModernRonin.Terrarium.Logic.Transformations {
+namespace ModernRonin.Terrarium.Logic.Transformations
+{
     public abstract class AEnumeratingSimulationStateTransformer<T> : ASimulationStateTransformer<IEnumerable<T>>
     {
-        protected override IEnumerable<T> Transform(IEnumerable<T> old, ISimulationState state)
+        protected sealed override IEnumerable<T> Transform(IEnumerable<T> old, ISimulationState state)
         {
             return old.Select(e => Transform(e, state));
         }

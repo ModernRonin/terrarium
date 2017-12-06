@@ -17,6 +17,7 @@ namespace ModernRonin.Terrarium.Logic
                 var ctx = c.Resolve<IComponentContext>();
                 return () => ctx.Resolve<ISimulation>().CurrentState;
             });
+            builder.RegisterType<Configuration>().AsImplementedInterfaces().SingleInstance();
         }
     }
 }
