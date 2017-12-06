@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using FluentAssertions;
 using ModernRonin.Standard;
 using ModernRonin.Standard.Tests;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
@@ -98,6 +99,33 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
         public void LocalBoundingBox_Of_SwissCrossShaped_Entity_Has_Width3()
         {
             Defaults.Cross.LocalBoundingBox.Width.OughtTo().Approximate(3);
+        }
+        [Test]
+        public void Constructor_Sets_Parts()
+        {
+            var parts= new List<Part>();
+            new EntityState(parts).Parts.Should().BeSameAs(parts);
+        }
+        [Test]
+        public void Constructor_Sets_TickEnergy_To_Zero_If_Not_Passed()
+        {
+            new EntityState(Null.Enumerable<Part>()).TickEnergy.Should().Be(0);
+        }
+        [Test]
+        public void Constructor_Sets_TickEnergy_If_Passed()
+        {
+            new EntityState(Null.Enumerable<Part>(), tickEnergy: 14f).TickEnergy.Should().Be(14f);
+        }
+        [Test]
+        public void Constructor_Sets_Position_To_ZeroZero_If_Not_Passed()
+        {
+            new EntityState(Null.Enumerable<Part>()).Position.Should().Be(Vector2D.Zero);
+        }
+        [Test]
+        public void Constructor_Sets_Position_If_Passed()
+        {
+            new EntityState(Null.Enumerable<Part>(), new Vector2D(13f, 17f))
+                .Position.Should().Be(new Vector2D(13f, 17f));
         }
     }
 }
