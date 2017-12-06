@@ -9,6 +9,7 @@ namespace ModernRonin.Terrarium.Logic.Transformations
         protected override float CalculateCost(Entity entity)
         {
             float partCost(Part part) => Configuration.GetEnergyCostForPartKind(part.Kind);
+
             var cost = entity.State.Parts.Select(partCost).Sum();
             return cost;
         }
