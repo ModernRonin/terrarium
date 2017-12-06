@@ -3,7 +3,8 @@ using ModernRonin.Standard;
 
 namespace ModernRonin.Terrarium.Logic.Objects.Entities
 {
-    public interface IEntityState {
+    public interface IEntityState
+    {
         Vector2D Position { get; }
         IEnumerable<Part> Parts { get; }
         string Code { get; }

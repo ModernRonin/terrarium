@@ -14,5 +14,6 @@ namespace ModernRonin.Terrarium.Logic
         public IEnumerable<Entity> GetEntitiesAt(Vector2D position) => Null.Enumerable<Entity>();
         public ISimulationState WithEnergySources(IEnumerable<IEnergySource> energySources) => this;
         public ISimulationState WithEntities(IEnumerable<Entity> entities) => this;
+        public float EnergyDensityAt(Vector2D position) => 0;
     }
 }

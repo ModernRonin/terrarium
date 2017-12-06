@@ -67,6 +67,7 @@
     <Compile Include="Objects\Entities\EntityStateTests.cs" />
     <Compile Include="Objects\Entities\PartTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimulationStateTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ModernRonin.Standard.Tests\ModernRonin.Standard.Tests.csproj">

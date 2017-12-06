@@ -27,8 +27,15 @@ namespace ModernRonin.Terrarium.Logic
         {
             return Entities.Where(e => e.State.AbsoluteBoundingBox.Contains(position));
         }
-        public ISimulationState WithEnergySources(IEnumerable<IEnergySource> energySources) => new SimulationState(Entities, energySources, Size);
+        public ISimulationState WithEnergySources(IEnumerable<IEnergySource> energySources) =>
+            new SimulationState(Entities, energySources, Size);
         public ISimulationState WithEntities(IEnumerable<Entity> entities) =>
             new SimulationState(entities, EnergySources, Size, EnergyDensity);
+        public float EnergyDensityAt(Vector2D position)
+        {
+            var x = (int) position.X;
+            var y = (int) position.Y;
+            return EnergyDensity[x, y];
+        }
     }
 }
