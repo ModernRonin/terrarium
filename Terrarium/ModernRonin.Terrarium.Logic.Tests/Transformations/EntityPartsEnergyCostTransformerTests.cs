@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace ModernRonin.Terrarium.Logic.Tests.Transformations
 {
     [TestFixture]
-    public class EntityEnergyCostTransformerTests
+    public class EntityPartsEnergyCostTransformerTests
     {
         [Test]
         public void Deducts_Cost_For_Parts()
@@ -27,7 +27,7 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
                 new Genome());
             var state = new SimulationState(entity.AsEnumerable(), Null.Enumerable<IEnergySource>());
 
-            var underTest = new EntityEnergyCostTransformer(configuration);
+            var underTest = new EntityPartsEnergyCostTransformer(configuration);
             var changed = underTest.Transform(state).Entities.Single();
 
             changed.State.TickEnergy.OughtTo().Approximate(-(1 * 0 + 1 * 3 + 2 * 7));
