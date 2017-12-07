@@ -28,50 +28,65 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
                       .Using<Rectangle2D>(ctx => ctx.Subject.Should().Be(ctx.Expectation)).WhenTypeIs<Rectangle2D>()
                       .Excluding(u => u.AbsoluteBoundingBox).Excluding(u => u.Code);
         }
+
+        public class BuilderMethodSpec
+        {
+            public Expression<Func<EntityState, IEntityState>> Method { get; set; }
+            public Expression<Func<IEntityState, object>> Getter { get; set; }
+            public override string ToString() => $"{Method} / {Getter}";
+        }
+
+        static IEnumerable<BuilderMethodSpec> BuilderMethodCalls
+        {
+            get
+            {
+                yield return new BuilderMethodSpec {Method = e => e.AddTickEnergy(13f), Getter = e => e.TickEnergy};
+                yield return new BuilderMethodSpec
+                {
+                    Method = e => e.SubtractTickEnergy(13f),
+                    Getter = e => e.TickEnergy
+                };
+                yield return new BuilderMethodSpec {Method = e => e.ResetTickEnergy(), Getter = e => e.TickEnergy};
+                yield return new BuilderMethodSpec
+                {
+                    Method = e => e.WithParts(new[] {sCorePart, sCorePart}),
+                    Getter = e => e.Parts
+                };
+                yield return new BuilderMethodSpec
+                {
+                    Method = e => e.WithCurrentInstructionIndex(129),
+                    Getter = e => e.CurrentInstructionIndex
+                };
+                yield return new BuilderMethodSpec {Method = e => e.At(new Vector2D(-2, -3)), Getter = e => e.Position};
+            }
+        }
         [Test]
         public void AbsoluteBoundingBox()
         {
             Defaults.Cross.At(new Vector2D(10, 20)).AbsoluteBoundingBox.OughtTo().Approximate(9, 19, 12, 22);
         }
-
-        static IEnumerable<Expression<Func<EntityState, IEntityState>>> BuilderMethodCalls
-        {
-            get
-            {
-                yield return e => e.AddTickEnergy(13f);
-                yield return e => e.SubtractTickEnergy(13f);
-                yield return e => e.ResetTickEnergy();
-                yield return e => e.WithParts(new[] {sCorePart, sCorePart});
-                yield return e => e.WithCurrentInstructionIndex(129);
-            }
-        }
         [Test]
-        public void BuilderMethods_Return_Different_Instances([ValueSource(nameof(BuilderMethodCalls))] Expression<Func<EntityState, IEntityState>>  builderMethod)
-        {
-            builderMethod.Compile()(mFullyConstructed).Should().NotBeSameAs(mFullyConstructed);
-        }
-
-        [Test]
-        public void AddTickEnergy_Adds()
+        public void AddTickEnergy_Adds_To_TickEnergy()
         {
             mFullyConstructed.AddTickEnergy(13f).TickEnergy.OughtTo().Approximate(36f);
-        }
-        [Test]
-        public void AddTickEnergy_Returns_Equivalent_Except_For_TickEnergy()
-        {
-            mFullyConstructed.AddTickEnergy(13f).ShouldBeEquivalentTo(mFullyConstructed,
-                cfg => BuilderStandardEquivalency(cfg).Excluding(u => u.TickEnergy));
-        }
-        [Test]
-        public void At_Returns_Equivalent_Except_Position()
-        {
-            mFullyConstructed.At(Vector2D.Zero).ShouldBeEquivalentTo(mFullyConstructed,
-                cfg => BuilderStandardEquivalency(cfg).Excluding(u => u.Position));
         }
         [Test]
         public void At_Sets_Position()
         {
             mFullyConstructed.At(new Vector2D(-1f, -2f)).Position.Should().Be(new Vector2D(-1f, -2f));
+        }
+        [Test]
+        public void BuilderMethods_Return_Different_Instances(
+            [ValueSource(nameof(BuilderMethodCalls))] BuilderMethodSpec builderMethodSpec)
+        {
+            builderMethodSpec.Method.Compile()(mFullyConstructed).Should().NotBeSameAs(mFullyConstructed);
+        }
+        [Test]
+        public void BuilderMethods_Return_Equivalent_Except_For_Target_Property(
+            [ValueSource(nameof(BuilderMethodCalls))] BuilderMethodSpec builderMethodSpec)
+        {
+            builderMethodSpec.Method.Compile()(mFullyConstructed).ShouldBeEquivalentTo(mFullyConstructed,
+                cfg => BuilderStandardEquivalency(cfg).Excluding(builderMethodSpec.Getter));
         }
         [Test]
         public void Code_Is_Different_If_Parts_Are()
@@ -192,43 +207,19 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
             Defaults.Cross.LocalBoundingBox.Width.OughtTo().Approximate(3);
         }
         [Test]
-        public void ResetTickEnergy_Returns_Equivalent_Except_For_TickEnergy()
-        {
-            mFullyConstructed.ResetTickEnergy().ShouldBeEquivalentTo(mFullyConstructed,
-                cfg => BuilderStandardEquivalency(cfg).Excluding(u => u.TickEnergy));
-        }
-        [Test]
         public void ResetTickEnergy_Sets_TickEnergy_To_Zero()
         {
             mFullyConstructed.ResetTickEnergy().TickEnergy.OughtTo().Approximate(0f);
         }
         [Test]
-        public void SubtractTickEnergy_Returns_Equivalent_Except_For_TickEnergy()
-        {
-            mFullyConstructed.SubtractTickEnergy(14f).ShouldBeEquivalentTo(mFullyConstructed,
-                cfg => BuilderStandardEquivalency(cfg).Excluding(u => u.TickEnergy));
-        }
-        [Test]
-        public void SubtractTickEnergy_Subtracts()
+        public void SubtractTickEnergy_Subtracts_From_TickEnergy()
         {
             mFullyConstructed.SubtractTickEnergy(13f).TickEnergy.OughtTo().Approximate(10f);
-        }
-        [Test]
-        public void WithCurrentInstructionIndex_Returns_Equivalent_Except_CurrentInstructionIndex()
-        {
-            mFullyConstructed.WithCurrentInstructionIndex(29).ShouldBeEquivalentTo(mFullyConstructed,
-                cfg => BuilderStandardEquivalency(cfg).Excluding(u => u.CurrentInstructionIndex));
         }
         [Test]
         public void WithCurrentInstructionIndex_Sets_CurrentInstructionIndex()
         {
             mFullyConstructed.WithCurrentInstructionIndex(29).CurrentInstructionIndex.Should().Be(29);
-        }
-        [Test]
-        public void WithParts_Returns_Equivalent_Except_For_Parts()
-        {
-            mFullyConstructed.WithParts(new[] {sCorePart, sCorePart}).ShouldBeEquivalentTo(mFullyConstructed,
-                cfg => BuilderStandardEquivalency(cfg).Excluding(u => u.Parts));
         }
         [Test]
         public void WithParts_Sets_Parts()
