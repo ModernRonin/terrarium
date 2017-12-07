@@ -19,6 +19,10 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
         [TestCase(5, 14, 5, 14)]
         [TestCase(5, 4, 0, 9)]
         [TestCase(100, 4, 90, 14)]
+        [TestCase(0, 11, 0, 11)]
+        [TestCase(-1, 0, -1, 0)]
+        [TestCase(-1, 3, 0, 2)]
+        [TestCase(-7, 3, -4, 0)]
         public void TickEnergy_And_StoredEnergy_Are_Updated_Correctly(int initialTickEnergy, int initialStoredEnergy, int expectedTickEnergy, int expectedStoredEnergy)
         {
             if (initialTickEnergy + initialStoredEnergy != expectedTickEnergy + expectedStoredEnergy)
@@ -39,14 +43,5 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
             changed.State.TickEnergy.OughtTo().Approximate(expectedTickEnergy);
             changed.State.StoredEnergy.OughtTo().Approximate(expectedStoredEnergy);
         }
-        [Test]
-        public void TickEnergy_Stays_Zero_If_It_Is_Zero()
-        {
-            
-        }
-        // TODO: tests for negative TickEnergy and getting from StoredEnergy
-        // TE: negative
-        // SE= zero => TE does not change
-        // 
     }
 }
