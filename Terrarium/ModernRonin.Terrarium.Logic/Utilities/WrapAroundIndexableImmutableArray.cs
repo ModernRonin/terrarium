@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace ModernRonin.Terrarium.Logic
+namespace ModernRonin.Terrarium.Logic.Utilities
 {
     public class WrapAroundIndexableImmutableArray<T> : IReadOnlyList<T>
     {

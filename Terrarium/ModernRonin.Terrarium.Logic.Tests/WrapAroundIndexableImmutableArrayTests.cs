@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
+using ModernRonin.Terrarium.Logic.Utilities;
 using NSubstitute;
 using NUnit.Framework;
 

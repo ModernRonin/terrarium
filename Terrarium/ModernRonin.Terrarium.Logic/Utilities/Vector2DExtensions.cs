@@ -1,6 +1,6 @@
 ﻿using ModernRonin.Standard;
 
-namespace ModernRonin.Terrarium.Logic
+namespace ModernRonin.Terrarium.Logic.Utilities
 {
     public static class Vector2DExtensions
     {
