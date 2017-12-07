@@ -11,6 +11,6 @@ namespace ModernRonin.Terrarium.Logic.Objects.Entities
             Instructions = new WrapAroundIndexableImmutableArray<IInstruction>(instructions);
         }
         public Parameters Parameters { get; }
-        public IReadOnlyList<IInstruction> Instructions { get; }
+        public WrapAroundIndexableImmutableArray<IInstruction> Instructions { get; }
     }
 }
