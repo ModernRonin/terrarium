@@ -72,6 +72,7 @@
     <Compile Include="Transformations\EntityEnergyAbsorptionTransformerTests.cs" />
     <Compile Include="Transformations\EntityPartsEnergyCostTransformerTests.cs" />
     <Compile Include="Transformations\EntityResetTickEnergyTransformerTests.cs" />
+    <Compile Include="WrapAroundIndexableImmutableArrayTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ModernRonin.Standard.Tests\ModernRonin.Standard.Tests.csproj">
