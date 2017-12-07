@@ -137,5 +137,7 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
             var changed = underTest.Transform(state).Entities.Single();
             changed.State.StoredEnergy.OughtTo().Approximate(14);
         }
+
+        // TODO: tests for negative TickEnergy and getting from StoredEnergy
     }
 }

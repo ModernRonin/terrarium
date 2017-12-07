@@ -31,6 +31,9 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
                 yield return DependencyOf<EntityCurrentInstructionCostTransformer>().On<EntityResetTickEnergyTransformer>();
                 yield return DependencyOf<EntityEnergyAbsorptionTransformer>().On<EntityResetTickEnergyTransformer>();
                 yield return DependencyOf<EntityEnergyStoreTransformer>().On<EntityResetTickEnergyTransformer>();
+                yield return DependencyOf<EntityEnergyStoreTransformer>().On<EntityEnergyAbsorptionTransformer>();
+                yield return DependencyOf<EntityEnergyStoreTransformer>().On<EntityCurrentInstructionCostTransformer>();
+                yield return DependencyOf<EntityEnergyStoreTransformer>().On<EntityPartsEnergyCostTransformer>();
                 yield return DependencyOf<EntityPartsEnergyCostTransformer>().On<EntityResetTickEnergyTransformer>();
             }
         }

@@ -8,6 +8,10 @@ namespace ModernRonin.Terrarium.Logic.Transformations
         readonly IPartPropertiesConfiguration mConfiguration;
         public EntityEnergyStoreTransformer(IPartPropertiesConfiguration configuration) =>
             mConfiguration = configuration;
-        protected override Entity Transform(Entity old, ISimulationState state) => old;
+        protected override Entity Transform(Entity old, ISimulationState state)
+        {
+            var toBeStored = 0;
+            return old.WithState(old.State.AddStoredEnergy(toBeStored));
+        }
     }
 }
