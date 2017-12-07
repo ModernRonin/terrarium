@@ -19,4 +19,5 @@ namespace ModernRonin.Terrarium.Logic.Transformations
             return old.WithState(old.State.AddTickEnergy(absorbed));
         }
     }
+    //public class EntityEnergyStoreTransformer : 
 }
