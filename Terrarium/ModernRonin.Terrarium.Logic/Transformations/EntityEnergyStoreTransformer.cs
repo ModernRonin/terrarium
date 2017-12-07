@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ModernRonin.Terrarium.Logic.Config;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
+using ModernRonin.Terrarium.Logic.Utilities;
 
 namespace ModernRonin.Terrarium.Logic.Transformations
 {
@@ -25,9 +26,10 @@ namespace ModernRonin.Terrarium.Logic.Transformations
         {
             if (old.State.TickEnergy > 0)
             {
-                var remainingStorageCapacity = old.State.Parts.Where(p => p.Kind==PartKind.Absorber);
-                var toBeStored = 0;
-                return old.WithState(old.State.AddStoredEnergy(toBeStored));
+                var totalStorageCapacity = old.State.Parts.OfKind(PartKind.Store).Count()*mConfiguration.CapacityOfStores;
+                var remainingStorageCapacity = totalStorageCapacity-old.State.StoredEnergy;
+                var toBeStored = Math.Min(old.State.TickEnergy, remainingStorageCapacity);
+                return old.WithState(old.State.AddStoredEnergy(toBeStored).SubtractTickEnergy(toBeStored));
             }
             return old;
         }
