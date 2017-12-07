@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ModernRonin.Terrarium.Logic.Objects;
 
-namespace ModernRonin.Terrarium.Logic.Transformations
+namespace ModernRonin.Terrarium.Logic.Transformations.Framework
 {
     public abstract class AnEnergySourceTransformer : AEnumeratingSimulationStateTransformer<IEnergySource>
     {

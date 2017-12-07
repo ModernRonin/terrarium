@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ModernRonin.Standard;
 using ModernRonin.Terrarium.Logic.Objects;
+using ModernRonin.Terrarium.Logic.Transformations.Framework;
 
 namespace ModernRonin.Terrarium.Logic.Transformations
 {

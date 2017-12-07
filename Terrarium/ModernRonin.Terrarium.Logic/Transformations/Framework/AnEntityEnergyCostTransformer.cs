@@ -1,7 +1,7 @@
 ﻿using ModernRonin.Terrarium.Logic.Config;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
 
-namespace ModernRonin.Terrarium.Logic.Transformations
+namespace ModernRonin.Terrarium.Logic.Transformations.Framework
 {
     public abstract class AnEntityEnergyCostTransformer : AnEntityEnergyTransformer
     {

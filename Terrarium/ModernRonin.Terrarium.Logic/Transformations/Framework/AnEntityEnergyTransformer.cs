@@ -4,7 +4,7 @@ using System.Linq;
 using ModernRonin.Standard;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
 
-namespace ModernRonin.Terrarium.Logic.Transformations
+namespace ModernRonin.Terrarium.Logic.Transformations.Framework
 {
     public abstract class AnEntityEnergyTransformer : AnEntityTransformer
     {

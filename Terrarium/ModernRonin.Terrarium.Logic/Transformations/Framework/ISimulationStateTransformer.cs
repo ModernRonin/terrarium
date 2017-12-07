@@ -1,4 +1,4 @@
-﻿namespace ModernRonin.Terrarium.Logic.Transformations
+﻿namespace ModernRonin.Terrarium.Logic.Transformations.Framework
 {
     public interface ISimulationStateTransformer
     {

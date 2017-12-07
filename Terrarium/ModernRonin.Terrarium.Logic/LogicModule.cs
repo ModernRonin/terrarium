@@ -2,6 +2,7 @@
 using Autofac;
 using ModernRonin.Terrarium.Logic.Config;
 using ModernRonin.Terrarium.Logic.Transformations;
+using ModernRonin.Terrarium.Logic.Transformations.Framework;
 
 namespace ModernRonin.Terrarium.Logic
 {

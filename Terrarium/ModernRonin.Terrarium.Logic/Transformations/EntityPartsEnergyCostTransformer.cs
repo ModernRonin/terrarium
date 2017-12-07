@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using ModernRonin.Terrarium.Logic.Config;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
+using ModernRonin.Terrarium.Logic.Transformations.Framework;
 
 namespace ModernRonin.Terrarium.Logic.Transformations
 {

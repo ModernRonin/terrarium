@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using ModernRonin.Terrarium.Logic.Transformations;
+using ModernRonin.Terrarium.Logic.Transformations.Framework;
 using NUnit.Framework;
 
 namespace ModernRonin.Terrarium.Logic.Tests.Transformations

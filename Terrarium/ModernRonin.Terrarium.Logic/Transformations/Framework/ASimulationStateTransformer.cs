@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using ModernRonin.Standard;
 
-namespace ModernRonin.Terrarium.Logic.Transformations
+namespace ModernRonin.Terrarium.Logic.Transformations.Framework
 {
     public abstract class ASimulationStateTransformer<T> : ISimulationStateTransformerWithDependencies
     {

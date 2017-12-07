@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ModernRonin.Terrarium.Logic.Config;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
+using ModernRonin.Terrarium.Logic.Transformations.Framework;
 using ModernRonin.Terrarium.Logic.Utilities;
 
 namespace ModernRonin.Terrarium.Logic.Transformations

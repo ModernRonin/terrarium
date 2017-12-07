@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
+using ModernRonin.Terrarium.Logic.Transformations.Framework;
 
 namespace ModernRonin.Terrarium.Logic.Transformations
 {

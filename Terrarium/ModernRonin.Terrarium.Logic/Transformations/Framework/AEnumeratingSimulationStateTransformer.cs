@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace ModernRonin.Terrarium.Logic.Transformations
+namespace ModernRonin.Terrarium.Logic.Transformations.Framework
 {
     public abstract class AEnumeratingSimulationStateTransformer<T> : ASimulationStateTransformer<IEnumerable<T>>
     {
