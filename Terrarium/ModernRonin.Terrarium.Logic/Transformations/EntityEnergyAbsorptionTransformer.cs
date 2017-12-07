@@ -17,6 +17,4 @@ namespace ModernRonin.Terrarium.Logic.Transformations
             return Add(old, absorbed);
         }
     }
-
-    //public class EntityEnergyStoreTransformer : 
 }

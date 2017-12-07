@@ -73,6 +73,7 @@
     <Compile Include="Transformations\EntityEnergyAbsorptionTransformerTests.cs" />
     <Compile Include="Transformations\EntityPartsEnergyCostTransformerTests.cs" />
     <Compile Include="Transformations\EntityResetTickEnergyTransformerTests.cs" />
+    <Compile Include="Transformations\TransformerDependenciesTests.cs" />
     <Compile Include="WrapAroundIndexableImmutableArrayTests.cs" />
   </ItemGroup>
   <ItemGroup>

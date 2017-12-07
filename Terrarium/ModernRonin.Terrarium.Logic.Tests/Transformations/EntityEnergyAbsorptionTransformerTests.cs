@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using FluentAssertions;
 using ModernRonin.Standard;
 using ModernRonin.Standard.Tests;
 using ModernRonin.Terrarium.Logic.Objects;
@@ -33,12 +32,6 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
 
             var changed = underTest.Transform(state).Entities.Single();
             changed.State.TickEnergy.OughtTo().Approximate(30f);
-        }
-        [Test]
-        public void Dependencies_Contains_ResetTickEnergy()
-        {
-            new EntityEnergyAbsorptionTransformer()
-                .Dependencies.Should().Contain(typeof(EntityResetTickEnergyTransformer));
         }
     }
 }
