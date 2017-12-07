@@ -10,16 +10,19 @@ namespace ModernRonin.Terrarium.Logic.Objects.Entities
             IEnumerable<Part> parts,
             Vector2D position = new Vector2D(),
             float tickEnergy = 0,
+            float storedEnergy = 0,
             int currentInstructionIndex = 0)
         {
             Position = position;
             TickEnergy = tickEnergy;
+            StoredEnergy = storedEnergy;
             CurrentInstructionIndex = currentInstructionIndex;
             Parts = parts;
         }
         public Vector2D Position { get; }
         public IEnumerable<Part> Parts { get; }
         public float TickEnergy { get; }
+        public float StoredEnergy { get; }
         public int CurrentInstructionIndex { get; }
         public string Code => string.Join("?", Parts.Select(p => p.Code));
         public Rectangle2D LocalBoundingBox
@@ -34,14 +37,29 @@ namespace ModernRonin.Terrarium.Logic.Objects.Entities
             }
         }
         public Rectangle2D AbsoluteBoundingBox => LocalBoundingBox.RelativeTo(Position);
-        public IEntityState At(Vector2D position) => new EntityState(Parts, position, TickEnergy, CurrentInstructionIndex);
+        public IEntityState At(Vector2D position) =>
+            new EntityState(Parts, position, TickEnergy, StoredEnergy, CurrentInstructionIndex);
         public IEntityState WithParts(IEnumerable<Part> parts) =>
-            new EntityState(parts, Position, TickEnergy, CurrentInstructionIndex);
-        public IEntityState AddTickEnergy(float delta) =>
-            new EntityState(Parts, Position, TickEnergy + delta, CurrentInstructionIndex);
+            new EntityState(parts, Position, TickEnergy, StoredEnergy, CurrentInstructionIndex);
+        public IEntityState AddTickEnergy(float delta) => new EntityState(Parts,
+            Position,
+            TickEnergy + delta,
+            StoredEnergy,
+            CurrentInstructionIndex);
         public IEntityState SubtractTickEnergy(float delta) => AddTickEnergy(-delta);
-        public IEntityState ResetTickEnergy() => new EntityState(Parts, Position, 0, CurrentInstructionIndex);
+        public IEntityState ResetTickEnergy() =>
+            new EntityState(Parts, Position, 0, StoredEnergy, CurrentInstructionIndex);
         public IEntityState WithCurrentInstructionIndex(int index) =>
-            new EntityState(Parts, Position, TickEnergy, index);
+            new EntityState(Parts, Position, TickEnergy, StoredEnergy, index);
+        public IEntityState AddStoredEnergy(float delta) => new EntityState(Parts,
+            Position,
+            TickEnergy,
+            StoredEnergy + delta,
+            CurrentInstructionIndex);
+        public IEntityState SubtractStoredEnergy(float delta) => new EntityState(Parts,
+            Position,
+            TickEnergy,
+            StoredEnergy - delta,
+            CurrentInstructionIndex);
     }
 }

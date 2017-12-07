@@ -14,7 +14,7 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
     public class EntityStateTests
     {
         readonly EntityState mFullyConstructed =
-            new EntityState(sCorePart.AsEnumerable(), new Vector2D(13f, 17f), 23f, 19);
+            new EntityState(sCorePart.AsEnumerable(), new Vector2D(13f, 17f), 23f, 29f, 19);
         static readonly Part sCorePart = new Part(PartKind.Core, Vector2D.Zero);
         static EntityState CreateSinglePartEntity() => new EntityState(new[] {new Part(PartKind.Core, Vector2D.Zero)});
         static EntityState CreateTwoHorizontalPartsEntity() => new EntityState(new[]
@@ -58,12 +58,23 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
                     Getter = e => e.CurrentInstructionIndex
                 };
                 yield return new BuilderMethodSpec {Method = e => e.At(new Vector2D(-2, -3)), Getter = e => e.Position};
+                yield return new BuilderMethodSpec {Method = e => e.AddStoredEnergy(31f), Getter = e => e.StoredEnergy};
+                yield return new BuilderMethodSpec
+                {
+                    Method = e => e.SubtractStoredEnergy(31f),
+                    Getter = e => e.StoredEnergy
+                };
             }
         }
         [Test]
         public void AbsoluteBoundingBox()
         {
             Defaults.Cross.At(new Vector2D(10, 20)).AbsoluteBoundingBox.OughtTo().Approximate(9, 19, 12, 22);
+        }
+        [Test]
+        public void AddStoredEnergy_Adds_To_TickEnergy()
+        {
+            mFullyConstructed.AddStoredEnergy(13f).StoredEnergy.OughtTo().Approximate(42f);
         }
         [Test]
         public void AddTickEnergy_Adds_To_TickEnergy()
@@ -210,6 +221,11 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
         public void ResetTickEnergy_Sets_TickEnergy_To_Zero()
         {
             mFullyConstructed.ResetTickEnergy().TickEnergy.OughtTo().Approximate(0f);
+        }
+        [Test]
+        public void SubtractStoredEnergy_Subtracts_From_TickEnergy()
+        {
+            mFullyConstructed.SubtractStoredEnergy(13f).StoredEnergy.OughtTo().Approximate(16f);
         }
         [Test]
         public void SubtractTickEnergy_Subtracts_From_TickEnergy()

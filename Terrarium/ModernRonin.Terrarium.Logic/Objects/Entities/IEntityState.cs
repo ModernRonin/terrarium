@@ -11,6 +11,7 @@ namespace ModernRonin.Terrarium.Logic.Objects.Entities
         Rectangle2D LocalBoundingBox { get; }
         Rectangle2D AbsoluteBoundingBox { get; }
         float TickEnergy { get; }
+        float StoredEnergy { get; }
         int CurrentInstructionIndex { get; }
         IEntityState At(Vector2D position);
         IEntityState WithParts(IEnumerable<Part> parts);
@@ -18,5 +19,7 @@ namespace ModernRonin.Terrarium.Logic.Objects.Entities
         IEntityState SubtractTickEnergy(float delta);
         IEntityState ResetTickEnergy();
         IEntityState WithCurrentInstructionIndex(int index);
+        IEntityState AddStoredEnergy(float delta);
+        IEntityState SubtractStoredEnergy(float delta);
     }
 }
