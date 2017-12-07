@@ -11,10 +11,12 @@ namespace ModernRonin.Terrarium.Logic.Objects.Entities
         Rectangle2D LocalBoundingBox { get; }
         Rectangle2D AbsoluteBoundingBox { get; }
         float TickEnergy { get; }
+        int CurrentInstructionIndex { get; }
         IEntityState At(Vector2D position);
         IEntityState WithParts(IEnumerable<Part> parts);
         IEntityState AddTickEnergy(float delta);
         IEntityState SubtractTickEnergy(float delta);
         IEntityState ResetTickEnergy();
+        IEntityState WithCurrentInstructionIndex(int index);
     }
 }

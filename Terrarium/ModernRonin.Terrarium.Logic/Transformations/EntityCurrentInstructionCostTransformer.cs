@@ -7,7 +7,7 @@ namespace ModernRonin.Terrarium.Logic.Transformations
         public EntityCurrentInstructionCostTransformer(IEnergyCostConfiguration configuration) : base(configuration) { }
         protected override float CalculateCost(Entity entity)
         {
-
+            var instructionIndex = entity.State.CurrentInstructionIndex;
             return 0;
         }
     }
