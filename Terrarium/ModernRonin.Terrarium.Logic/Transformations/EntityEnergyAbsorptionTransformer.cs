@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ModernRonin.Standard;
+﻿using System.Linq;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
 
 namespace ModernRonin.Terrarium.Logic.Transformations
@@ -11,6 +8,7 @@ namespace ModernRonin.Terrarium.Logic.Transformations
         protected override Entity Transform(Entity old, ISimulationState state)
         {
             bool isAbsorber(Part part) => part.Kind == PartKind.Absorber;
+
             float energyFor(Part absorber) => state.EnergyDensityAt(old.State.Position + absorber.RelativePosition);
 
             var absorbers = old.State.Parts.Where(isAbsorber);
@@ -19,5 +17,6 @@ namespace ModernRonin.Terrarium.Logic.Transformations
             return Add(old, absorbed);
         }
     }
+
     //public class EntityEnergyStoreTransformer : 
 }
