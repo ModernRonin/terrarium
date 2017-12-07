@@ -15,7 +15,6 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
     public class EntityEnergyStoreTransformerTests
     {
         [TestCase(100, 0, 86, 14)]
-        [TestCase(100, 0, 86, 14)]
         [TestCase(5, 14, 5, 14)]
         [TestCase(5, 4, 0, 9)]
         [TestCase(100, 4, 90, 14)]
