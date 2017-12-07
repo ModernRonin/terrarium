@@ -1,4 +1,5 @@
-﻿using ModernRonin.Terrarium.Logic.Objects.Entities;
+﻿using ModernRonin.Terrarium.Logic.Config;
+using ModernRonin.Terrarium.Logic.Objects.Entities;
 
 namespace ModernRonin.Terrarium.Logic.Transformations
 {

@@ -6,7 +6,7 @@ using ModernRonin.Terrarium.Logic.Objects.Entities.Instructions;
 using ModernRonin.Terrarium.Logic.Transformations;
 using MoreLinq;
 
-namespace ModernRonin.Terrarium.Logic
+namespace ModernRonin.Terrarium.Logic.Config
 {
     public class Configuration : IEnergyCostConfiguration
     {

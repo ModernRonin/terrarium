@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using ModernRonin.Terrarium.Logic.Config;
 using ModernRonin.Terrarium.Logic.Transformations;
 
 namespace ModernRonin.Terrarium.Logic

@@ -2,6 +2,7 @@
 using System.Linq;
 using ModernRonin.Standard;
 using ModernRonin.Standard.Tests;
+using ModernRonin.Terrarium.Logic.Config;
 using ModernRonin.Terrarium.Logic.Objects;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
 using ModernRonin.Terrarium.Logic.Objects.Entities.Instructions;
