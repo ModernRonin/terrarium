@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using FluentAssertions;
+using FluentAssertions.Equivalency;
 using ModernRonin.Standard;
 using ModernRonin.Standard.Tests;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
@@ -19,6 +19,13 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
             {new Part(PartKind.Core, Vector2D.Zero), new Part(PartKind.Absorber, new Vector2D(1, 0))});
         static EntityState CreateTwoVerticalPartsEntity() => new EntityState(new[]
             {new Part(PartKind.Core, Vector2D.Zero), new Part(PartKind.Absorber, new Vector2D(0, 1))});
+        static EquivalencyAssertionOptions<IEntityState> BuilderStandardEquivalency(
+            EquivalencyAssertionOptions<IEntityState> cfg)
+        {
+            return cfg.Using<Vector2D>(ctx => ctx.Subject.Should().Be(ctx.Expectation)).WhenTypeIs<Vector2D>()
+                      .Using<Rectangle2D>(ctx => ctx.Subject.Should().Be(ctx.Expectation)).WhenTypeIs<Rectangle2D>()
+                      .Excluding(u => u.AbsoluteBoundingBox).Excluding(u => u.Code);
+        }
         [Test]
         public void AbsoluteBoundingBox()
         {
@@ -30,24 +37,31 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
             mFullyConstructed.AddTickEnergy(13f).TickEnergy.OughtTo().Approximate(36f);
         }
         [Test]
-        public void AddTickEnergy_Leaves_CurrentInstructionIndex_Equal()
-        {
-            mFullyConstructed.AddTickEnergy(14f).CurrentInstructionIndex.Should().Be(19);
-        }
-        [Test]
-        public void AddTickEnergy_Leaves_Parts_Equal()
-        {
-            mFullyConstructed.AddTickEnergy(14f).Parts.Single().Should().BeSameAs(sCorePart);
-        }
-        [Test]
-        public void AddTickEnergy_Leaves_Position_Equal()
-        {
-            mFullyConstructed.AddTickEnergy(14f).Position.Should().Be(new Vector2D(13f, 17f));
-        }
-        [Test]
         public void AddTickEnergy_Returns_Different_Instance()
         {
             mFullyConstructed.AddTickEnergy(13f).Should().NotBeSameAs(mFullyConstructed);
+        }
+        [Test]
+        public void AddTickEnergy_Returns_Equivalent_Except_For_TickEnergy()
+        {
+            mFullyConstructed.AddTickEnergy(13f).ShouldBeEquivalentTo(mFullyConstructed,
+                cfg => BuilderStandardEquivalency(cfg).Excluding(u => u.TickEnergy));
+        }
+        [Test]
+        public void At_Returns_Different_Instance()
+        {
+            mFullyConstructed.At(new Vector2D(-1f, -2f)).Should().NotBeSameAs(mFullyConstructed);
+        }
+        [Test]
+        public void At_Returns_Equivalent_Except_Position()
+        {
+            mFullyConstructed.At(Vector2D.Zero).ShouldBeEquivalentTo(mFullyConstructed,
+                cfg => BuilderStandardEquivalency(cfg).Excluding(u => u.Position));
+        }
+        [Test]
+        public void At_Sets_Position()
+        {
+            mFullyConstructed.At(new Vector2D(-1f, -2f)).Position.Should().Be(new Vector2D(-1f, -2f));
         }
         [Test]
         public void Code_Is_Different_If_Parts_Are()
@@ -168,24 +182,15 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
             Defaults.Cross.LocalBoundingBox.Width.OughtTo().Approximate(3);
         }
         [Test]
-        public void ResetTickEnergy_Leaves_CurrentInstructionIndex_Equal()
-        {
-            mFullyConstructed.ResetTickEnergy().CurrentInstructionIndex.Should().Be(19);
-        }
-        [Test]
-        public void ResetTickEnergy_Leaves_Parts_Equal()
-        {
-            mFullyConstructed.ResetTickEnergy().Parts.Single().Should().BeSameAs(sCorePart);
-        }
-        [Test]
-        public void ResetTickEnergy_Leaves_Position_Equal()
-        {
-            mFullyConstructed.ResetTickEnergy().Position.Should().Be(new Vector2D(13f, 17f));
-        }
-        [Test]
         public void ResetTickEnergy_Returns_Different_Instance()
         {
             mFullyConstructed.ResetTickEnergy().Should().NotBeSameAs(mFullyConstructed);
+        }
+        [Test]
+        public void ResetTickEnergy_Returns_Equivalent_Except_For_TickEnergy()
+        {
+            mFullyConstructed.ResetTickEnergy().ShouldBeEquivalentTo(mFullyConstructed,
+                cfg => BuilderStandardEquivalency(cfg).Excluding(u => u.TickEnergy));
         }
         [Test]
         public void ResetTickEnergy_Sets_TickEnergy_To_Zero()
@@ -193,24 +198,15 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
             mFullyConstructed.ResetTickEnergy().TickEnergy.OughtTo().Approximate(0f);
         }
         [Test]
-        public void SubtractTickEnergy_Leaves_CurrentInstructionIndex_Equal()
-        {
-            mFullyConstructed.SubtractTickEnergy(14f).CurrentInstructionIndex.Should().Be(19);
-        }
-        [Test]
-        public void SubtractTickEnergy_Leaves_Parts_Equal()
-        {
-            mFullyConstructed.SubtractTickEnergy(14f).Parts.Single().Should().BeSameAs(sCorePart);
-        }
-        [Test]
-        public void SubtractTickEnergy_Leaves_Position_Equal()
-        {
-            mFullyConstructed.SubtractTickEnergy(14f).Position.Should().Be(new Vector2D(13f, 17f));
-        }
-        [Test]
         public void SubtractTickEnergy_Returns_Different_Instance()
         {
             mFullyConstructed.SubtractTickEnergy(13f).Should().NotBeSameAs(mFullyConstructed);
+        }
+        [Test]
+        public void SubtractTickEnergy_Returns_Equivalent_Except_For_TickEnergy()
+        {
+            mFullyConstructed.SubtractTickEnergy(14f).ShouldBeEquivalentTo(mFullyConstructed,
+                cfg => BuilderStandardEquivalency(cfg).Excluding(u => u.TickEnergy));
         }
         [Test]
         public void SubtractTickEnergy_Subtracts()
@@ -218,60 +214,15 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
             mFullyConstructed.SubtractTickEnergy(13f).TickEnergy.OughtTo().Approximate(10f);
         }
         [Test]
-        public void WithParts_Leaves_CurrentInstructionIndex_Equal()
-        {
-            mFullyConstructed.WithParts(new Part[2]).CurrentInstructionIndex.Should().Be(19);
-        }
-        [Test]
-        public void WithParts_Leaves_Position_Equal()
-        {
-            mFullyConstructed.WithParts(new Part[2]).Position.Should().Be(new Vector2D(13f, 17f));
-        }
-        [Test]
-        public void WithParts_Leaves_TickEnergy_Equal()
-        {
-            mFullyConstructed.WithParts(new Part[2]).TickEnergy.Should().Be(23f);
-        }
-        [Test]
-        public void WithParts_Returns_Different_Instance()
-        {
-            mFullyConstructed.WithParts(Null.Enumerable<Part>()).Should().NotBeSameAs(mFullyConstructed);
-        }
-        [Test]
-        public void WithParts_Sets_Parts()
-        {
-            var parts = new Part[2];
-            new EntityState(Null.Enumerable<Part>()).WithParts(parts).Parts.Should().BeSameAs(parts);
-        }
-        [Test]
-        public void At_Returns_Different_Instance()
-        {
-            mFullyConstructed.At(new Vector2D(-1f, -2f)).Should().NotBeSameAs(mFullyConstructed);
-        }
-        [Test]
-        public void At_Sets_Position()
-        {
-            mFullyConstructed.At(new Vector2D(-1f, -2f)).Position.Should().Be(new Vector2D(-1f, -2f));
-        }
-        [Test]
-        public void At_Leaves_Position_Intact()
-        {
-            mFullyConstructed.At(Vector2D.Zero).Parts.Single().Should().BeSameAs(sCorePart);
-        }
-        [Test]
-        public void At_Leaves_TickEnergy_Intact()
-        {
-            mFullyConstructed.At(Vector2D.Zero).TickEnergy.Should().Be(23f);
-        }
-        [Test]
-        public void At_Leaves_CurrentInstructionIndex_Intact()
-        {
-            mFullyConstructed.At(Vector2D.Zero).CurrentInstructionIndex.Should().Be(19);
-        }
-        [Test]
         public void WithCurrentInstructionIndex_Returns_Different_Instance()
         {
             mFullyConstructed.WithCurrentInstructionIndex(29).Should().NotBeSameAs(mFullyConstructed);
+        }
+        [Test]
+        public void WithCurrentInstructionIndex_Returns_Equivalent_Except_CurrentInstructionIndex()
+        {
+            mFullyConstructed.WithCurrentInstructionIndex(29).ShouldBeEquivalentTo(mFullyConstructed,
+                cfg => BuilderStandardEquivalency(cfg).Excluding(u => u.CurrentInstructionIndex));
         }
         [Test]
         public void WithCurrentInstructionIndex_Sets_CurrentInstructionIndex()
@@ -279,19 +230,21 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
             mFullyConstructed.WithCurrentInstructionIndex(29).CurrentInstructionIndex.Should().Be(29);
         }
         [Test]
-        public void WithCurrentInstructionIndex_Leaves_Parts_Intact()
+        public void WithParts_Returns_Different_Instance()
         {
-            mFullyConstructed.WithCurrentInstructionIndex(29).Parts.Should().BeSameAs(mFullyConstructed.Parts);
+            mFullyConstructed.WithParts(Null.Enumerable<Part>()).Should().NotBeSameAs(mFullyConstructed);
         }
         [Test]
-        public void WithCurrentInstructionIndex_Leaves_Position_Intact()
+        public void WithParts_Returns_Equivalent_Except_For_Parts()
         {
-            mFullyConstructed.WithCurrentInstructionIndex(29).Position.Should().Be(mFullyConstructed.Position);
+            mFullyConstructed.WithParts(new[] {sCorePart, sCorePart}).ShouldBeEquivalentTo(mFullyConstructed,
+                cfg => BuilderStandardEquivalency(cfg).Excluding(u => u.Parts));
         }
         [Test]
-        public void WithCurrentInstructionIndex_Leaves_TickEnergy_Intact()
+        public void WithParts_Sets_Parts()
         {
-            mFullyConstructed.WithCurrentInstructionIndex(29).TickEnergy.Should().Be(mFullyConstructed.TickEnergy);
+            var parts = new Part[2];
+            new EntityState(Null.Enumerable<Part>()).WithParts(parts).Parts.Should().BeSameAs(parts);
         }
     }
 }
