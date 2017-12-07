@@ -8,7 +8,8 @@ namespace ModernRonin.Terrarium.Logic.Transformations
         protected override float CalculateCost(Entity entity)
         {
             var instructionIndex = entity.State.CurrentInstructionIndex;
-            return 0;
+            var currentInstruction = entity.Genome.Instructions[instructionIndex];
+            return Configuration.GetEnergyCostForInstruction(currentInstruction);
         }
     }
 }
