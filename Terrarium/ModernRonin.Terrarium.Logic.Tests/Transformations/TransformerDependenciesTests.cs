@@ -18,7 +18,7 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
                 new EnergySourceMovingTransformer(),
                 new EntityCurrentInstructionCostTransformer(null),
                 new EntityEnergyAbsorptionTransformer(),
-                new EntityEnergyStoreTransformer(),
+                new EntityEnergyStoreTransformer(null),
                 new EntityPartsEnergyCostTransformer(null),
                 new EntityResetTickEnergyTransformer()
             }.ToDictionary(t => t.GetType());
