@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
+using ModernRonin.Terrarium.Logic.Utilities;
 
 namespace ModernRonin.Terrarium.Logic.Transformations
 {
@@ -7,11 +8,9 @@ namespace ModernRonin.Terrarium.Logic.Transformations
     {
         protected override Entity Transform(Entity old, ISimulationState state)
         {
-            bool isAbsorber(Part part) => part.Kind == PartKind.Absorber;
-
             float energyFor(Part absorber) => state.EnergyDensityAt(old.State.Position + absorber.RelativePosition);
 
-            var absorbers = old.State.Parts.Where(isAbsorber);
+            var absorbers = old.State.Parts.OfKind(PartKind.Absorber);
             var absorbed = absorbers.Select(energyFor).Sum();
 
             return Add(old, absorbed);
