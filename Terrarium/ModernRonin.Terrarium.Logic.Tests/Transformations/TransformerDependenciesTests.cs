@@ -11,6 +11,7 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
     // ReSharper disable once TestFileNameWarning
     public class TransformerDependenciesTests
     {
+        // @formatter:off
         readonly IDictionary<Type, ISimulationStateTransformerWithDependencies> mTransformers =
             new ISimulationStateTransformerWithDependencies[]
             {
@@ -19,6 +20,18 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
                 new EntityEnergyStoreTransformer(), new EntityResetTickEnergyTransformer()
             }.ToDictionary(t => t.GetType());
 
+        static IEnumerable<Dependency> TestCases
+        {
+            get
+            {
+                yield return DependencyOf<EnergySourceMovingTransformer>().OnNothing();
+                yield return DependencyOf<EntityResetTickEnergyTransformer>().OnNothing();
+                yield return DependencyOf<EntityCurrentInstructionCostTransformer>()
+                    .On<EntityResetTickEnergyTransformer>();
+            }
+        }
+
+        // @formatter:on
         public class Dependency
         {
             public Type Depender { get; set; }
@@ -42,16 +55,6 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
 
         static Dependency DependencyOf<T>() where T : ISimulationStateTransformerWithDependencies =>
             new Dependency {Depender = typeof(T)};
-        static IEnumerable<Dependency> TestCases
-        {
-            get
-            {
-                yield return DependencyOf<EnergySourceMovingTransformer>().OnNothing();
-                yield return DependencyOf<EntityResetTickEnergyTransformer>().OnNothing();
-                yield return DependencyOf<EntityCurrentInstructionCostTransformer>()
-                    .On<EntityResetTickEnergyTransformer>();
-            }
-        }
         [Test]
         public void DependsOn([ValueSource(nameof(TestCases))] Dependency dependency)
         {
