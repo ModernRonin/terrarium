@@ -12,25 +12,28 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
     public class TransformerDependenciesTests
     {
         // @formatter:off
+        // @formatter:keep_user_linebreaks true
         readonly IDictionary<Type, ISimulationStateTransformerWithDependencies> mTransformers =
             new ISimulationStateTransformerWithDependencies[]
             {
-                new EnergySourceMovingTransformer(), new EntityCurrentInstructionCostTransformer(null),
-                new EntityEnergyAbsorptionTransformer(), new EntityPartsEnergyCostTransformer(null),
-                new EntityEnergyStoreTransformer(), new EntityResetTickEnergyTransformer()
+                new EnergySourceMovingTransformer(),
+                new EntityCurrentInstructionCostTransformer(null),
+                new EntityEnergyAbsorptionTransformer(),
+                new EntityEnergyStoreTransformer(),
+                new EntityPartsEnergyCostTransformer(null),
+                new EntityResetTickEnergyTransformer()
             }.ToDictionary(t => t.GetType());
-
         static IEnumerable<Dependency> TestCases
         {
             get
             {
                 yield return DependencyOf<EnergySourceMovingTransformer>().OnNothing();
                 yield return DependencyOf<EntityResetTickEnergyTransformer>().OnNothing();
-                yield return DependencyOf<EntityCurrentInstructionCostTransformer>()
-                    .On<EntityResetTickEnergyTransformer>();
+                yield return DependencyOf<EntityCurrentInstructionCostTransformer>().On<EntityResetTickEnergyTransformer>();
             }
         }
 
+        // @formatter:keep_user_linebreaks false
         // @formatter:on
         public class Dependency
         {
