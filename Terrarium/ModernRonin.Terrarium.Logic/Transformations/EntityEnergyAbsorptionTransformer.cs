@@ -6,9 +6,8 @@ using ModernRonin.Terrarium.Logic.Objects.Entities;
 
 namespace ModernRonin.Terrarium.Logic.Transformations
 {
-    public class EntityEnergyAbsorptionTransformer : AnEntityTransformer
+    public class EntityEnergyAbsorptionTransformer : AnEntityEnergyTransformer
     {
-        public override IEnumerable<Type> Dependencies => typeof(EntityResetTickEnergyTransformer).AsEnumerable();
         protected override Entity Transform(Entity old, ISimulationState state)
         {
             bool isAbsorber(Part part) => part.Kind == PartKind.Absorber;
@@ -16,7 +15,8 @@ namespace ModernRonin.Terrarium.Logic.Transformations
 
             var absorbers = old.State.Parts.Where(isAbsorber);
             var absorbed = absorbers.Select(energyFor).Sum();
-            return old.WithState(old.State.AddTickEnergy(absorbed));
+
+            return Add(old, absorbed);
         }
     }
     //public class EntityEnergyStoreTransformer : 
