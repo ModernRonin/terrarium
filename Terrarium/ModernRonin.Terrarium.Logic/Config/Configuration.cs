@@ -3,12 +3,11 @@ using System.Collections.Concurrent;
 using System.Linq;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
 using ModernRonin.Terrarium.Logic.Objects.Entities.Instructions;
-using ModernRonin.Terrarium.Logic.Transformations;
 using MoreLinq;
 
 namespace ModernRonin.Terrarium.Logic.Config
 {
-    public class Configuration : IEnergyCostConfiguration
+    public class Configuration : IEnergyCostConfiguration, IPartPropertiesConfiguration
     {
         readonly ConcurrentDictionary<PartKind, float> mPartKindCosts = new ConcurrentDictionary<PartKind, float>();
         public Configuration()
@@ -33,6 +32,7 @@ namespace ModernRonin.Terrarium.Logic.Config
             }
             throw new NotImplementedException();
         }
+        public float CapacityOfStores { get; set; }
         public float SetEnergyCostForPartKind(PartKind kind, float cost) => mPartKindCosts[kind] = cost;
     }
 }
