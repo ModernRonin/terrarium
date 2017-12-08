@@ -14,27 +14,30 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
     public class EntityExecuteCurrentInstructionTransformerTests
     {
         [Test]
-        public void Increments_CurrentInstructionIndex()
+        public void Calls_Executor_With_CurrentInstruction()
         {
-            var entity = new Entity(new EntityState(Null.Enumerable<Part>(), currentInstructionIndex:13), new Genome(null, new IInstruction[19]));
+            var instruction = Substitute.For<IInstruction>();
+            var entity = new Entity(Substitute.For<IEntityState>(), new Genome(new Parameters(), new[] {instruction}));
             var state = new SimulationState(entity.AsEnumerable(), Null.Enumerable<IEnergySource>());
+            var executor = Substitute.For<IInstructionExecutor>();
 
-            var underTest= new EntityExecuteCurrentInstructionTransformer();
-            var changed = underTest.Transform(state).Entities.Single();
+            var underTest = new EntityExecuteCurrentInstructionTransformer(executor);
+            underTest.Transform(state);
 
-            changed.State.CurrentInstructionIndex.Should().Be(14);
+            executor.Received().Execute(instruction, entity, state);
         }
         [Test]
-        public void Sets_CurrentInstructionIndex_To_Zero_If_It_Was_At_Maximum()
+        public void Returns_Executors_ReturnValue()
         {
-            var entity = new Entity(new EntityState(Null.Enumerable<Part>(), currentInstructionIndex: 13), new Genome(null, new IInstruction[14]));
+            var instruction = Substitute.For<IInstruction>();
+            var entity = new Entity(Substitute.For<IEntityState>(), new Genome(new Parameters(), new[] {instruction}));
             var state = new SimulationState(entity.AsEnumerable(), Null.Enumerable<IEnergySource>());
+            var executor = Substitute.For<IInstructionExecutor>();
+            var newEntity = Substitute.For<IEntity>();
+            executor.Execute(instruction, entity, state).Returns(newEntity);
 
-            var underTest = new EntityExecuteCurrentInstructionTransformer();
-            var changed = underTest.Transform(state).Entities.Single();
-
-            changed.State.CurrentInstructionIndex.Should().Be(0);
+            var underTest = new EntityExecuteCurrentInstructionTransformer(executor);
+            underTest.Transform(state).Entities.Single().Should().BeSameAs(newEntity);
         }
     }
 }
-

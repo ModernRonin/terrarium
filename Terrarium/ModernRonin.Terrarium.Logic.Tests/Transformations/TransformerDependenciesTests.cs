@@ -23,7 +23,7 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
                 new EntityPartsEnergyCostTransformer(null),
                 new EntityResetTickEnergyTransformer(),
                 new RemoveEntitiesWithNegativeTickEnergyTransformer(),
-                new EntityExecuteCurrentInstructionTransformer(), 
+                new EntityExecuteCurrentInstructionTransformer(null), 
             }.ToDictionary(t => t.GetType());
         static IEnumerable<Dependency> TestCases
         {

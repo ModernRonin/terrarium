@@ -7,7 +7,7 @@ namespace ModernRonin.Terrarium.Logic.Transformations.Framework
     {
         protected sealed override IEnumerable<T> Transform(IEnumerable<T> old, ISimulationState state)
         {
-            return old.Select(e => Transform(e, state));
+            return old.Select(e => Transform(e, state)).ToArray();
         }
         protected abstract T Transform(T old, ISimulationState state);
     }
