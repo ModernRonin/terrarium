@@ -3,8 +3,8 @@ using ModernRonin.Terrarium.Logic.Objects.Entities.Instructions;
 
 namespace ModernRonin.Terrarium.Logic.Transformations
 {
-    public interface IInstructionExecutor
+    public interface IEntityChangingInstructionExecutor
     {
-        IEntity Execute(IInstruction currentInstruction, IEntity entity, ISimulationState simulationState);
+        IEntity Execute(IEntityChangingInstruction instruction, IEntity entity, ISimulationState simulationState);
     }
 }
