@@ -4,7 +4,7 @@ using ModernRonin.Terrarium.Logic.Utilities;
 
 namespace ModernRonin.Terrarium.Logic.Objects.Entities
 {
-    public class Genome
+    public class Genome : IGenome
     {
         public Genome(Parameters parameters, IReadOnlyList<IInstruction> instructions)
         {
