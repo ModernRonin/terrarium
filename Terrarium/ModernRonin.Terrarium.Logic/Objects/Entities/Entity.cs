@@ -1,6 +1,6 @@
 ﻿namespace ModernRonin.Terrarium.Logic.Objects.Entities
 {
-    public class Entity
+    public class Entity : IEntity
     {
         public Entity(IEntityState state, Genome genome)
         {
