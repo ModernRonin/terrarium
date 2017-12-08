@@ -2,6 +2,7 @@
 using Autofac;
 using ModernRonin.Terrarium.Logic.Config;
 using ModernRonin.Terrarium.Logic.Transformations;
+using ModernRonin.Terrarium.Logic.Transformations.Execution;
 using ModernRonin.Terrarium.Logic.Transformations.Framework;
 
 namespace ModernRonin.Terrarium.Logic
@@ -14,6 +15,8 @@ namespace ModernRonin.Terrarium.Logic
             builder.RegisterType<SimulationStateTransformer>().As<ISimulationStateTransformer>().SingleInstance();
             builder.RegisterAssemblyTypes(ThisAssembly).AssignableTo<ISimulationStateTransformerWithDependencies>()
                    .As<ISimulationStateTransformerWithDependencies>().InstancePerDependency();
+            builder.RegisterAssemblyTypes(ThisAssembly).AssignableTo<IInstructionExecutor>().As<IInstructionExecutor>()
+                   .InstancePerDependency();
             builder.Register<Func<ISimulationState>>(c =>
             {
                 var ctx = c.Resolve<IComponentContext>();
