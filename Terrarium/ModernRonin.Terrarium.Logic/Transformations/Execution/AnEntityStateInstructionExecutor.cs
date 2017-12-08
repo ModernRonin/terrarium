@@ -5,12 +5,12 @@ namespace ModernRonin.Terrarium.Logic.Transformations.Execution
 {
     public abstract class AnEntityStateInstructionExecutor<T> : AnEntityInstructionExecutor<T> where T : IInstruction
     {
-        protected sealed override Entity Transform(IEntity entity, T instruction)
+        protected sealed override Entity ExecuteOn(T instruction, IEntity entity)
         {
             var oldState = entity.State;
-            var newState = Transform(oldState, instruction);
+            var newState = ExecuteOn(instruction, oldState);
             return entity.WithState(newState);
         }
-        protected abstract IEntityState Transform(IEntityState oldState, T instruction);
+        protected abstract IEntityState ExecuteOn(T instruction, IEntityState oldState);
     }
 }

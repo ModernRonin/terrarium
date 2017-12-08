@@ -5,7 +5,7 @@ namespace ModernRonin.Terrarium.Logic.Transformations.Execution
 {
     public class RotateThrustersExecutor : AnEntityStateInstructionExecutor<RotateThrustersInstruction>
     {
-        protected override IEntityState Transform(IEntityState oldState, RotateThrustersInstruction instruction) =>
+        protected override IEntityState ExecuteOn(RotateThrustersInstruction instruction, IEntityState oldState) =>
             oldState.WithThrustDirection(instruction.NewRotation);
     }
 }

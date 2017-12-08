@@ -13,10 +13,10 @@ namespace ModernRonin.Terrarium.Logic.Transformations.Execution
             IEntity entity,
             ISimulationState simulationState)
         {
-            var changed = Transform(entity, instruction);
+            var changed = ExecuteOn(instruction, entity);
             var entities = changed.Concat(simulationState.Entities.Except(entity.AsEnumerable()));
             return simulationState.WithEntities(entities);
         }
-        protected abstract Entity Transform(IEntity entity, T instruction);
+        protected abstract Entity ExecuteOn(T instruction, IEntity entity);
     }
 }
