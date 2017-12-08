@@ -3,14 +3,9 @@ using ModernRonin.Terrarium.Logic.Objects.Entities.Instructions;
 
 namespace ModernRonin.Terrarium.Logic.Transformations.Execution
 {
-    public class ToggleThrustersExecutor : AnEntityInstructionExecutor<ToggleThrustersInstruction>
+    public class ToggleThrustersExecutor : AnEntityStateInstructionExecutor<ToggleThrustersInstruction>
     {
-        protected override Entity Transform(IEntity entity)
-        {
-            var changed = entity.State.AreThrustersOn
-                ? entity.WithState(entity.State.ThrustOff())
-                : entity.WithState(entity.State.ThrustOn());
-            return changed;
-        }
+        protected override IEntityState Transform(IEntityState oldState, ToggleThrustersInstruction instruction) =>
+            oldState.AreThrustersOn ? oldState.ThrustOff() : oldState.ThrustOn();
     }
 }
