@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ModernRonin.Terrarium.Logic.Transformations.Framework
 {
-    public abstract class AEnumeratingSimulationStateTransformer<T> : ASimulationStateTransformer<IEnumerable<T>>
+    public abstract class AnEnumeratingSimulationStateTransformer<T> : ASimulationStateTransformer<IEnumerable<T>>
     {
         protected sealed override IEnumerable<T> Transform(IEnumerable<T> old, ISimulationState state)
         {
