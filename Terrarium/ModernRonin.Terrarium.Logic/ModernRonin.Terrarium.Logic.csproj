@@ -14,4 +14,8 @@
     <ProjectReference Include="..\ModernRonin.Standard\ModernRonin.Standard.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Transformations\Execution\" />
+  </ItemGroup>
+
 </Project>
