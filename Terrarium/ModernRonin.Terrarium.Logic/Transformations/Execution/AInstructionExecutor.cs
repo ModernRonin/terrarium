@@ -2,14 +2,8 @@
 using ModernRonin.Terrarium.Logic.Objects.Entities;
 using ModernRonin.Terrarium.Logic.Objects.Entities.Instructions;
 
-namespace ModernRonin.Terrarium.Logic.Transformations
+namespace ModernRonin.Terrarium.Logic.Transformations.Execution
 {
-    public interface IInstructionExecutor 
-    {
-        Type HandledInstructionType { get; }
-        ISimulationState Execute(IInstruction instruction, IEntity entity, ISimulationState simulationState);
-    }
-
     public abstract class AInstructionExecutor<T> : IInstructionExecutor where T : IInstruction
     {
         public ISimulationState Execute(IInstruction instruction, IEntity entity, ISimulationState simulationState) =>

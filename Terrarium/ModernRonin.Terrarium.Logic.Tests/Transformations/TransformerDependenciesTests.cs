@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using ModernRonin.Standard;
 using ModernRonin.Terrarium.Logic.Transformations;
+using ModernRonin.Terrarium.Logic.Transformations.Execution;
 using ModernRonin.Terrarium.Logic.Transformations.Framework;
 using NUnit.Framework;
 
@@ -23,7 +25,7 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
                 new EntityPartsEnergyCostTransformer(null),
                 new EntityResetTickEnergyTransformer(),
                 new RemoveEntitiesWithNegativeTickEnergyTransformer(),
-                new EntityExecuteCurrentInstructionTransformer(null), 
+                new EntityExecuteCurrentInstructionTransformer(Null.Enumerable<IInstructionExecutor>()), 
             }.ToDictionary(t => t.GetType());
         static IEnumerable<Dependency> TestCases
         {
