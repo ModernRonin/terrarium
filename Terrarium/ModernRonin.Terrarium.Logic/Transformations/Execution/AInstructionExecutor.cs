@@ -11,4 +11,5 @@ namespace ModernRonin.Terrarium.Logic.Transformations.Execution
         public Type HandledInstructionType => typeof(T);
         protected abstract ISimulationState DoExecute(T instruction, IEntity entity, ISimulationState simulationState);
     }
+    
 }

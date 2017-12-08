@@ -25,9 +25,9 @@ namespace ModernRonin.Terrarium.Logic.Config
                     return 0.2f;
                 case JumpInstruction _:
                     return 0.1f;
-                case RotateThrusterInstruction _:
+                case RotateThrustersInstruction _:
                     return 0.75f;
-                case PulseThrusterInstruction _:
+                case ToggleThrustersInstruction _:
                     return 1;
             }
             throw new NotImplementedException();
