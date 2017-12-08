@@ -5,9 +5,9 @@ namespace ModernRonin.Terrarium.Logic.Objects.Entities
     public interface IEntity
     {
         IEntityState State { get; }
-        Genome Genome { get; }
+        IGenome Genome { get; }
         Entity WithState(IEntityState state);
-        Entity WithGenome(Genome genome);
+        Entity WithGenome(IGenome genome);
         IInstruction CurrentInstruction { get; }
     }
 }
