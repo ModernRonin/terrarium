@@ -11,7 +11,12 @@ namespace ModernRonin.Terrarium.Logic.Transformations
         {
             get { yield return typeof(RemoveEntitiesWithNegativeTickEnergyTransformer); }
         }
-        protected override IEntity Transform(IEntity old, ISimulationState state) =>
-            throw new NotImplementedException();
+        protected override IEntity Transform(IEntity old, ISimulationState state)
+        {
+            var nextInstructionIndex = old.State.CurrentInstructionIndex + 1;
+            if (nextInstructionIndex >= old.Genome.Instructions.Count) nextInstructionIndex = 0;
+
+            return old.WithState(old.State.WithCurrentInstructionIndex(nextInstructionIndex));
+        }
     }
 }
