@@ -23,7 +23,7 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
                 new EntityPartsEnergyCostTransformer(null),
                 new EntityResetTickEnergyTransformer(),
                 new RemoveEntitiesWithNegativeTickEnergyTransformer(),
-                new EntityExecuteCurrentEntityChangingInstructionTransformer(null), 
+                new EntityExecuteCurrentInstructionTransformer(null), 
             }.ToDictionary(t => t.GetType());
         static IEnumerable<Dependency> TestCases
         {
@@ -39,7 +39,7 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
                 yield return DependencyOf<EntityEnergyStoreTransformer>().On<EntityPartsEnergyCostTransformer>();
                 yield return DependencyOf<EntityPartsEnergyCostTransformer>().On<EntityResetTickEnergyTransformer>();
                 yield return DependencyOf<RemoveEntitiesWithNegativeTickEnergyTransformer>().On<EntityEnergyStoreTransformer>();
-                yield return DependencyOf<EntityExecuteCurrentEntityChangingInstructionTransformer>()
+                yield return DependencyOf<EntityExecuteCurrentInstructionTransformer>()
                     .On<RemoveEntitiesWithNegativeTickEnergyTransformer>();
             }
         }

@@ -1,4 +1,4 @@
 ﻿namespace ModernRonin.Terrarium.Logic.Objects.Entities.Instructions
 {
-    public class PulseThrusterInstruction : ISimulationChangingInstruction { }
+    public class PulseThrusterInstruction : IInstruction { }
 }

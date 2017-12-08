@@ -1,4 +1,4 @@
 ﻿namespace ModernRonin.Terrarium.Logic.Objects.Entities.Instructions
 {
-    public class GrowInstruction : ISimulationChangingInstruction { }
+    public class GrowInstruction : IInstruction { }
 }

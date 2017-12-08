@@ -1,4 +1,4 @@
 ﻿namespace ModernRonin.Terrarium.Logic.Objects.Entities.Instructions
 {
-    public class RotateThrusterInstruction : IEntityChangingInstruction { }
+    public class RotateThrusterInstruction : IInstruction { }
 }

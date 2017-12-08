@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
-using ModernRonin.Terrarium.Logic.Objects.Entities.Instructions;
 using ModernRonin.Terrarium.Logic.Transformations.Framework;
 
 namespace ModernRonin.Terrarium.Logic.Transformations
 {
-    public class EntityExecuteCurrentEntityChangingInstructionTransformer : AnEntityTransformer
+    public class EntityExecuteCurrentInstructionTransformer : AnEntityTransformer
     {
-        readonly IEntityChangingInstructionExecutor mExecutor;
-        public EntityExecuteCurrentEntityChangingInstructionTransformer(IEntityChangingInstructionExecutor executor) =>
+        readonly IInstructionExecutor mExecutor;
+        public EntityExecuteCurrentInstructionTransformer(IInstructionExecutor executor) =>
             mExecutor = executor;
         public override IEnumerable<Type> Dependencies
         {
@@ -17,9 +16,8 @@ namespace ModernRonin.Terrarium.Logic.Transformations
         }
         protected override IEntity Transform(IEntity old, ISimulationState state)
         {
-            if (old.CurrentInstruction is IEntityChangingInstruction currentInstruction)
-                return mExecutor.Execute(currentInstruction, old, state);
-            return old;
+            var currentInstruction = old.CurrentInstruction;
+            return mExecutor.Execute(currentInstruction, old, state);
         }
     }
 }
