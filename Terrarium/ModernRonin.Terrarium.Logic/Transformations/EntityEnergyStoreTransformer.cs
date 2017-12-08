@@ -22,7 +22,7 @@ namespace ModernRonin.Terrarium.Logic.Transformations
                 yield return typeof(EntityPartsEnergyCostTransformer);
             }
         }
-        protected override Entity Transform(Entity old, ISimulationState state)
+        protected override IEntity Transform(IEntity old, ISimulationState state)
         {
             if (old.State.TickEnergy > 0)
             {

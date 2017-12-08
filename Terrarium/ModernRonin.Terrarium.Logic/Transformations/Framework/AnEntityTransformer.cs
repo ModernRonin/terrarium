@@ -3,10 +3,10 @@ using ModernRonin.Terrarium.Logic.Objects.Entities;
 
 namespace ModernRonin.Terrarium.Logic.Transformations.Framework
 {
-    public abstract class AnEntityTransformer : AnEnumeratingSimulationStateTransformer<Entity>
+    public abstract class AnEntityTransformer : AnEnumeratingSimulationStateTransformer<IEntity>
     {
-        protected sealed override IEnumerable<Entity> Get(ISimulationState state) => state.Entities;
-        protected sealed override ISimulationState Set(ISimulationState state, IEnumerable<Entity> property) =>
+        protected sealed override IEnumerable<IEntity> Get(ISimulationState state) => state.Entities;
+        protected sealed override ISimulationState Set(ISimulationState state, IEnumerable<IEntity> property) =>
             state.WithEntities(property);
     }
 }

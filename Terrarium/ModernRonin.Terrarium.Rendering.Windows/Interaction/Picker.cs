@@ -16,7 +16,7 @@ namespace ModernRonin.Terrarium.Rendering.Windows.Interaction
             mCamera = camera;
             mSimulationStateGetter = simulationStateGetter;
         }
-        public event Action<IEnumerable<Entity>> OnEntitiesPicked;
+        public event Action<IEnumerable<IEntity>> OnEntitiesPicked;
         public void Update()
         {
             if (!mMouseDelta.HasLeftBeenClicked) return;

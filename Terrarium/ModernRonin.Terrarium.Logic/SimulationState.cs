@@ -10,7 +10,7 @@ namespace ModernRonin.Terrarium.Logic
     public class SimulationState : ISimulationState
     {
         public SimulationState(
-            IEnumerable<Entity> entities,
+            IEnumerable<IEntity> entities,
             IEnumerable<IEnergySource>energySources,
             Vector2D size = new Vector2D(),
             float[,] energyDensity = null)
@@ -21,16 +21,16 @@ namespace ModernRonin.Terrarium.Logic
             EnergyDensity = energyDensity ?? EnergySources.Aggregate(Size.ToEnergyDensity(), (g, s) => s.ApplyTo(g));
         }
         public Vector2D Size { get; }
-        public IEnumerable<Entity> Entities { get; }
+        public IEnumerable<IEntity> Entities { get; }
         public float[,] EnergyDensity { get; }
         public IEnumerable<IEnergySource> EnergySources { get; }
-        public IEnumerable<Entity> GetEntitiesAt(Vector2D position)
+        public IEnumerable<IEntity> GetEntitiesAt(Vector2D position)
         {
             return Entities.Where(e => e.State.AbsoluteBoundingBox.Contains(position));
         }
         public ISimulationState WithEnergySources(IEnumerable<IEnergySource> energySources) =>
             new SimulationState(Entities, energySources, Size);
-        public ISimulationState WithEntities(IEnumerable<Entity> entities) =>
+        public ISimulationState WithEntities(IEnumerable<IEntity> entities) =>
             new SimulationState(entities, EnergySources, Size, EnergyDensity);
         public float EnergyDensityAt(Vector2D position)
         {

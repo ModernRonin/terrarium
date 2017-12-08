@@ -7,7 +7,7 @@ namespace ModernRonin.Terrarium.Logic.Transformations
 {
     public class EntityEnergyAbsorptionTransformer : AnEntityEnergyTransformer
     {
-        protected override Entity Transform(Entity old, ISimulationState state)
+        protected override IEntity Transform(IEntity old, ISimulationState state)
         {
             float energyFor(Part absorber) => state.EnergyDensityAt(old.State.Position + absorber.RelativePosition);
 

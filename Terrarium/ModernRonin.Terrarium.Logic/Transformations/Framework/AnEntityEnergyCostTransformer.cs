@@ -7,11 +7,11 @@ namespace ModernRonin.Terrarium.Logic.Transformations.Framework
     {
         public AnEntityEnergyCostTransformer(IEnergyCostConfiguration configuration) => Configuration = configuration;
         public IEnergyCostConfiguration Configuration { get; }
-        protected sealed override Entity Transform(Entity old, ISimulationState state)
+        protected sealed override IEntity Transform(IEntity old, ISimulationState state)
         {
             var cost = CalculateCost(old);
             return Subtract(old, cost);
         }
-        protected abstract float CalculateCost(Entity entity);
+        protected abstract float CalculateCost(IEntity entity);
     }
 }
