@@ -13,6 +13,8 @@ namespace ModernRonin.Terrarium.Logic.Transformations
         }
         protected override IEntity Transform(IEntity old, ISimulationState state)
         {
+            var currentInstruction = old.CurrentInstruction;
+
             var nextInstructionIndex = old.State.CurrentInstructionIndex + 1;
             if (nextInstructionIndex >= old.Genome.Instructions.Count) nextInstructionIndex = 0;
 
