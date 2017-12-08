@@ -6,6 +6,7 @@ using ModernRonin.Terrarium.Logic.Objects.Entities.Instructions;
 
 namespace ModernRonin.Terrarium.Logic
 {
+    // TODO: add default genome(s)
     public static class Defaults
     {
         public static IEntityState Snake => new EntityState(new List<Part>
