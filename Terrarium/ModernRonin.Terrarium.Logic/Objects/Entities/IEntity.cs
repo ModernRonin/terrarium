@@ -1,4 +1,6 @@
-﻿namespace ModernRonin.Terrarium.Logic.Objects.Entities
+﻿using ModernRonin.Terrarium.Logic.Objects.Entities.Instructions;
+
+namespace ModernRonin.Terrarium.Logic.Objects.Entities
 {
     public interface IEntity
     {
@@ -6,5 +8,6 @@
         Genome Genome { get; }
         Entity WithState(IEntityState state);
         Entity WithGenome(Genome genome);
+        IInstruction CurrentInstruction { get; }
     }
 }
