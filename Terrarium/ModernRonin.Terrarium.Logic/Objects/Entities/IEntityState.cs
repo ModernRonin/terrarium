@@ -13,6 +13,8 @@ namespace ModernRonin.Terrarium.Logic.Objects.Entities
         float TickEnergy { get; }
         float StoredEnergy { get; }
         int CurrentInstructionIndex { get; }
+        bool AreThrustersOn { get; }
+        Vector2D ThrustDirection { get; }
         IEntityState At(Vector2D position);
         IEntityState WithParts(IEnumerable<Part> parts);
         IEntityState AddTickEnergy(float delta);
@@ -21,5 +23,8 @@ namespace ModernRonin.Terrarium.Logic.Objects.Entities
         IEntityState WithCurrentInstructionIndex(int index);
         IEntityState AddStoredEnergy(float delta);
         IEntityState SubtractStoredEnergy(float delta);
+        IEntityState ThrustOn();
+        IEntityState ThrustOff();
+        IEntityState WithThrustDirection(Vector2D direction);
     }
 }

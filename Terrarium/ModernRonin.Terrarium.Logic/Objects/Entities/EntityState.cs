@@ -11,12 +11,16 @@ namespace ModernRonin.Terrarium.Logic.Objects.Entities
             Vector2D position = new Vector2D(),
             float tickEnergy = 0,
             float storedEnergy = 0,
-            int currentInstructionIndex = 0)
+            int currentInstructionIndex = 0,
+            bool areThrustersOn = false,
+            Vector2D thrustDirection = new Vector2D())
         {
             Position = position;
             TickEnergy = tickEnergy;
             StoredEnergy = storedEnergy;
             CurrentInstructionIndex = currentInstructionIndex;
+            AreThrustersOn = areThrustersOn;
+            ThrustDirection = thrustDirection;
             Parts = parts;
         }
         public Vector2D Position { get; }
@@ -24,6 +28,8 @@ namespace ModernRonin.Terrarium.Logic.Objects.Entities
         public float TickEnergy { get; }
         public float StoredEnergy { get; }
         public int CurrentInstructionIndex { get; }
+        public bool AreThrustersOn { get; }
+        public Vector2D ThrustDirection { get; }
         public string Code => string.Join("?", Parts.Select(p => p.Code));
         public Rectangle2D LocalBoundingBox
         {
@@ -37,29 +43,76 @@ namespace ModernRonin.Terrarium.Logic.Objects.Entities
             }
         }
         public Rectangle2D AbsoluteBoundingBox => LocalBoundingBox.RelativeTo(Position);
-        public IEntityState At(Vector2D position) =>
-            new EntityState(Parts, position, TickEnergy, StoredEnergy, CurrentInstructionIndex);
-        public IEntityState WithParts(IEnumerable<Part> parts) =>
-            new EntityState(parts, Position, TickEnergy, StoredEnergy, CurrentInstructionIndex);
+        public IEntityState At(Vector2D position) => new EntityState(Parts,
+            position,
+            TickEnergy,
+            StoredEnergy,
+            CurrentInstructionIndex,
+            AreThrustersOn,
+            ThrustDirection);
+        public IEntityState WithParts(IEnumerable<Part> parts) => new EntityState(parts,
+            Position,
+            TickEnergy,
+            StoredEnergy,
+            CurrentInstructionIndex,
+            AreThrustersOn,
+            ThrustDirection);
         public IEntityState AddTickEnergy(float delta) => new EntityState(Parts,
             Position,
             TickEnergy + delta,
             StoredEnergy,
-            CurrentInstructionIndex);
+            CurrentInstructionIndex,
+            AreThrustersOn,
+            ThrustDirection);
         public IEntityState SubtractTickEnergy(float delta) => AddTickEnergy(-delta);
-        public IEntityState ResetTickEnergy() =>
-            new EntityState(Parts, Position, 0, StoredEnergy, CurrentInstructionIndex);
-        public IEntityState WithCurrentInstructionIndex(int index) =>
-            new EntityState(Parts, Position, TickEnergy, StoredEnergy, index);
+        public IEntityState ResetTickEnergy() => new EntityState(Parts,
+            Position,
+            0,
+            StoredEnergy,
+            CurrentInstructionIndex,
+            AreThrustersOn,
+            ThrustDirection);
+        public IEntityState WithCurrentInstructionIndex(int index) => new EntityState(Parts,
+            Position,
+            TickEnergy,
+            StoredEnergy,
+            index,
+            AreThrustersOn,
+            ThrustDirection);
         public IEntityState AddStoredEnergy(float delta) => new EntityState(Parts,
             Position,
             TickEnergy,
             StoredEnergy + delta,
-            CurrentInstructionIndex);
+            CurrentInstructionIndex,
+            AreThrustersOn,
+            ThrustDirection);
         public IEntityState SubtractStoredEnergy(float delta) => new EntityState(Parts,
             Position,
             TickEnergy,
             StoredEnergy - delta,
-            CurrentInstructionIndex);
+            CurrentInstructionIndex,
+            AreThrustersOn,
+            ThrustDirection);
+        public IEntityState ThrustOn() => new EntityState(Parts,
+            Position,
+            TickEnergy,
+            StoredEnergy,
+            CurrentInstructionIndex,
+            true,
+            ThrustDirection);
+        public IEntityState ThrustOff() => new EntityState(Parts,
+            Position,
+            TickEnergy,
+            StoredEnergy,
+            CurrentInstructionIndex,
+            false,
+            ThrustDirection);
+        public IEntityState WithThrustDirection(Vector2D direction) => new EntityState(Parts,
+            Position,
+            TickEnergy,
+            StoredEnergy,
+            CurrentInstructionIndex,
+            AreThrustersOn,
+            direction);
     }
 }

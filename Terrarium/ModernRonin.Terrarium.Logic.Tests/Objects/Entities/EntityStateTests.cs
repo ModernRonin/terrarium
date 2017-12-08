@@ -13,8 +13,13 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
     [TestFixture]
     public class EntityStateTests
     {
-        readonly EntityState mFullyConstructed =
-            new EntityState(sCorePart.AsEnumerable(), new Vector2D(13f, 17f), 23f, 29f, 19);
+        readonly EntityState mFullyConstructed = new EntityState(sCorePart.AsEnumerable(),
+            new Vector2D(13f, 17f),
+            23f,
+            29f,
+            19,
+            true,
+            new Vector2D(-3, 17));
         static readonly Part sCorePart = new Part(PartKind.Core, Vector2D.Zero);
         static EntityState CreateSinglePartEntity() => new EntityState(new[] {new Part(PartKind.Core, Vector2D.Zero)});
         static EntityState CreateTwoHorizontalPartsEntity() => new EntityState(new[]
@@ -64,6 +69,13 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
                     Method = e => e.SubtractStoredEnergy(31f),
                     Getter = e => e.StoredEnergy
                 };
+                yield return new BuilderMethodSpec
+                {
+                    Method = e => e.WithThrustDirection(new Vector2D(-1, 1)),
+                    Getter = e => e.ThrustDirection
+                };
+                yield return new BuilderMethodSpec {Method = e => e.ThrustOff(), Getter = e => e.AreThrustersOn};
+                yield return new BuilderMethodSpec {Method = e => e.ThrustOn(), Getter = e => e.AreThrustersOn};
             }
         }
         [Test]
@@ -233,6 +245,16 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
             mFullyConstructed.SubtractTickEnergy(13f).TickEnergy.OughtTo().Approximate(10f);
         }
         [Test]
+        public void ThrustOff_Sets_AreThrusterOn_To_False()
+        {
+            mFullyConstructed.ThrustOn().ThrustOff().AreThrustersOn.Should().BeFalse();
+        }
+        [Test]
+        public void ThrustOn_Sets_AreThrusterOn_To_True()
+        {
+            mFullyConstructed.ThrustOff().ThrustOn().AreThrustersOn.Should().BeTrue();
+        }
+        [Test]
         public void WithCurrentInstructionIndex_Sets_CurrentInstructionIndex()
         {
             mFullyConstructed.WithCurrentInstructionIndex(29).CurrentInstructionIndex.Should().Be(29);
@@ -242,6 +264,12 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
         {
             var parts = new Part[2];
             new EntityState(Null.Enumerable<Part>()).WithParts(parts).Parts.Should().BeSameAs(parts);
+        }
+        [Test]
+        public void WithThrustDirection_Sets_ThrustDirection()
+        {
+            mFullyConstructed.WithThrustDirection(new Vector2D(123, 456)).ThrustDirection.Should()
+                             .Be(new Vector2D(123, 456));
         }
     }
 }
