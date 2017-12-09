@@ -10,6 +10,14 @@ namespace ModernRonin.Terrarium.Logic.Utilities
         public IEnumerator<T> GetEnumerator() => mWrappee.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         public int Count => mWrappee.Count;
-        public T this[int index] => mWrappee[index % Count];
+        public T this[int index]
+        {
+            get
+            {
+                index = index % Count;
+                if (index < 0) index += Count;
+                return mWrappee[index];
+            }
+        }
     }
 }

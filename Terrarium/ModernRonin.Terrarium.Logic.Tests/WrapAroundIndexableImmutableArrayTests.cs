@@ -19,6 +19,12 @@ namespace ModernRonin.Terrarium.Logic.Tests
         [TestCase(7, 1)]
         [TestCase(8, 2)]
         [TestCase(9, 0)]
+        [TestCase(-1, 2)]
+        [TestCase(-2, 1)]
+        [TestCase(-3, 0)]
+        [TestCase(-4, 2)]
+        [TestCase(-5, 1)]
+        [TestCase(-6, 0)]
         public void Indexer_Wraps_Index_And_Delegates_To_Wrappee(int inputIndex, int wrappeeIndex)
         {
             var wrappee = Substitute.For<IReadOnlyList<int>>();
