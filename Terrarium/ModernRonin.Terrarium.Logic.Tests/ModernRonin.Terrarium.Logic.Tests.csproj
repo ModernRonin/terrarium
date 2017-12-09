@@ -76,8 +76,10 @@
     <Compile Include="Transformations\EntityExecuteCurrentInstructionTransformerTests.cs" />
     <Compile Include="Transformations\EntityPartsEnergyCostTransformerTests.cs" />
     <Compile Include="Transformations\EntityResetTickEnergyTransformerTests.cs" />
+    <Compile Include="Transformations\Execution\RotateThrustersExecutorTests.cs" />
     <Compile Include="Transformations\RemoveEntitiesWithNegativeTickEnergyTransformerTests.cs" />
     <Compile Include="Transformations\TransformerDependenciesTests.cs" />
+    <Compile Include="Utilities\ModelExtensionsTests.cs" />
     <Compile Include="WrapAroundIndexableImmutableArrayTests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using ModernRonin.Standard;
-using ModernRonin.Terrarium.Logic.Objects.Entities;
+﻿using ModernRonin.Terrarium.Logic.Objects.Entities;
 using ModernRonin.Terrarium.Logic.Objects.Entities.Instructions;
-using MoreLinq;
+using ModernRonin.Terrarium.Logic.Utilities;
 
 namespace ModernRonin.Terrarium.Logic.Transformations.Execution
 {
@@ -14,8 +12,7 @@ namespace ModernRonin.Terrarium.Logic.Transformations.Execution
             ISimulationState simulationState)
         {
             var changed = ExecuteOn(instruction, entity);
-            var entities = changed.Concat(simulationState.Entities.Except(entity.AsEnumerable()));
-            return simulationState.WithEntities(entities);
+            return simulationState.ReplaceEntity(entity, changed);
         }
         protected abstract Entity ExecuteOn(T instruction, IEntity entity);
     }

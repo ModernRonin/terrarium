@@ -9,8 +9,12 @@ namespace ModernRonin.Terrarium.Logic.Transformations.Execution
         {
             var oldState = entity.State;
             var newState = ExecuteOn(instruction, oldState);
+            if (DoAutoIncrementInstructionPointer)
+                newState=newState.WithCurrentInstructionIndex(newState.CurrentInstructionIndex+1);
             return entity.WithState(newState);
         }
         protected abstract IEntityState ExecuteOn(T instruction, IEntityState oldState);
+        protected abstract bool DoAutoIncrementInstructionPointer { get; }
+
     }
 }
