@@ -76,6 +76,7 @@
     <Compile Include="Transformations\EntityExecuteCurrentInstructionTransformerTests.cs" />
     <Compile Include="Transformations\EntityPartsEnergyCostTransformerTests.cs" />
     <Compile Include="Transformations\EntityResetTickEnergyTransformerTests.cs" />
+    <Compile Include="Transformations\Execution\JumpExecutorTests.cs" />
     <Compile Include="Transformations\Execution\RotateThrustersExecutorTests.cs" />
     <Compile Include="Transformations\Execution\ToggleThrustersExecutorTests.cs" />
     <Compile Include="Transformations\RemoveEntitiesWithNegativeTickEnergyTransformerTests.cs" />

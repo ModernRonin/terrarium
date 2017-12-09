@@ -5,8 +5,8 @@ namespace ModernRonin.Terrarium.Logic.Transformations.Execution
 {
     public class ToggleThrustersExecutor : AnEntityStateInstructionExecutor<ToggleThrustersInstruction>
     {
+        protected override bool DoAutoIncrementInstructionPointer => true;
         protected override IEntityState ExecuteOn(ToggleThrustersInstruction instruction, IEntityState oldState) =>
             oldState.AreThrustersOn ? oldState.ThrustOff() : oldState.ThrustOn();
-        protected override bool DoAutoIncrementInstructionPointer => true;
     }
 }
