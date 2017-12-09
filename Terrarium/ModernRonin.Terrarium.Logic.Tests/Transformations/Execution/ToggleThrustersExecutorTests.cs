@@ -18,6 +18,17 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations.Execution
             new ToggleThrustersExecutor().HandledInstructionType.Should().Be<ToggleThrustersInstruction>();
         }
         [Test]
+        public void Increments_InstructionPointer()
+        {
+            var instruction = new ToggleThrustersInstruction();
+            var entity = new Entity(new EntityState(Null.Enumerable<Part>()), new Genome(null, new[] {instruction}));
+            var simulationState = new SimulationState(entity.AsEnumerable(), Null.Enumerable<IEnergySource>());
+
+            var underTest = new ToggleThrustersExecutor();
+            underTest.Execute(instruction, entity, simulationState).Entities.Single().State.CurrentInstructionIndex
+                     .Should().Be(1);
+        }
+        [Test]
         public void Sets_Thrusters_To_Off_If_They_Were_On()
         {
             var instruction = new ToggleThrustersInstruction();
