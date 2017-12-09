@@ -18,12 +18,37 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations.Execution
             new RotateThrustersExecutor().HandledInstructionType.Should().Be<RotateThrustersInstruction>();
         }
         [Test]
-        public void Sets_ThrustDirection_From_Instruction()
+        public void Increments_CurrentInstructionIndex()
         {
-            var underTest = new RotateThrustersExecutor();
             var instruction = new RotateThrustersInstruction(new Vector2D(1, 2));
             var entity = new Entity(new EntityState(Null.Enumerable<Part>()), new Genome(null, new[] {instruction}));
             var state = new SimulationState(entity.AsEnumerable(), Null.Enumerable<IEnergySource>());
+
+            var underTest = new RotateThrustersExecutor();
+            underTest.Execute(instruction, entity, state).Entities.Single().State.CurrentInstructionIndex.Should()
+                     .Be(1);
+        }
+        [Test]
+        public void Leaves_Other_Entities_Unchanged()
+        {
+            var instruction = new RotateThrustersInstruction(new Vector2D(1, 2));
+            var entity = new Entity(new EntityState(Null.Enumerable<Part>()), new Genome(null, new[] {instruction}));
+            var other = new Entity(new EntityState(Null.Enumerable<Part>(), thrustDirection: new Vector2D(7, 7)), null);
+            var state = new SimulationState(new[] {entity, other}, Null.Enumerable<IEnergySource>());
+
+            var underTest = new RotateThrustersExecutor();
+            var changedState = underTest.Execute(instruction, entity, state);
+            changedState.Entities.Should().HaveCount(2);
+            changedState.Entities.Should().Contain(other);
+        }
+        [Test]
+        public void Sets_ThrustDirection_From_Instruction()
+        {
+            var instruction = new RotateThrustersInstruction(new Vector2D(1, 2));
+            var entity = new Entity(new EntityState(Null.Enumerable<Part>()), new Genome(null, new[] {instruction}));
+            var state = new SimulationState(entity.AsEnumerable(), Null.Enumerable<IEnergySource>());
+
+            var underTest = new RotateThrustersExecutor();
             underTest.Execute(instruction, entity, state).Entities.Single().State.ThrustDirection.Should()
                      .Be(instruction.NewRotation);
         }
