@@ -19,7 +19,8 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
             29f,
             19,
             true,
-            new Vector2D(-3, 17));
+            new Vector2D(-3, 17),
+            64f);
         static readonly Part sCorePart = new Part(PartKind.Core, Vector2D.Zero);
         static EntityState CreateSinglePartEntity() => new EntityState(new[] {new Part(PartKind.Core, Vector2D.Zero)});
         static EntityState CreateTwoHorizontalPartsEntity() => new EntityState(new[]
@@ -62,6 +63,11 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
                     Method = e => e.WithCurrentInstructionIndex(129),
                     Getter = e => e.CurrentInstructionIndex
                 };
+                yield return new BuilderMethodSpec
+                {
+                    Method = e => e.NextInstructionIndex(),
+                    Getter = e => e.CurrentInstructionIndex
+                };
                 yield return new BuilderMethodSpec {Method = e => e.At(new Vector2D(-2, -3)), Getter = e => e.Position};
                 yield return new BuilderMethodSpec {Method = e => e.AddStoredEnergy(31f), Getter = e => e.StoredEnergy};
                 yield return new BuilderMethodSpec
@@ -76,6 +82,16 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
                 };
                 yield return new BuilderMethodSpec {Method = e => e.ThrustOff(), Getter = e => e.AreThrustersOn};
                 yield return new BuilderMethodSpec {Method = e => e.ThrustOn(), Getter = e => e.AreThrustersOn};
+                yield return new BuilderMethodSpec
+                {
+                    Method = e => e.WithThrustDirection(new Vector2D(79f, 81f)),
+                    Getter = e => e.ThrustDirection
+                };
+                yield return new BuilderMethodSpec
+                {
+                    Method = e => e.WithLastDistanceMovedSquared(256f),
+                    Getter = e => e.LastDistanceMovedSquared
+                };
             }
         }
         [Test]
@@ -258,6 +274,16 @@ namespace ModernRonin.Terrarium.Logic.Tests.Objects.Entities
         public void WithCurrentInstructionIndex_Sets_CurrentInstructionIndex()
         {
             mFullyConstructed.WithCurrentInstructionIndex(29).CurrentInstructionIndex.Should().Be(29);
+        }
+        [Test]
+        public void NextInstructionIndex_Increments_CurrentInstructionIndex()
+        {
+            mFullyConstructed.NextInstructionIndex().CurrentInstructionIndex.Should().Be(20);
+        }
+        [Test]
+        public void WithLastDistanceMovedSquared_Sets_LastDistanceMovedSquared()
+        {
+            mFullyConstructed.WithLastDistanceMovedSquared(169).LastDistanceMovedSquared.Should().Be(169);
         }
         [Test]
         public void WithParts_Sets_Parts()

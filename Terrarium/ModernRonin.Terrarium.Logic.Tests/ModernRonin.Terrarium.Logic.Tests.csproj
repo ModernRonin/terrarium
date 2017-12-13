@@ -67,6 +67,11 @@
     <Compile Include="Objects\Entities\EntityStateTests.cs" />
     <Compile Include="Objects\Entities\EntityTests.cs" />
     <Compile Include="Objects\Entities\GenomeTests.cs" />
+    <Compile Include="Objects\Entities\Instructions\Conditions\AmFatConditionTests.cs" />
+    <Compile Include="Objects\Entities\Instructions\Conditions\AmHungryConditionTests.cs" />
+    <Compile Include="Objects\Entities\Instructions\Conditions\AmMovingConditionTests.cs" />
+    <Compile Include="Objects\Entities\Instructions\Conditions\AmMovingQuicklyConditionTests.cs" />
+    <Compile Include="Objects\Entities\Instructions\Conditions\AmMovingSlowlyConditionTests.cs" />
     <Compile Include="Objects\Entities\PartTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimulationStateTests.cs" />
@@ -77,6 +82,7 @@
     <Compile Include="Transformations\EntityPartsEnergyCostTransformerTests.cs" />
     <Compile Include="Transformations\EntityResetTickEnergyTransformerTests.cs" />
     <Compile Include="Transformations\Execution\JumpExecutorTests.cs" />
+    <Compile Include="Transformations\Execution\JumpIfExecutorTests.cs" />
     <Compile Include="Transformations\Execution\RotateThrustersExecutorTests.cs" />
     <Compile Include="Transformations\Execution\ToggleThrustersExecutorTests.cs" />
     <Compile Include="Transformations\RemoveEntitiesWithNegativeTickEnergyTransformerTests.cs" />

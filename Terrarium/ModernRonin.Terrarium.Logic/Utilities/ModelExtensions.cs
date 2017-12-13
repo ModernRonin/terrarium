@@ -2,6 +2,7 @@
 using System.Linq;
 using ModernRonin.Standard;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
+using ModernRonin.Terrarium.Logic.Objects.Entities.Instructions;
 using MoreLinq;
 
 namespace ModernRonin.Terrarium.Logic.Utilities
@@ -16,5 +17,7 @@ namespace ModernRonin.Terrarium.Logic.Utilities
             var entities = replacement.Concat(self.Entities.Except(original.AsEnumerable()));
             return self.WithEntities(entities);
         }
+        public static IEntityState WithJump(this IEntityState self, JumpInstruction jump) =>
+            self.WithCurrentInstructionIndex(self.CurrentInstructionIndex + jump.InstructionPointerDelta);
     }
 }

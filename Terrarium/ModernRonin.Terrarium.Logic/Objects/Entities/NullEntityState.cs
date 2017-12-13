@@ -15,16 +15,19 @@ namespace ModernRonin.Terrarium.Logic.Objects.Entities
         public int CurrentInstructionIndex => 0;
         public bool AreThrustersOn => false;
         public Vector2D ThrustDirection => Vector2D.Zero;
+        public float LastDistanceMovedSquared => 0;
         public IEntityState At(Vector2D position) => this;
         public IEntityState WithParts(IEnumerable<Part> parts) => this;
         public IEntityState AddTickEnergy(float delta) => this;
         public IEntityState SubtractTickEnergy(float delta) => this;
         public IEntityState ResetTickEnergy() => this;
         public IEntityState WithCurrentInstructionIndex(int index) => this;
+        public IEntityState NextInstructionIndex() => this;
         public IEntityState AddStoredEnergy(float delta) => this;
         public IEntityState SubtractStoredEnergy(float delta) => this;
         public IEntityState ThrustOn() => this;
         public IEntityState ThrustOff() => this;
         public IEntityState WithThrustDirection(Vector2D direction) => this;
+        public IEntityState WithLastDistanceMovedSquared(float squaredDistance) => this;
     }
 }

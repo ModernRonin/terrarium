@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
+using ModernRonin.Standard;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
+using ModernRonin.Terrarium.Logic.Objects.Entities.Instructions;
 using ModernRonin.Terrarium.Logic.Utilities;
 using NSubstitute;
 using NUnit.Framework;
@@ -29,6 +31,14 @@ namespace ModernRonin.Terrarium.Logic.Tests.Utilities
             newEntities.Should().Contain(entities[0]);
             newEntities.Should().Contain(entities[1]);
             newEntities.Should().Contain(entities[3]);
+        }
+        [Test]
+        public void WithJump_Adjust_CurrentInstructionIndex()
+        {
+            var state = new EntityState(Null.Enumerable<Part>(), currentInstructionIndex: 7);
+            var jmp = new JumpInstruction(-3);
+
+            state.WithJump(jmp).CurrentInstructionIndex.Should().Be(4);
         }
     }
 }
