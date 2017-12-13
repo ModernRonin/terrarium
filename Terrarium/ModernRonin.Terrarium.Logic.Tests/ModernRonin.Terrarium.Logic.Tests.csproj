@@ -72,6 +72,7 @@
     <Compile Include="Objects\Entities\Instructions\Conditions\AmMovingConditionTests.cs" />
     <Compile Include="Objects\Entities\Instructions\Conditions\AmMovingQuicklyConditionTests.cs" />
     <Compile Include="Objects\Entities\Instructions\Conditions\AmMovingSlowlyConditionTests.cs" />
+    <Compile Include="Objects\Entities\Instructions\Conditions\HavePartsConditionTests.cs" />
     <Compile Include="Objects\Entities\PartTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimulationStateTests.cs" />
