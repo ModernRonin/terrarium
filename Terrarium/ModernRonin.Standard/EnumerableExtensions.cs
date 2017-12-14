@@ -16,5 +16,12 @@ namespace ModernRonin.Standard
             TValue toValue(string name) => createValueForEnum(toKey(name));
             return Enum.GetNames(typeof(TEnum)).ToDictionary(toKey, toValue);
         }
+        public static IEnumerable<T> Replace<T>(
+            this IEnumerable<T> self,
+            IEnumerable<T> toBeReplaced,
+            Func<T, T> replacer)
+        {
+            
+        }
     }
 }
