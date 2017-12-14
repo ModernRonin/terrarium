@@ -12,8 +12,11 @@ namespace ModernRonin.Standard
         {
             if (!typeof(Enum).IsAssignableFrom(typeof(TEnum)))
                 throw new ArgumentException($"The type parameter {nameof(TEnum)} must be an enum.");
+
             TEnum toKey(string name) => (TEnum) Enum.Parse(typeof(TEnum), name);
+
             TValue toValue(string name) => createValueForEnum(toKey(name));
+
             return Enum.GetNames(typeof(TEnum)).ToDictionary(toKey, toValue);
         }
         public static IEnumerable<T> Replace<T>(
@@ -21,7 +24,11 @@ namespace ModernRonin.Standard
             IEnumerable<T> toBeReplaced,
             Func<T, T> replacer)
         {
-            
+            var frozen = toBeReplaced as T[] ?? toBeReplaced.ToArray();
+
+            T replace(T element) => frozen.Contains(element) ? replacer(element) : element;
+
+            return self.Select(replace);
         }
     }
 }

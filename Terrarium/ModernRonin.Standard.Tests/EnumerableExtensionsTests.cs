@@ -23,5 +23,12 @@ namespace ModernRonin.Standard.Tests
             result[Pet.Mouse].Should().Be(5);
             result[Pet.Bird].Should().Be(4);
         }
+        [Test]
+        public void Replace_Replaces()
+        {
+            var input = new[] {1, 2, 3, 4, 5};
+            var toBeReplaced = new[] {1, 3, 5};
+            input.Replace(toBeReplaced, n => n + 10).Should().Equal(11, 2, 13, 4, 15);
+        }
     }
 }
