@@ -4,6 +4,7 @@ using ModernRonin.Standard;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
 using ModernRonin.Terrarium.Logic.Objects.Entities.Instructions;
 using ModernRonin.Terrarium.Logic.Utilities;
+using MoreLinq;
 
 namespace ModernRonin.Terrarium.Logic.Transformations.Execution
 {
@@ -31,7 +32,12 @@ namespace ModernRonin.Terrarium.Logic.Transformations.Execution
                 .CollisionDetection.Excepting(occupiedBySelf).IsFreeAt(entityState.Position + targetPosition);
             if (isTargetPositionFree)
             {
-                if (instruction.Kind != PartKind.Core)
+                if (instruction.Kind == PartKind.Core)
+                {
+                    var newborn = CreateChild(entity, targetPosition);
+                    simulationState = simulationState.WithEntities(newborn.Concat(simulationState.Entities));
+                }
+                else
                 {
                     var points = PointsFromTo(origin, targetPosition, direction);
                     var partsToMove = FilterPartsAtPoints(frozenParts, points);
@@ -39,12 +45,15 @@ namespace ModernRonin.Terrarium.Logic.Transformations.Execution
                     Part shift(Part part) => new Part(part.Kind, part.RelativePosition + direction);
 
                     frozenParts = frozenParts.Replace(partsToMove, shift).ToList();
+                    frozenParts.Add(new Part(instruction.Kind, targetPosition));
+                    entityState = entityState.WithParts(frozenParts);
                 }
-                targetPosition = instruction.Kind == PartKind.Core ? targetPosition : origin;
-                frozenParts.Add(new Part(instruction.Kind, targetPosition));
-                entityState = entityState.WithParts(frozenParts);
             }
             return simulationState.ReplaceEntity(entity, entity.WithState(entityState));
+        }
+        IEntity CreateChild(IEntity entity, Vector2D targetPosition)
+        {
+            throw new System.NotImplementedException();
         }
         Vector2D FindNextSpaceNotOccupiedBySelf(Vector2D start, Vector2D direction, Rectangle2D[] occupied)
         {
