@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ModernRonin.Standard;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
@@ -31,29 +32,28 @@ namespace ModernRonin.Terrarium.Logic.Transformations.Execution
             var isTargetPositionFree = simulationState
                 .CollisionDetection.Excepting(occupiedBySelf).IsFreeAt(entityState.Position + targetPosition);
             if (isTargetPositionFree)
-            {
                 if (instruction.Kind == PartKind.Core)
-                {
-                    var newborn = CreateChild(entity, targetPosition);
-                    simulationState = simulationState.WithEntities(newborn.Concat(simulationState.Entities));
-                }
+                    simulationState = Reproduce(entity, targetPosition, simulationState);
                 else
-                {
-                    var points = PointsFromTo(origin, targetPosition, direction);
-                    var partsToMove = FilterPartsAtPoints(frozenParts, points);
-
-                    Part shift(Part part) => new Part(part.Kind, part.RelativePosition + direction);
-
-                    frozenParts = frozenParts.Replace(partsToMove, shift).ToList();
-                    frozenParts.Add(new Part(instruction.Kind, targetPosition));
-                    entityState = entityState.WithParts(frozenParts);
-                }
-            }
+                    entityState = AddPart(direction,
+                        frozenParts,
+                        entityState,
+                        new Part(instruction.Kind, origin), targetPosition);
             return simulationState.ReplaceEntity(entity, entity.WithState(entityState));
         }
-        IEntity CreateChild(IEntity entity, Vector2D targetPosition)
+        ISimulationState Reproduce(IEntity parent, Vector2D targetPosition, ISimulationState simulationState) =>
+            simulationState.WithEntities(CreateChild(parent, targetPosition).Concat(simulationState.Entities));
+        IEntity CreateChild(IEntity entity, Vector2D targetPosition) => throw new NotImplementedException();
+        IEntityState AddPart(Vector2D direction, List<Part> frozenParts, IEntityState entityState, Part newPart, Vector2D targetPosition)
         {
-            throw new System.NotImplementedException();
+            var points = PointsFromTo(newPart.RelativePosition, targetPosition, direction);
+            var partsToMove = FilterPartsAtPoints(frozenParts, points);
+
+            Part shift(Part part) => new Part(part.Kind, part.RelativePosition + direction);
+
+            frozenParts = frozenParts.Replace(partsToMove, shift).ToList();
+            frozenParts.Add(newPart);
+            return entityState.WithParts(frozenParts);
         }
         Vector2D FindNextSpaceNotOccupiedBySelf(Vector2D start, Vector2D direction, Rectangle2D[] occupied)
         {
