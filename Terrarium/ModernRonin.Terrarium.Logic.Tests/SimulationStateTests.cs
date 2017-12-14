@@ -2,6 +2,7 @@
 using FluentAssertions;
 using ModernRonin.Standard;
 using ModernRonin.Standard.Tests;
+using ModernRonin.Terrarium.Logic.Collision;
 using ModernRonin.Terrarium.Logic.Objects;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
 using NSubstitute;
@@ -20,7 +21,7 @@ namespace ModernRonin.Terrarium.Logic.Tests
             var underTest = new SimulationState(null,
                 energySources,
                 new Vector2D(5, 1),
-                new float[2, 2] {{17f, 17f}, {17f, 17f}});
+                energyDensity:new float[2, 2] {{17f, 17f}, {17f, 17f}});
             underTest.EnergyDensity[0, 0].OughtTo().Approximate(17f);
             underTest.EnergyDensity[0, 1].OughtTo().Approximate(17f);
             underTest.EnergyDensity[1, 1].OughtTo().Approximate(17f);
@@ -55,12 +56,20 @@ namespace ModernRonin.Terrarium.Logic.Tests
                 .Size.OughtTo().Approximate(13, 17);
         }
         [Test]
+        public void Constructor_Sets_CollisionDetection()
+        {
+            var collisionDetection = Substitute.For<ICollisionDetection>();
+            new SimulationState(Null.Enumerable<IEntity>(),
+                Null.Enumerable<IEnergySource>(),
+                collisionDetection: collisionDetection).CollisionDetection.Should().BeSameAs(collisionDetection);
+        }
+        [Test]
         public void EnergyDensityAt_Gives_Density_At_Nearest_Integer_Coordinates()
         {
             var underTest = new SimulationState(Null.Enumerable<Entity>(),
                 Null.Enumerable<IEnergySource>(),
                 new Vector2D(3, 3),
-                new float[,] {{1, 2, 3}, {10, 20, 30}, {100, 200, 300}});
+                energyDensity: new float[,] {{1, 2, 3}, {10, 20, 30}, {100, 200, 300}});
             underTest.EnergyDensityAt(Vector2D.Zero).OughtTo().Approximate(1);
             underTest.EnergyDensityAt(new Vector2D(1.5f, 1.5f)).OughtTo().Approximate(20);
         }
@@ -97,6 +106,13 @@ namespace ModernRonin.Terrarium.Logic.Tests
             var underTest = new SimulationState(Null.Enumerable<Entity>(), Null.Enumerable<IEnergySource>());
             var entities = new Entity[2];
             underTest.WithEntities(entities).Entities.Should().BeSameAs(entities);
+        }
+        [Test]
+        public void WithCollisionDetection_Sets_CollisionDetection()
+        {
+            var collisionDetection= Substitute.For<ICollisionDetection>();
+            new SimulationState(Null.Enumerable<IEntity>(), Null.Enumerable<IEnergySource>())
+                .WithCollisionDetection(collisionDetection).CollisionDetection.Should().BeSameAs(collisionDetection);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace ModernRonin.Terrarium.Logic.Tests.Transformations
             var state = new SimulationState(new[] {entity},
                 Null.Enumerable<IEnergySource>(),
                 new Vector2D(100, 100),
-                energyDensity);
+                energyDensity:energyDensity);
 
             var changed = underTest.Transform(state).Entities.Single();
             changed.State.TickEnergy.OughtTo().Approximate(30f);
