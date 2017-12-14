@@ -30,5 +30,16 @@ namespace ModernRonin.Standard
 
             return self.Select(replace);
         }
+        public static IEnumerable<T> Replace<T>(
+            this IEnumerable<T> self,
+            IEnumerable<T> toBeReplaced,
+            Func<T, T> replacer, IEqualityComparer<T> comparer)
+        {
+            var frozen = toBeReplaced as T[] ?? toBeReplaced.ToArray();
+
+            T replace(T element) => frozen.Contains(element, comparer) ? replacer(element) : element;
+
+            return self.Select(replace);
+        }
     }
 }
