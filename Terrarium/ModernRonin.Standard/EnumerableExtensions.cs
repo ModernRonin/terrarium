@@ -22,18 +22,12 @@ namespace ModernRonin.Standard
         public static IEnumerable<T> Replace<T>(
             this IEnumerable<T> self,
             IEnumerable<T> toBeReplaced,
-            Func<T, T> replacer)
-        {
-            var frozen = toBeReplaced as T[] ?? toBeReplaced.ToArray();
-
-            T replace(T element) => frozen.Contains(element) ? replacer(element) : element;
-
-            return self.Select(replace);
-        }
+            Func<T, T> replacer) => Replace(self, toBeReplaced, replacer, EqualityComparer<T>.Default);
         public static IEnumerable<T> Replace<T>(
             this IEnumerable<T> self,
             IEnumerable<T> toBeReplaced,
-            Func<T, T> replacer, IEqualityComparer<T> comparer)
+            Func<T, T> replacer,
+            IEqualityComparer<T> comparer)
         {
             var frozen = toBeReplaced as T[] ?? toBeReplaced.ToArray();
 
