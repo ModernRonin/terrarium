@@ -1,0 +1,33 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using ModernRonin.Standard;
+
+namespace ModernRonin.Terrarium.Logic.Utilities
+{
+    public static class SimulationGeometry
+    {
+        static readonly Vector2D[] sDirectionVectors =
+        {
+            new Vector2D(0, -1), new Vector2D(1, -1), new Vector2D(1, 0), new Vector2D(1, 1), new Vector2D(0, 1),
+            new Vector2D(-1, 0), new Vector2D(-1, -1), new Vector2D(-1, 1)
+        };
+        public static Vector2D VectorFor(int directionIndex) =>
+            sDirectionVectors[directionIndex % sDirectionVectors.Length];
+        public static Vector2D FindNextSpaceNotOccupiedBySelf(
+            Vector2D start,
+            Vector2D direction,
+            Rectangle2D[] occupied)
+        {
+            if (!occupied.Any(o => o.Contains(start))) return start;
+            return FindNextSpaceNotOccupiedBySelf(start + direction, direction, occupied);
+        }
+        public static IEnumerable<Vector2D> PointsFromTo(Vector2D start, Vector2D end, Vector2D increment)
+        {
+            while (start != end)
+            {
+                yield return start;
+                start += increment;
+            }
+        }
+    }
+}
