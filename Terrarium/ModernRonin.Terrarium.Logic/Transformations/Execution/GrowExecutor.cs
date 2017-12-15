@@ -32,30 +32,26 @@ namespace ModernRonin.Terrarium.Logic.Transformations.Execution
                 if (instruction.Kind == PartKind.Core)
                     simulationState = Reproduce(entity, targetPosition, simulationState);
                 else
-                    entityState = AddPart(direction,
+                    entityState = entityState.WithParts(InsertPartPushing(new Part(instruction.Kind, origin),
                         frozenParts,
-                        entityState,
-                        new Part(instruction.Kind, origin),
-                        targetPosition);
+                        direction,
+                        targetPosition));
             return simulationState.ReplaceEntity(entity, entity.WithState(entityState));
         }
         ISimulationState Reproduce(IEntity parent, Vector2D targetPosition, ISimulationState simulationState) =>
             simulationState.WithEntities(mMidwife.GiveBirth(parent, targetPosition).Concat(simulationState.Entities));
-        static IEntityState AddPart(
-            Vector2D direction,
-            List<Part> frozenParts,
-            IEntityState entityState,
+        static IEnumerable<Part> InsertPartPushing(
             Part newPart,
+            List<Part> parts,
+            Vector2D direction,
             Vector2D targetPosition)
         {
             var points = PointsFromTo(newPart.RelativePosition, direction, targetPosition);
-            var partsToMove = frozenParts.Where(p => points.Any(p.BoundingBox.Contains));
+            var partsToMove = parts.Where(p => points.Any(p.BoundingBox.Contains));
 
             Part shift(Part part) => new Part(part.Kind, part.RelativePosition + direction);
 
-            frozenParts = frozenParts.Replace(partsToMove, shift).ToList();
-            frozenParts.Add(newPart);
-            return entityState.WithParts(frozenParts);
+            return parts.Replace(partsToMove, shift).Append(newPart);
         }
     }
 }
