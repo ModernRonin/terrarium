@@ -89,6 +89,7 @@
     <Compile Include="Transformations\RemoveEntitiesWithNegativeTickEnergyTransformerTests.cs" />
     <Compile Include="Transformations\TransformerDependenciesTests.cs" />
     <Compile Include="Utilities\ModelExtensionsTests.cs" />
+    <Compile Include="Utilities\SimulationGeometryTests.cs" />
     <Compile Include="WrapAroundIndexableImmutableArrayTests.cs" />
   </ItemGroup>
   <ItemGroup>

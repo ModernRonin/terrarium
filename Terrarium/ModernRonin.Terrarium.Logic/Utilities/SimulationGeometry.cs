@@ -4,6 +4,9 @@ using ModernRonin.Standard;
 
 namespace ModernRonin.Terrarium.Logic.Utilities
 {
+    /// <summary>
+    /// Geometric operations different from what a standard/classical euclidean geometry library would do or how it would do them
+    /// </summary>
     public static class SimulationGeometry
     {
         static readonly Vector2D[] sDirectionVectors =
