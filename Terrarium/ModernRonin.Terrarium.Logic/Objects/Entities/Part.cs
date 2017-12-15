@@ -12,5 +12,6 @@ namespace ModernRonin.Terrarium.Logic.Objects.Entities
         public Vector2D RelativePosition { get; }
         public PartKind Kind { get; }
         public string Code => $"{Kind}!{RelativePosition.X}!{RelativePosition.Y}";
+        public Rectangle2D BoundingBox => new Rectangle2D(RelativePosition, RelativePosition + Vector2D.One);
     }
 }

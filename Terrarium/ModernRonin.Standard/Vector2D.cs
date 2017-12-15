@@ -60,5 +60,6 @@ namespace ModernRonin.Standard
             }
         }
         public static Vector2D Zero => new Vector2D(0, 0);
+        public static Vector2D One => new Vector2D(1,1);
     }
 }
