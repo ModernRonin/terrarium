@@ -19,5 +19,19 @@ namespace ModernRonin.Terrarium.Logic.Utilities
         }
         public static IEntityState WithJump(this IEntityState self, JumpInstruction jump) =>
             self.WithCurrentInstructionIndex(self.CurrentInstructionIndex + jump.InstructionPointerDelta);
+        public static IEnumerable<Part> InsertPartPushing(
+            this IEnumerable<Part> self,
+            Part part,
+            Vector2D direction,
+            Vector2D targetPosition)
+        {
+            var frozen = self as Part[] ?? self.ToArray();
+            var points = SimulationGeometry.PointsFromTo(part.RelativePosition, direction, targetPosition);
+            var partsToMove = frozen.Where(p => points.Any(p.BoundingBox.Contains));
+
+            Part shift(Part p) => new Part(p.Kind, p.RelativePosition + direction);
+
+            return frozen.Replace(partsToMove, shift).Append(part);
+        }
     }
 }
