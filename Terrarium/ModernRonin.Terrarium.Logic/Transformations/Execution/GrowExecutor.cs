@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using ModernRonin.Standard;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
@@ -12,6 +11,8 @@ namespace ModernRonin.Terrarium.Logic.Transformations.Execution
 {
     public class GrowExecutor : AnInstructionExecutor<GrowInstruction>
     {
+        readonly IEntityMidwife mMidwife;
+        public GrowExecutor(IEntityMidwife midwife) => mMidwife = midwife;
         protected override ISimulationState DoExecute(
             GrowInstruction instruction,
             IEntity entity,
@@ -39,9 +40,8 @@ namespace ModernRonin.Terrarium.Logic.Transformations.Execution
             return simulationState.ReplaceEntity(entity, entity.WithState(entityState));
         }
         ISimulationState Reproduce(IEntity parent, Vector2D targetPosition, ISimulationState simulationState) =>
-            simulationState.WithEntities(CreateChild(parent, targetPosition).Concat(simulationState.Entities));
-        IEntity CreateChild(IEntity entity, Vector2D targetPosition) => throw new NotImplementedException();
-        IEntityState AddPart(
+            simulationState.WithEntities(mMidwife.GiveBirth(parent, targetPosition).Concat(simulationState.Entities));
+        static IEntityState AddPart(
             Vector2D direction,
             List<Part> frozenParts,
             IEntityState entityState,
