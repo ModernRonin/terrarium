@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using ModernRonin.Standard;
 using ModernRonin.Terrarium.Logic.Objects.Entities;
@@ -39,6 +40,21 @@ namespace ModernRonin.Terrarium.Logic.Tests.Utilities
             var jmp = new JumpInstruction(-3);
 
             state.WithJump(jmp).CurrentInstructionIndex.Should().Be(4);
+        }
+        [Test]
+        public void InsertPartPushing_Adds_Part_At_Tail()
+        {
+            var parts = new[]
+            {
+                new Part(PartKind.Core, Vector2D.Zero), 
+                new Part(PartKind.Absorber, Vector2D.One), 
+                new Part(PartKind.Store, Vector2D.Two), 
+            };
+            var insertee= new Part(PartKind.Thruster, Vector2D.One);
+            var direction = Vector2D.One;
+            var targetPosition = Vector2D.Three;
+
+            parts.InsertPartPushing(insertee, direction, targetPosition).Last().Should().BeSameAs(insertee);
         }
     }
 }
