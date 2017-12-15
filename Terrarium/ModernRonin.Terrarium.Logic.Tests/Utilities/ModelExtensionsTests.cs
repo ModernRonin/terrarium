@@ -14,6 +14,43 @@ namespace ModernRonin.Terrarium.Logic.Tests.Utilities
     public class ModelExtensionsTests
     {
         [Test]
+        public void InsertPartPushing_Adds_Part_At_Tail()
+        {
+            var parts = new[]
+            {
+                new Part(PartKind.Core, Vector2D.Zero), new Part(PartKind.Absorber, Vector2D.One),
+                new Part(PartKind.Store, Vector2D.Two)
+            };
+            var insertee = new Part(PartKind.Thruster, Vector2D.One);
+            var direction = Vector2D.One;
+            var targetPosition = Vector2D.Three;
+
+            parts.InsertPartPushing(insertee, direction, targetPosition).Last().Should().BeSameAs(insertee);
+        }
+        [Test]
+        public void InsertPartPushing_Pushes_Parts_Towards_TargetPosition()
+        {
+            var parts = new[]
+            {
+                new Part(PartKind.Core, Vector2D.Zero), new Part(PartKind.Absorber, Vector2D.One),
+                new Part(PartKind.Store, Vector2D.Two)
+            };
+            var insertee = new Part(PartKind.Thruster, Vector2D.One);
+            var direction = Vector2D.One;
+            var targetPosition = Vector2D.Three;
+
+            var output = parts.InsertPartPushing(insertee, direction, targetPosition).ToArray();
+
+            output.Should().HaveCount(4);
+            output[0].Should().BeSameAs(parts[0]);
+            output[1].RelativePosition.Should().Be(Vector2D.Two);
+            output[2].RelativePosition.Should().Be(Vector2D.Three);
+            output[3].RelativePosition.Should().Be(Vector2D.One);
+            output[1].Kind.Should().Be(PartKind.Absorber);
+            output[2].Kind.Should().Be(PartKind.Store);
+            output[3].Kind.Should().Be(PartKind.Thruster);
+        }
+        [Test]
         public void ReplaceEntity_Returns_State_With_Changed_Entities()
         {
             var alpha = Substitute.For<IEntity>();
@@ -40,21 +77,6 @@ namespace ModernRonin.Terrarium.Logic.Tests.Utilities
             var jmp = new JumpInstruction(-3);
 
             state.WithJump(jmp).CurrentInstructionIndex.Should().Be(4);
-        }
-        [Test]
-        public void InsertPartPushing_Adds_Part_At_Tail()
-        {
-            var parts = new[]
-            {
-                new Part(PartKind.Core, Vector2D.Zero), 
-                new Part(PartKind.Absorber, Vector2D.One), 
-                new Part(PartKind.Store, Vector2D.Two), 
-            };
-            var insertee= new Part(PartKind.Thruster, Vector2D.One);
-            var direction = Vector2D.One;
-            var targetPosition = Vector2D.Three;
-
-            parts.InsertPartPushing(insertee, direction, targetPosition).Last().Should().BeSameAs(insertee);
         }
     }
 }
