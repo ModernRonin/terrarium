@@ -23,7 +23,7 @@ namespace ModernRonin.Terrarium.Logic.Transformations.Execution
             var origin = frozenParts.ElementAt(instruction.OriginPartIndex % frozenParts.Count).RelativePosition;
             var occupiedBySelf = frozenParts.Select(p => new Rectangle2D(p.RelativePosition, new Vector2D(1, 1)))
                                             .ToArray();
-            var targetPosition = FindNextSpaceNotOccupiedBySelf(origin, direction, occupiedBySelf);
+            var targetPosition = FindNextUnoccupiedPoint(origin, direction, occupiedBySelf);
 
             var isTargetPositionFree = simulationState
                 .CollisionDetection.Excepting(occupiedBySelf).IsFreeAt(entityState.Position + targetPosition);
@@ -48,7 +48,7 @@ namespace ModernRonin.Terrarium.Logic.Transformations.Execution
             Part newPart,
             Vector2D targetPosition)
         {
-            var points = PointsFromTo(newPart.RelativePosition, targetPosition, direction);
+            var points = PointsFromTo(newPart.RelativePosition, direction, targetPosition);
             var partsToMove = frozenParts.Where(p => points.Any(p.BoundingBox.Contains));
 
             Part shift(Part part) => new Part(part.Kind, part.RelativePosition + direction);

@@ -16,15 +16,15 @@ namespace ModernRonin.Terrarium.Logic.Utilities
         };
         public static Vector2D VectorFor(int directionIndex) =>
             sDirectionVectors[directionIndex % sDirectionVectors.Length];
-        public static Vector2D FindNextSpaceNotOccupiedBySelf(
+        public static Vector2D FindNextUnoccupiedPoint(
             Vector2D start,
             Vector2D direction,
             Rectangle2D[] occupied)
         {
             if (!occupied.Any(o => o.Contains(start))) return start;
-            return FindNextSpaceNotOccupiedBySelf(start + direction, direction, occupied);
+            return FindNextUnoccupiedPoint(start + direction, direction, occupied);
         }
-        public static IEnumerable<Vector2D> PointsFromTo(Vector2D start, Vector2D end, Vector2D increment)
+        public static IEnumerable<Vector2D> PointsFromTo(Vector2D start, Vector2D increment, Vector2D end)
         {
             while (start != end)
             {
