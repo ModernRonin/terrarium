@@ -16,10 +16,8 @@ namespace ModernRonin.Terrarium.Logic.Utilities
         };
         public static Vector2D VectorFor(int directionIndex) =>
             sDirectionVectors[directionIndex % sDirectionVectors.Length];
-        public static Vector2D FindNextUnoccupiedPoint(
-            Vector2D start,
-            Vector2D direction,
-            Rectangle2D[] occupied)
+        // ReSharper disable once ParameterTypeCanBeEnumerable.Global
+        public static Vector2D FindNextUnoccupiedPoint(Vector2D start, Vector2D direction, Rectangle2D[] occupied)
         {
             if (!occupied.Any(o => o.Contains(start))) return start;
             return FindNextUnoccupiedPoint(start + direction, direction, occupied);
